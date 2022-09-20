@@ -12,7 +12,7 @@ package org.centrale.objet.WoE;
 public class Objet {
     
     private int life;
-    private int valeur;
+    private int valeur; 
 
     public Objet(int life, int valeur) {
         this.life = life;

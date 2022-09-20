@@ -16,7 +16,7 @@ public class Creature {
     private int ptVie = 100;
     private int degAtt = 20;
     private int ptPar = 10;
-    private int pageAtt = 60;
+    private int pageAtt = 70;
     private int pagePar = 60;
     private Point2D pos;
 
@@ -110,8 +110,7 @@ public class Creature {
 
 
     public void affiche() {
-        System.out.println("\n-----------------------------");
-        System.out.printf( "ptVie=" + ptVie + ", degAtt=" + degAtt + ", ptPar=" + ptPar + ", pageAtt=" + pageAtt + ", pagePar=" + pagePar + ", pos=" + pos);
+        System.out.println( "ptVie=" + ptVie + ", degAtt=" + degAtt + ", ptPar=" + ptPar + ", pageAtt=" + pageAtt + ", pagePar=" + pagePar + ", pos=" + pos + "\n");
     }
 
 

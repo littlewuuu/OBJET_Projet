@@ -4,17 +4,45 @@
  * and open the template in the editor.
  */
 package org.centrale.objet.WoE;
+import java.util.*;
 
 
 /**
- *
- * @author wuzilong et zoukang
+ * The class {Personnage} represents a human being in the world, 
+ * 
+ * 
+ * @author Wu Zilong 
+ * @author Zou Kang
  */
 public class Personnage extends Creature {
-
+    
+    /**
+     * Le nom de Personnnage
+     */
     private String nom;
-
-    private int distAttMax = 3;
+    /**
+     * 
+     */
+    private int distAttMax = 10;
+    
+    private Vector<PotionSoin> potionsoin = new Vector();//存放药水
+    
+    //找到药水加入背包
+    public void TrouPotion(PotionSoin p){
+        if(p instanceof PotionSoin){
+            potionsoin.add(p);
+        }
+    }
+       
+    //使用药水
+    public void usagePotion(PotionSoin p){
+        if(potionsoin.size() == 0){
+            System.out.println("no potion for use!");
+            return;
+        }
+        potionsoin.remove(p);
+        p=null;
+    }
 
     public Personnage(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
@@ -26,9 +54,19 @@ public class Personnage extends Creature {
     public Personnage(String nom) {
         this.nom = nom;
     }
-    
-    
 
+    
+ 
+
+    public Vector<PotionSoin> getPotionsoin() {
+        return potionsoin;
+    }
+
+    public void setPotionsoin(Vector<PotionSoin> potionsoin) {
+        this.potionsoin = potionsoin;
+    }
+    
+    
     
 /**
  * 
@@ -48,14 +86,7 @@ public class Personnage extends Creature {
 
     }
 
-//    public void affiche() {
-//        System.out.println("================================");
-//        System.out.printf("les information du Personnage: \n");
-//        System.out.printf("nom: " + nom + "\ndistAttMax" + distAttMax + "ptVie: " + ptVie + "\ndegAtt: " + degAtt + "\nptPar: "
-//                + ptPar + "\npageAtt: " + pageAtt + "\npagePar: " + pagePar + "\npos: " + pos + "\n");
-//
-//    }
-        
+ 
 /**
  * @return String
  * @param perso
@@ -78,7 +109,7 @@ public class Personnage extends Creature {
     
     
     public void affiche(){
-        System.out.printf("nom=" + nom + ",distAttMax=" + distAttMax);
+        System.out.print("nom=" + nom + ",distAttMax=" + distAttMax);
         super.affiche();
     }
 

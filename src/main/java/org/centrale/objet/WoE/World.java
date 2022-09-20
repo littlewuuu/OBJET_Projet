@@ -17,7 +17,7 @@ public class World {
     public Archer robin;
     public Paysan peon;
     public Lapin bugs1;
-    public Lapin bugs2; //new
+    public Lapin bugs2; //new 
     public Archer guillaumeT;
     public Guerrier grosBill;//new
     public Loup wolfie;//new
@@ -34,19 +34,17 @@ public class World {
     }
 
     public void creerMondeAlea() {
-        
+
         bugs1 = new Lapin();
         bugs2 = new Lapin();
-        
-      robin = new Archer("robin");
-       peon = new Paysan("peon");
-       
-         
-        grosBill = new Guerrier();
-         
+
+        robin = new Archer("robin");
+        peon = new Paysan("peon");
+
+        grosBill = new Guerrier("grosBill");
+
         wolfie = new Loup();
-        
-        
+
         Random generateurAleatoire = new Random();
         Point2D points[] = new Point2D[6];
 
@@ -59,7 +57,7 @@ public class World {
         while (i < 6) {
             X = generateurAleatoire.nextInt(100) - 50;
             Y = generateurAleatoire.nextInt(100) - 50;
-            for (int j = 0; j < i; j++) {   
+            for (int j = 0; j < i; j++) {
                 if (X == points[j].getX() && Y == points[j].getX()) {
                     break;
                 }
@@ -79,21 +77,25 @@ public class World {
 
         guillaumeT = new Archer(robin);
         guillaumeT.setNom("guillaumeT");
-        
 
         robin.deplace();
-        System.out.println("--------------attack----------");
-        
-        bugs1.setPos(new Point2D(grosBill.getPos().getX()+1,grosBill.getPos().getY()));
-        bugs1.affiche();
-        grosBill.affiche();
-        grosBill.combattre(bugs1);
-        bugs1.affiche();
-        System.out.println("--------------fin de attack----------");
 
+        //测试药水
+        System.out.println("================test potion================");
+        PotionSoin potion1 = new PotionSoin();
+        PotionSoin potion2 = new PotionSoin();
+        robin.getPotionsoin().add(potion1);
+        robin.getPotionsoin().add(potion2);
+        System.out.println("nombre de potion de robin: " + robin.getPotionsoin().size());
+        System.out.println("consumer 1 potion");
+        robin.usagePotion(potion2);
+        System.out.println("nombre de potion de robin: " + robin.getPotionsoin().size());
+        System.out.println("consumer 1 potion");
+        robin.usagePotion(potion1);
+        System.out.println("nombre de potion de robin: " + robin.getPotionsoin().size());
+        robin.usagePotion(potion1);
+        System.out.println("================fin de test potion================");
         
-        
-
     }
 
 }

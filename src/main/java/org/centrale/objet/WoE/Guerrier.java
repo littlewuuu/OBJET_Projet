@@ -13,8 +13,7 @@ import java.util.Random;
  */
 public class Guerrier extends Personnage {
 
-    private Epee epee = new Epee(10);//伤害 10
-
+    private Epee epee = new Epee(8);//伤害 8
     public Guerrier(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(nom, ptVie, degAtt, ptPar, pageAtt, pagePar, distAttMax, pos);
     }
@@ -22,7 +21,11 @@ public class Guerrier extends Personnage {
     public Guerrier(Personnage perso) {
         super(perso);
     }
-
+    
+    public Guerrier(String name){
+        super(name);
+    }
+    
     public Guerrier() {
     }
 
@@ -57,6 +60,7 @@ public class Guerrier extends Personnage {
     }
 
     public void affiche() {
+        System.out.println("Guerrier: ");
         super.affiche();
     }
 

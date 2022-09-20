@@ -51,5 +51,6 @@ public class TestPoint2D {
         System.out.println("distance entre p1 et p3 " + p1.distance(p3) );
         
     }
-    
+     
 }
+
