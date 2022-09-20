@@ -10,6 +10,7 @@ import java.util.Random;
 /**
  *
  * @author wuzilong
+ * @author zoukang
  */
 public class Creature {
 
