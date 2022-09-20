@@ -20,7 +20,7 @@ public class Monstre extends Creature {
     /**
      * Initializes a newly created Monstre object, so that it represents
      * the same values of characters as the argument.
-     * @param ptVie
+     * @param ptVie represent 
      * @param degAtt
      * @param ptPar            
      * @param pageAtt

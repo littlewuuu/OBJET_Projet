@@ -63,8 +63,9 @@ public class Archer extends Personnage {
 
     public void affiche() {
         System.out.println("Archer: ");
-        System.out.printf("nbFleche=" + nbFleche);
+        
         super.affiche();
+        //System.out.println("nbFleche=" + nbFleche+" ");
     }
 
 }

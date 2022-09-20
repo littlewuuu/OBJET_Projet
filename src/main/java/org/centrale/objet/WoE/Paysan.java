@@ -23,6 +23,7 @@ public class Paysan extends Personnage{
         super();
     }
     public void affiche(){
+        System.out.println("Paysan: ");
         super.affiche();
     }
     public Paysan(String name){

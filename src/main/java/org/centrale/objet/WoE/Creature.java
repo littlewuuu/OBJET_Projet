@@ -98,11 +98,9 @@ public class Creature {
         do {
             x = generateRandom.nextInt(2);
             y = generateRandom.nextInt(2);
-
             if (x != 0 || y != 0) {
                 break;
             }
-
         } while (true);
 
         pos.translate(x, y);

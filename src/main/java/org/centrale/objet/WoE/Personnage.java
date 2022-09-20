@@ -70,7 +70,7 @@ public class Personnage extends Creature {
     
 /**
  * 
- * @param perso
+ * @param perso Another Personnage type for initialization
  */
     public Personnage(Personnage perso) {
         this.nom = perso.nom;
@@ -88,8 +88,7 @@ public class Personnage extends Creature {
 
  
 /**
- * @return String
- * @param perso
+ * @return String 
  */
     public String getNom() {
         return nom;
@@ -109,7 +108,7 @@ public class Personnage extends Creature {
     
     
     public void affiche(){
-        System.out.print("nom=" + nom + ",distAttMax=" + distAttMax);
+        System.out.print("nom=" + nom + ",distAttMax=" + distAttMax+" ");
         super.affiche();
     }
 
