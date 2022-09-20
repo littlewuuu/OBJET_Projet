@@ -11,7 +11,7 @@ package org.centrale.objet.WoE;
  */
 public class PotionSoin extends Objet{
     private int recover = 5;
-    private int state = 1; //标记是否被消耗 0-使用过消失 1-未使用
+   
 
         
     public PotionSoin(){}
@@ -33,13 +33,7 @@ public class PotionSoin extends Objet{
         this.recover = recover;
     }
 
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
+ 
     
     
 }

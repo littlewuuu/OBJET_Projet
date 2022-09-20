@@ -11,8 +11,19 @@ package org.centrale.objet.WoE;
  */
 public class Objet {
     
-    private int life;
-    private int valeur; 
+    private int life; //durée d'utilisation
+    private int valeur; //combien cela coûte-t-il d'acheter
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
 
     public Objet(int life, int valeur) {
         this.life = life;

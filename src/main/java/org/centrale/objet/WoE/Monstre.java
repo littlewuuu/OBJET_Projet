@@ -20,19 +20,19 @@ public class Monstre extends Creature {
     /**
      * Initializes a newly created Monstre object, so that it represents
      * the same values of characters as the argument.
-     * @param ptVie represent 
-     * @param degAtt
-     * @param ptPar            
-     * @param pageAtt
-     * @param pagePar
-     * @param pos 
+     * @param ptVie represents life value 
+     * @param degAtt Valeur des dommages
+     * @param ptPar points de parade du défenseur
+     * @param pageAtt pourcentages d’attaque
+     * @param pagePar Probabilité de défense
+     * @param pos Position de Monstre
      */
     public Monstre(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
     }
     /**
      * Initializes a newly created Monstre object by another Monstre objet m
-     * @param m 
+     * @param m Another Monstre type for initialization
      */
     public Monstre(Creature m) {
         super(m);

@@ -34,6 +34,7 @@ public class Creature {
         this.pageAtt = m.pageAtt;
         this.pagePar = m.pagePar;
         this.pos = new Point2D(m.pos);
+        //this.pos = m.pos;
         this.ptPar = m.ptPar;
         this.ptVie = m.ptVie;
     }
@@ -91,6 +92,11 @@ public class Creature {
         this.pos = new Point2D(pos);
     }
 
+    /**
+     * Il s'agit d'une fonction qui se déplace de manière aléatoire dans 
+     * huit directions autour de la zone, en utilisant un nombre aléatoire 
+     * pour déterminer la direction du mouvement.
+     */
     public void deplace() {
         Random generateRandom = new Random();
         int x, y;

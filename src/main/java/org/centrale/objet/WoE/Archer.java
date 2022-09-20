@@ -32,6 +32,13 @@ public class Archer extends Personnage {
         super(name);
     }
 
+    
+    /**
+     * Il s'agit d'un système de combat pour combattre une autre créature. 
+     * Il reconnaît les attaques à distance ou les combats de mêlée et simule la 
+     * probabilité de toucher et de se défendre au moyen de nombres aléatoires.
+     * @param c Creature
+     */
     void combattre(Creature c) {
         Random generateRandom = new Random();
         int randatt = generateRandom.nextInt(100) + 1;
@@ -63,9 +70,9 @@ public class Archer extends Personnage {
 
     public void affiche() {
         System.out.println("Archer: ");
-        
+        System.out.println("nbFleche=" + nbFleche+" ");
+
         super.affiche();
-        //System.out.println("nbFleche=" + nbFleche+" ");
     }
 
 }
