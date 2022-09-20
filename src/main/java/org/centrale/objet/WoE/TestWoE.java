@@ -28,28 +28,28 @@ public class TestWoE {
         myworld.guillaumeT.affiche();
         myworld.robin.affiche();
 
-        //测试近战
-        System.out.println("================test attaquer================");
+        //test combat contact
+        System.out.println("================test combat contact================");
         myworld.bugs1.setPos(new Point2D(myworld.grosBill.getPos().getX() + 1, myworld.grosBill.getPos().getY()));
-        System.out.println("----------------avant attaquer----------------");
+        System.out.println("----------------avant----------------");
         myworld.bugs1.affiche();
         myworld.grosBill.affiche();
         myworld.grosBill.combattre(myworld.bugs1);
-        System.out.println("----------------apres attaquer----------------");
+        System.out.println("----------------apres----------------");
         myworld.bugs1.affiche();
-        System.out.println("================fin de attaquer================");
+        System.out.println("================fin de combat contact================");
 
-        //测试远战
-        System.out.println("================test attaquer distance================");
+        //test combat a distance
+        System.out.println("================test combat a distance================");
         myworld.bugs2.setPos(new Point2D(myworld.robin.getPos().getX() + 5, myworld.robin.getPos().getY() + 5));
-        System.out.println("----------------avant attaquer----------------");
+        System.out.println("----------------avant----------------");
         myworld.bugs2.affiche();
         myworld.robin.affiche();
         myworld.robin.combattre(myworld.bugs2);
-        System.out.println("----------------apres attaquer----------------");
+        System.out.println("----------------apres----------------");
         myworld.bugs2.affiche();
         myworld.robin.affiche();
-        System.out.println("================fin test attaquer distance================");
+        System.out.println("================fin test combat a distance================");
 
     }
 }

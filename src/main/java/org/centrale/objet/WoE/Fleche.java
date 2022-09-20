@@ -10,7 +10,8 @@ package org.centrale.objet.WoE;
  * @author wuzilong
  */
 public class Fleche extends Objet {
-    private int dommage;
+    //Injuries caused by Fleche
+    private int dommage= 4;
 
     public Fleche(int dommage, int life, int valeur) {
         super(life, valeur);
