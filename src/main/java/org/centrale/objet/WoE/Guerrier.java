@@ -29,6 +29,12 @@ public class Guerrier extends Personnage {
     public Guerrier() {
     }
 
+    /**
+     * Il s'agit d'un système de combat pour combattre une autre créature. 
+     * Il reconnaît les attaques à distance ou les combats de mêlée et simule la 
+     * probabilité de toucher et de se défendre au moyen de nombres aléatoires.
+     * @param c Creature
+     */
     void combattre(Creature c) {
         Random generateRandom = new Random();
         int randatt = generateRandom.nextInt(100) + 1;
@@ -37,13 +43,13 @@ public class Guerrier extends Personnage {
         if (distance == 1) {
             if (randatt > c.getPageAtt()) {//rate
             } else {//reussie
-                if (randdef > c.getPagePar()) { //防御失败
-                    c.setPtVie(c.getPtVie() - this.getDegAtt());
-                } else {//防御成功
-                    c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
+                if (randdef > c.getPagePar()) {  
+                    c.setPtVie(c.getPtVie() - this.epee.getDommage()); //on utilise le dommage de epee 
+                } else { 
+                    c.setPtVie(c.getPtVie() - this.epee.getDommage()+ c.getPtPar());
                 }
             }
-        } else if (distance > 1 && distance < this.getDistAttMax()) { //远距离攻击
+        } else if (distance > 1 && distance < this.getDistAttMax()) { //conbattre a distance
 
             int randdis = generateRandom.nextInt(100) + 1;
             if (randdis > this.getPageAtt()) {

@@ -27,7 +27,21 @@ public class TestWoE {
 
         myworld.guillaumeT.affiche();
         myworld.robin.affiche();
-
+        
+        System.out.println("================test deplace================");
+        System.out.println("----------------avant deplace:----------------");
+        myworld.robin.affiche();
+        myworld.peon.affiche();
+        myworld.bugs1.affiche();
+        System.out.println("----------------apres deplace:----------------");
+        myworld.robin.deplace();
+        myworld.peon.deplace();
+        myworld.bugs1.deplace();
+        myworld.robin.affiche();
+        myworld.peon.affiche();
+        myworld.bugs1.affiche();
+        System.out.println("================fin test deplace================");
+        
         //test combat contact
         System.out.println("================test combat contact================");
         myworld.bugs1.setPos(new Point2D(myworld.grosBill.getPos().getX() + 1, myworld.grosBill.getPos().getY()));
