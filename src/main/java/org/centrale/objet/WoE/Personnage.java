@@ -83,6 +83,10 @@ public class Personnage extends Creature {
         this.distAttMax = distAttMax;
 
     }
+    
+    public Personnage(Point2D p){
+        super(p);
+    }
 
     /**
      *

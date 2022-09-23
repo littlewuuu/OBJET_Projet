@@ -18,6 +18,7 @@ public class TestWoE {
         World myworld = new World();
         myworld.creerMondeAlea();
 
+        /*
         myworld.robin.affiche();
         myworld.peon.affiche();
         myworld.bugs1.affiche();
@@ -64,6 +65,6 @@ public class TestWoE {
         myworld.bugs2.affiche();
         myworld.robin.affiche();
         System.out.println("================fin test combat a distance================");
-
+        */
     }
 }

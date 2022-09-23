@@ -19,6 +19,9 @@ public class Paysan extends Personnage{
         super(p);
     }
     
+    public Paysan(Point2D p){
+        super(p);
+    }
     public Paysan() {
         super();
     }

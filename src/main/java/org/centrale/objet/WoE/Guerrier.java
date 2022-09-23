@@ -28,7 +28,10 @@ public class Guerrier extends Personnage {
     
     public Guerrier() {
     }
-
+    
+    public Guerrier(Point2D p){
+        super(p);
+    }
     /**
      * Il s'agit d'un système de combat pour combattre une autre créature. 
      * Il reconnaît les attaques à distance ou les combats de mêlée et simule la 

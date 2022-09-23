@@ -22,6 +22,10 @@ public class Lapin extends Monstre {
     public Lapin() {
     }
     
+    public Lapin(Point2D p){
+        super(p);
+    }
+    
      public void affiche(){
          System.out.println("Lapin:");
         super.affiche();

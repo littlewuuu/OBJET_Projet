@@ -32,6 +32,9 @@ public class Archer extends Personnage {
         super(name);
     }
 
+    public Archer(Point2D p){
+        super(p);
+    }
     
     /**
      * Il s'agit d'un système de combat pour combattre une autre créature. 

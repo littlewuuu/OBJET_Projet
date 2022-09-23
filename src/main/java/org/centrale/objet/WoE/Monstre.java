@@ -38,6 +38,11 @@ public class Monstre extends Creature {
         super(m);
     }
 
+    
+    public Monstre(Point2D p){
+        super(p);
+    }
+    
     /**
      * Initializes a newly created Monstre object so that all the attributes are 0 or null.
      */

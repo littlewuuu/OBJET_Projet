@@ -40,6 +40,10 @@ public class Creature {
         this.ptVie = m.ptVie;
     }
     
+    public Creature(Point2D p){
+        this.pos = new Point2D(p);
+    }
+    
  
     public Creature() {
 

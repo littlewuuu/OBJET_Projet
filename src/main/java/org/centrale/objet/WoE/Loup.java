@@ -29,6 +29,11 @@ public class Loup extends Monstre{
     public Loup() {
     }
     
+    
+    public Loup(Point2D p){
+        super(p);
+    }
+    
         
  void combattre(Creature c) {
         Random generateRandom = new Random();
