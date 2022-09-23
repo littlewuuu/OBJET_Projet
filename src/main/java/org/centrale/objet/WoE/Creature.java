@@ -109,12 +109,13 @@ public class Creature {
         do {
             x = generateRandom.nextInt(2);
             y = generateRandom.nextInt(2);
-            if (x != 0 || y != 0) {
+            if ((x != 0 || y != 0 )&& World.getOCCUPIED(this.getPos().getX() + x,this.getPos().getY()+y)==0) {
                 break;
             }
         } while (true);
-
+        World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), 0);
         pos.translate(x, y);
+        World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), 1);
     }
 
 
