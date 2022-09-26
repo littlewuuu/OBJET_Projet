@@ -13,9 +13,13 @@ import java.util.Random;
  */
 public class Loup extends Monstre{
     
-    //狼的最远攻击距离，新增
+    /**
+     * The longest distance a Loup can reach.
+     */
     private int distAttMax = 5;
-    //狼的伤害
+    /**
+     * The damage that wolves can do.
+     */
     private int Att = 5;
 
     public Loup(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
@@ -34,22 +38,25 @@ public class Loup extends Monstre{
         super(p);
     }
     
-        
- void combattre(Creature c) {
+    /**
+     * Attack a creature according to the position of the target,
+     * @param c Target creature of the attack.
+     */    
+    void combattre(Creature c) {
         Random generateRandom = new Random();
         int randatt = generateRandom.nextInt(100) + 1;
         int randdef = generateRandom.nextInt(100) + 1;
         double distance = Point2D.distance(this.getPos().getX(), this.getPos().getY(), c.getPos().getX(), c.getPos().getY());
-        if (distance == 1) {//近战
+        if (distance == 1) {//combat contact
             if (randatt > c.getPageAtt()) {//rate 没集击中
-            } else {//击中
+            } else {//success
                 if (randdef > c.getPagePar()) { //防御失败
                     c.setPtVie(c.getPtVie() - this.getDegAtt());
                 } else {//防御成功
                     c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
                 }
             }
-        } else if (distance > 1 && distance < this.distAttMax) { //远距离攻击
+        } else if (distance > 1 && distance < this.distAttMax) { //combat a distance
 
             int randdis = generateRandom.nextInt(100) + 1;
             if (randdis > this.getPageAtt()) {
