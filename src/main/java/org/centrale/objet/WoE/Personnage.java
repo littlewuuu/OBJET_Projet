@@ -38,7 +38,7 @@ public class Personnage extends Creature {
      * when find a potion type, put into knapsack We will first check if the
      * input parameter is a potion class, if yes, put into knapsack
      *
-     * @param p
+     * @param p instance of Potion Soin
      */
     public void TrouPotion(PotionSoin p) {
         if (p instanceof PotionSoin) {
@@ -47,12 +47,13 @@ public class Personnage extends Creature {
     }
 
     //使用药水
+
     /**
      * The process of using potion first, we will check whether there is potion
      * in Knapsack, if no, program will printout "no potion" if yes, potion will
      * be moved out of knapsack, and set as null to be collect as garbage
      *
-     * @param p
+     * @param p instance of Potion Soin
      */
     public void usagePotion(PotionSoin p) {
         if (potionsoin.size() == 0) {
@@ -68,14 +69,14 @@ public class Personnage extends Creature {
      * Initializes a newly created Personnage object, so that it represents the
      * same values of characters as the argument.
      *
-     * @param nom
-     * @param ptVie
-     * @param degAtt points of attack
-     * @param ptPar points of defence
-     * @param pageAtt pourcentageAtt
-     * @param pagePar pourcentagePar
+     * @param nom        name of person
+     * @param ptVie      points of life
+     * @param degAtt     points of attack
+     * @param ptPar      points of defence
+     * @param pageAtt    pourcentageAtt
+     * @param pagePar    pourcentagePar
      * @param distAttMax longest distance it can attack
-     * @param pos
+     * @param pos        position, class of class 2D
      */
     public Personnage(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
@@ -83,17 +84,16 @@ public class Personnage extends Creature {
         this.distAttMax = distAttMax;
 
     }
-    
-    public Personnage(Point2D p){
+
+    public Personnage(Point2D p) {
         super(p);
     }
 
     /**
-     *
      * Initializes a newly created Personnage object by one name So we just set
      * the name of the person
      *
-     * @param nom
+     * @param nom name of person
      */
     public Personnage(String nom) {
         this.nom = nom;
@@ -113,7 +113,7 @@ public class Personnage extends Creature {
      * set a person's knapsack of potion with a knapsack's potion. So we can see
      * it's a vector
      *
-     * @param potionsoin
+     * @param potionsoin a list of PotionSoin(vector)
      */
     public void setPotionsoin(Vector<PotionSoin> potionsoin) {
         this.potionsoin = potionsoin;
@@ -123,7 +123,7 @@ public class Personnage extends Creature {
      * Initializes a person with a person object we use the object's name and
      * disAttMax to initialize the new object
      *
-     * @param perso
+     * @param perso an instance of person
      */
     public Personnage(Personnage perso) {
         super(perso);
@@ -136,7 +136,6 @@ public class Personnage extends Creature {
 
     /**
      * Initialize a person without parameter
-     *
      */
     public Personnage() {
         super();
@@ -157,7 +156,7 @@ public class Personnage extends Creature {
     /**
      * Set name of a person
      *
-     * @param nom
+     * @param nom name of person
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -175,7 +174,7 @@ public class Personnage extends Creature {
     /**
      * Set disAttMax
      *
-     * @param distAttMax
+     * @param distAttMax int, max attack distance
      */
     public void setDistAttMax(int distAttMax) {
         this.distAttMax = distAttMax;

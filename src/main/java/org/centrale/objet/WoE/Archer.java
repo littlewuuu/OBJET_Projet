@@ -8,38 +8,69 @@ package org.centrale.objet.WoE;
 import java.util.Random;
 
 /**
- *
  * @author wuzilong et zoukang
  */
 public class Archer extends Personnage {
 
+
     private Fleche fleche = new Fleche(10);
     private int nbFleche = 10;
 
+    /**
+     * initial Archer
+     *
+     * @param nom        name
+     * @param ptVie      point of life
+     * @param degAtt     points of attack
+     * @param ptPar      points of defence
+     * @param pageAtt    percentage of att
+     * @param pagePar    percentage of par
+     * @param distAttMax max att distance
+     * @param pos        position
+     */
     public Archer(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(nom, ptVie, degAtt, ptPar, pageAtt, pagePar, distAttMax, pos);
     }
 
+    /**
+     * Use an Archer to initial an Archer
+     *
+     * @param a an instance of Archer
+     */
     public Archer(Archer a) {
         super(a);
     }
 
+    /**
+     * Initial an Archer without parameter
+     */
     public Archer() {
         super();
     }
 
+    /**
+     * Initial Archer with name
+     *
+     * @param name name of Archer
+     */
     public Archer(String name) {
         super(name);
     }
 
-    public Archer(Point2D p){
+    /**
+     * initial with position
+     *
+     * @param p position, Class of Point2D
+     */
+    public Archer(Point2D p) {
         super(p);
     }
-    
+
     /**
-     * Il s'agit d'un système de combat pour combattre une autre créature. 
-     * Il reconnaît les attaques à distance ou les combats de mêlée et simule la 
+     * Il s'agit d'un système de combat pour combattre une autre créature.
+     * Il reconnaît les attaques à distance ou les combats de mêlée et simule la
      * probabilité de toucher et de se défendre au moyen de nombres aléatoires.
+     *
      * @param c Creature
      */
     void combattre(Creature c) {
@@ -71,9 +102,12 @@ public class Archer extends Personnage {
         }
     }
 
+    /**
+     * print out information of archer
+     */
     public void affiche() {
         System.out.println("Archer: ");
-        System.out.println("nbFleche=" + nbFleche+" ");
+        System.out.println("nbFleche=" + nbFleche + " ");
 
         super.affiche();
     }
