@@ -8,6 +8,7 @@ package org.centrale.objet.WoE;
 /**
  *
  * @author wuzilong
+ * @author Zou Kang
  */
 public class Epee extends Objet{
     private int dommage;
@@ -23,7 +24,11 @@ public class Epee extends Objet{
         this.dommage = dommage;
     }
     
-    //放伤害
+  
+    /**
+     * Dealing damage to a creature.
+     * @param c creature target
+     */
     public void Blesser(Creature c){
         c.setPtVie(c.getPtVie()-dommage);
     }

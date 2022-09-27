@@ -8,7 +8,7 @@ package org.centrale.objet.WoE;
 import java.util.*;
 
 /**
- * The class {Personnage} represents a human being in the world Under this
+ * The class {@Personnage} represents a human being in the world Under this
  * Superclass, we can find subclasses such as warrior, archer, etc. This class
  * has features such as the ability to move, attack and use items.
  *
