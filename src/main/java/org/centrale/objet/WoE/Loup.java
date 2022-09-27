@@ -10,6 +10,7 @@ import java.util.Random;
 /**
  *
  * @author wuzilong
+ * @author Zou Kang
  */
 public class Loup extends Monstre{
     
@@ -17,6 +18,7 @@ public class Loup extends Monstre{
      * The longest distance a Loup can reach.
      */
     private int distAttMax = 5;
+    
     /**
      * The damage that wolves can do.
      */
@@ -42,8 +44,8 @@ public class Loup extends Monstre{
      * Attack a creature according to the position of the target.
      * If the distance is 1, then it is melee, otherwise it is long range.
      * For each type of combat, we have a certain probability that the attack will fail, 
-    * and if it fails, there is no damage. After a successful attack. The target object has 
-    * a certain chance to succeed in defense, and if it succeeds, the damage is cut.
+     * and if it fails, there is no damage. After a successful attack. The target object has 
+     * a certain chance to succeed in defense, and if it succeeds, the damage is cut.
      * @param c Target creature of the attack.
      */    
     void combattre(Creature c) {

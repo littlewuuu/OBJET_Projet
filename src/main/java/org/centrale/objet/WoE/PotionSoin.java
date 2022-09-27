@@ -8,19 +8,24 @@ package org.centrale.objet.WoE;
 /**
  *
  * @author wuzilong
+ * @author Zou Kang
  */
 public class PotionSoin extends Objet{
+    /**
+     * The number of life points that can be restored by the PotionSoin.
+     */
     private int recover = 5;
    
-
-        
     public PotionSoin(){}
     public PotionSoin(int recouver, int life, int valeur) {
         super(life, valeur);
         this.recover = recouver;
     }
     
-    //补充生命值
+    /**
+     * Recovery of life value.
+     * @param c Target of recovery
+     */
     public void Guerir(Creature c){
         c.setPtVie(c.getPtVie()+recover);
     }

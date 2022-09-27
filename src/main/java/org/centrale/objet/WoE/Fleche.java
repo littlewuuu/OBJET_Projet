@@ -8,9 +8,12 @@ package org.centrale.objet.WoE;
 /**
  *
  * @author wuzilong
+ * @author Zou Kang
  */
 public class Fleche extends Objet {
-    //Injuries caused by Fleche
+    /**
+     * Injuries caused by Fleche
+     */
     private int dommage= 4;
 
     public Fleche(int dommage, int life, int valeur) {

@@ -11,8 +11,15 @@ package org.centrale.objet.WoE;
  */
 public class Objet {
     
-    private int life; //durée d'utilisation
-    private int valeur; //combien cela coûte-t-il d'acheter
+    /**
+     * Durée d'utilisation
+     */
+    private int life; 
+    
+    /**
+     * combien cela coûte-t-il d'acheter
+     */
+    private int valeur; 
     private String name;
 
     public String getName() {

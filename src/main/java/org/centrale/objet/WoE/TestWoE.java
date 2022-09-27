@@ -9,7 +9,8 @@ import java.util.Random;
 
 /**
  *
- * @author wuzilong et zoukang
+ * @author wuzilong 
+ * @author Zou Kang
  */
 public class TestWoE {
 

@@ -6,23 +6,39 @@
 package org.centrale.objet.WoE;
 
 /**
- *
  * @author wuzilong
  * @author Zou Kang
  */
-public class Epee extends Objet{
+public class Epee extends Objet {
     private int dommage;
-    
-    public Epee(){}
 
+    /**
+     * Initialize.
+     */
+    public Epee() {
+    }
+
+    /**
+     * Initialize
+     *
+     * @param dommage point of hurt
+     * @param life    points of life
+     * @param valeur  price
+     */
     public Epee(int dommage, int life, int valeur) {
         super(life, valeur);
         this.dommage = dommage;
     }
-    
+
+    /**
+     * Initialize
+     *
+     * @param dommage int
+     */
     public Epee(int dommage) {
         this.dommage = dommage;
     }
+
     
   
     /**
@@ -32,13 +48,22 @@ public class Epee extends Objet{
     public void Blesser(Creature c){
         c.setPtVie(c.getPtVie()-dommage);
     }
-
-    public int getDommage() {
+        
+    /**
+     * Get dommage.
+     * @return int dommage
+     */
+    public int getDommage(){
         return dommage;
     }
 
+    /**
+     * Set dommage.
+     *
+     * @param dommage, int
+     */
     public void setDommage(int dommage) {
         this.dommage = dommage;
     }
-    
+
 }

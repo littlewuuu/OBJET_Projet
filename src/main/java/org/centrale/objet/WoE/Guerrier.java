@@ -9,11 +9,12 @@ import java.util.Random;
 
 /**
  *
- * @author wuzilong et zoukang
+ * @author wuzilong
+ * @author Zou Kang
  */
 public class Guerrier extends Personnage {
 
-    private Epee epee = new Epee(8);//伤害 8
+    private Epee epee = new Epee(8);
     public Guerrier(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(nom, ptVie, degAtt, ptPar, pageAtt, pagePar, distAttMax, pos);
     }

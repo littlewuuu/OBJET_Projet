@@ -8,7 +8,7 @@ package org.centrale.objet.WoE;
 import java.util.*;
 
 /**
- * The class {@Personnage} represents a human being in the world Under this
+ * The class Personnage represents a human being in the world Under this
  * Superclass, we can find subclasses such as warrior, archer, etc. This class
  * has features such as the ability to move, attack and use items.
  *
@@ -19,26 +19,26 @@ import java.util.*;
 public class Personnage extends Creature {
 
     /**
-     * The name of a person
+     * The name of a person.
      */
     private String nom;
 
     /**
-     * Longest attack distance， default as 10
+     * Longest attack distance， default as 10.
      */
     private int distAttMax = 50;
 
     /**
      * A vector of PotionSoin, Considering that a person can carry several
-     * bottles of potion, we set it as a vector type
+     * bottles of potion, we set it as a vector type.
      */
-    private Vector<PotionSoin> potionsoin = new Vector();//存放药水
+    private Vector<PotionSoin> potionsoin = new Vector();
 
     /**
-     * when find a potion type, put into knapsack We will first check if the
-     * input parameter is a potion class, if yes, put into knapsack
+     * When find a potion type, put into knapsack We will first check if the
+     * input parameter is a potion class, if yes, put into knapsack.
      *
-     * @param p
+     * @param p instance of Potion Soin
      */
     public void TrouPotion(PotionSoin p) {
         if (p instanceof PotionSoin) {
@@ -46,13 +46,13 @@ public class Personnage extends Creature {
         }
     }
 
-    //使用药水
+
     /**
      * The process of using potion first, we will check whether there is potion
      * in Knapsack, if no, program will printout "no potion" if yes, potion will
-     * be moved out of knapsack, and set as null to be collect as garbage
+     * be moved out of knapsack, and set as null to be collect as garbage.
      *
-     * @param p
+     * @param p instance of PotionSoin
      */
     public void usagePotion(PotionSoin p) {
         if (potionsoin.size() == 0) {
@@ -68,14 +68,14 @@ public class Personnage extends Creature {
      * Initializes a newly created Personnage object, so that it represents the
      * same values of characters as the argument.
      *
-     * @param nom
-     * @param ptVie
-     * @param degAtt points of attack
-     * @param ptPar points of defence
-     * @param pageAtt pourcentageAtt
-     * @param pagePar pourcentagePar
+     * @param nom        name of person
+     * @param ptVie      points of life
+     * @param degAtt     points of attack
+     * @param ptPar      points of defense
+     * @param pageAtt    pourcentageAtt
+     * @param pagePar    pourcentagePar
      * @param distAttMax longest distance it can attack
-     * @param pos
+     * @param pos        position, class of class 2D
      */
     public Personnage(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
@@ -83,37 +83,35 @@ public class Personnage extends Creature {
         this.distAttMax = distAttMax;
 
     }
-    
-    public Personnage(Point2D p){
+
+    public Personnage(Point2D p) {
         super(p);
     }
 
     /**
-     *
      * Initializes a newly created Personnage object by one name So we just set
-     * the name of the person
+     * the name of the person.
      *
-     * @param nom
+     * @param nom name of person
      */
     public Personnage(String nom) {
         this.nom = nom;
     }
 
     /**
-     * get potionsoin of a class of person
+     * Get PotionSoin of a class of person
      *
-     * @return a vector of PotionSoin, PotionSoin is a class of potion, potion
-     * were stored in it
+     * @return a vector of PotionSoin, PotionSoin is a class of potion, potion were stored in it.
      */
     public Vector<PotionSoin> getPotionsoin() {
         return potionsoin;
     }
 
     /**
-     * set a person's knapsack of potion with a knapsack's potion. So we can see
-     * it's a vector
+     * Set a person's knapsack of potion with a knapsack's potion. 
+     * So we can see it's a vector
      *
-     * @param potionsoin
+     * @param potionsoin a list of PotionSoin(vector)
      */
     public void setPotionsoin(Vector<PotionSoin> potionsoin) {
         this.potionsoin = potionsoin;
@@ -121,9 +119,9 @@ public class Personnage extends Creature {
 
     /**
      * Initializes a person with a person object we use the object's name and
-     * disAttMax to initialize the new object
+     * disAttMax to initialize the new object.
      *
-     * @param perso
+     * @param perso an instance of person
      */
     public Personnage(Personnage perso) {
         super(perso);
@@ -131,12 +129,11 @@ public class Personnage extends Creature {
         this.distAttMax = perso.distAttMax;
         // public Creature(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos)
 
-//this.setPos(new Point2D(perso.getPos()));
+        //this.setPos(new Point2D(perso.getPos()));
     }
 
     /**
-     * Initialize a person without parameter
-     *
+     * Initialize a person without parameter.
      */
     public Personnage() {
         super();
@@ -157,7 +154,7 @@ public class Personnage extends Creature {
     /**
      * Set name of a person
      *
-     * @param nom
+     * @param nom name of person
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -175,14 +172,14 @@ public class Personnage extends Creature {
     /**
      * Set disAttMax
      *
-     * @param distAttMax
+     * @param distAttMax int, max attack distance
      */
     public void setDistAttMax(int distAttMax) {
         this.distAttMax = distAttMax;
     }
 
     /**
-     * print out the attribute of one person, name, disAttMax and so on
+     * Print out the attribute of one person, name, disAttMax and so on.
      */
     public void affiche() {
         System.out.print("nom=" + nom + ",distAttMax=" + distAttMax + " ");
