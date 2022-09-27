@@ -28,7 +28,7 @@ public class World {
     /**
      * The size of the World : TAILLE x TAILLE.
      */
-    private final static int TAILLE = 1000;
+        private final static int TAILLE = 1000;
 
     /**
      * To identify if a coordinate is occupied, 0 stands for non occupied and 1 stands for occupied.
@@ -141,10 +141,8 @@ public class World {
             creatures.add(a);
         }
 
-        System.out.println("nbArcher: " + nbArchers);
-        for (Creature i : creatures) {
-            i.affiche();
-        }
+        System.out.println("the number of creature in creatures: " +  creatures.size());
+        
 
         long debut = System.nanoTime();
 
@@ -157,9 +155,10 @@ public class World {
 
         System.out.println("sumPtVie: " + sumPtVie);
 
-        
-        testTimeArrayList();
-        testTimeLinkedList();
+        testDeplacement();
+//        
+//        testTimeArrayList();
+//        testTimeLinkedList();
         
     }
     
@@ -208,17 +207,18 @@ public class World {
     }
     
     /**
-     * To test if the function deplace of the class Creature works well.
+     * To test if the function {@code Creature#deplace} of the class Creature works well.
      */
     public void testDeplacement(){
         System.out.println("=============test deplacement: =============");
-        System.out.println("position now:");
+        System.out.println("persent position:");
         creatures.get(0).affiche();
-        System.out.print("table OCCUPIED now: ");
+        System.out.print("state of persent table OCCUPIED [" +creatures.get(0).getPos().getX()+" "+ creatures.get(0).getPos().getY()+"]: ");
         System.out.println(OCCUPIED[creatures.get(0).getPos().getX()][creatures.get(0).getPos().getY()]);
-        System.out.print("table OCCUPIED to move: ");
+        System.out.print("state of table OCCUPIED to move: ");
         System.out.println(OCCUPIED[creatures.get(0).getPos().getX() + 1][creatures.get(0).getPos().getY() + 1]);
 
+        //We surround the seven directions of A, leaving only one exit 
         creatures.get(1).setPos(new Point2D(creatures.get(0).getPos().getX() + 1, creatures.get(0).getPos().getY()));
         setOCCUPIED(creatures.get(0).getPos().getX() + 1, creatures.get(0).getPos().getY(), 1);
         creatures.get(2).setPos(new Point2D(creatures.get(0).getPos().getX() + 1, creatures.get(0).getPos().getY() - 1));
@@ -233,14 +233,15 @@ public class World {
         setOCCUPIED(creatures.get(0).getPos().getX() - 1, creatures.get(0).getPos().getY() + 1, 1);
         creatures.get(7).setPos(new Point2D(creatures.get(0).getPos().getX(), creatures.get(0).getPos().getY() + 1));
         setOCCUPIED(creatures.get(0).getPos().getX(), creatures.get(0).getPos().getY() + 1, 1);
-
+        
+        
         creatures.get(0).deplace();
 
-        System.out.print("table OCCUPIED original: ");
+        System.out.print("state of table OCCUPIED original: ");
         System.out.println(OCCUPIED[creatures.get(0).getPos().getX() - 1][creatures.get(0).getPos().getY() - 1]);
-        System.out.print("table OCCUPIED now: ");
+        System.out.print("state of table OCCUPIED now: ");
         System.out.println(OCCUPIED[creatures.get(0).getPos().getX()][creatures.get(0).getPos().getY()]);
-        System.out.println("position after:");
+        System.out.println("position after deplacement:");
         creatures.get(0).affiche();
 
     }
