@@ -6,33 +6,41 @@
 package org.centrale.objet.WoE;
 
 /**
- *
  * @author wuzilong
  * @author Zou Kang
  */
-public class Paysan extends Personnage{
+public class Paysan extends Personnage {
+
+    private final int type = 7;
 
     public Paysan(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(nom, ptVie, degAtt, ptPar, pageAtt, pagePar, distAttMax, pos);
     }
-    
-    public Paysan(Paysan p){
+
+    public Paysan(Paysan p) {
         super(p);
     }
-    
-    public Paysan(Point2D p){
+
+    public Paysan(Point2D p) {
         super(p);
     }
+
     public Paysan() {
         super();
+        setType(7);
     }
-    public void affiche(){
+
+    public Paysan(String name) {
+        super(name);
+    }
+
+    public void affiche() {
         System.out.println("Paysan: ");
         super.affiche();
     }
-    public Paysan(String name){
-        super(name);
+
+    @Override
+    public int getType() {
+        return type;
     }
-    
-    
 }

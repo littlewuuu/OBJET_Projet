@@ -11,7 +11,7 @@ import java.util.Random;
  * @author wuzilong
  * @author zoukang
  */
-public class Creature {
+public class Creature extends ElementDeJeu implements Deplacable,Runnable {
 
     private int ptVie = 100;
     private int degAtt = 20;
@@ -19,6 +19,20 @@ public class Creature {
     private int pageAtt = 70;
     private int pagePar = 60;
     private Point2D pos;
+
+    /**
+     * 1:Joueur
+     * 2:Fleche
+     * 3:Epee
+     * 4:PotionSoin
+     * 5:Archer
+     * 6:Guerrier
+     * 7:Paysan
+     * 8:Lapin
+     * 9:Loup
+     */
+    private int type;
+
 
     /**
      * initialize
@@ -64,10 +78,19 @@ public class Creature {
     }
 
     /**
-     * initialize.
+     * initialize by random.
      */
     public Creature() {
+        Point2D pos = new Point2D(World.createPoints(getType()));
+        this.pos = new Point2D(pos);
+    }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     /**
@@ -124,6 +147,7 @@ public class Creature {
     public void setPtPar(int ptPar) {
         this.ptPar = ptPar;
     }
+
 
     /**
      * Get percentage of attack.
@@ -185,20 +209,25 @@ public class Creature {
      * huit directions autour de la zone, en utilisant un nombre aléatoire
      * pour déterminer la direction du mouvement.
      */
-    public void deplace() {
+    public void deplacer() {
         Random generateRandom = new Random();
         int x, y;
         x = y = 0;
         do {
-            x = generateRandom.nextInt(2);
-            y = generateRandom.nextInt(2);
-            if ((x != 0 || y != 0) && World.getOCCUPIED(this.getPos().getX() + x, this.getPos().getY() + y) == 0) {
+            x = generateRandom.nextInt(3)-1;
+            y = generateRandom.nextInt(3)-1;
+            if ((x != 0 || y != 0)
+                    &&(this.getPos().getX() + x >=0)
+                    && (this.getPos().getY() + y >=0)
+                    &&(this.getPos().getX() + x <= World.TAILLE-1)
+                    &&(this.getPos().getY() + y <= World.TAILLE - 1)
+                    && World.getOCCUPIED(this.getPos().getX() + x, this.getPos().getY() + y) == 0) {
                 break;
             }
         } while (true);
         World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), 0);
         pos.translate(x, y);
-        World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), 1);
+        World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), getType());
     }
 
     /**
@@ -208,4 +237,17 @@ public class Creature {
         System.out.println("ptVie=" + ptVie + ", degAtt=" + degAtt + ", ptPar=" + ptPar + ", pageAtt=" + pageAtt + ", pagePar=" + pagePar + ", pos=" + pos + "\n");
     }
 
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            deplacer();
+            if(this.getPtVie()<=0)
+                break;
+        }
+    }
 }

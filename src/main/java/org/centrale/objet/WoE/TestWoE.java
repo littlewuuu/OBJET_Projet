@@ -5,21 +5,42 @@
  */
 package org.centrale.objet.WoE;
 
-import java.util.Random;
+import javax.swing.*;
 
 /**
- *
- * @author wuzilong 
+ * @author wuzilong
  * @author Zou Kang
  */
-public class TestWoE {
+public class TestWoE extends JFrame {
+    MyPanel mp = null;
 
     public static void main(String[] args) {
 
-        World myworld = new World();
-        myworld.creerMondeAlea();
+        TestWoE testWoE = new TestWoE();
 
-        /*
+
+    }
+
+    public TestWoE(){
+        JFrame frame = new JFrame();
+        mp = new MyPanel();
+        frame.setContentPane(mp);
+
+        Thread thread = new Thread(mp);
+        thread.start();
+        this.add(mp);//把面板(就是游戏的绘图区域)
+        this.setSize(World.TAILLE*8 + 250, World.TAILLE*8+30);
+        this.addKeyListener(mp);//让JFrame 监听mp的键盘事件
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
+
+
+}
+
+
+/*
+
         myworld.robin.affiche();
         myworld.peon.affiche();
         myworld.bugs1.affiche();
@@ -29,7 +50,7 @@ public class TestWoE {
 
         myworld.guillaumeT.affiche();
         myworld.robin.affiche();
-        
+
         System.out.println("================test deplace================");
         System.out.println("----------------avant deplace:----------------");
         myworld.robin.affiche();
@@ -43,7 +64,7 @@ public class TestWoE {
         myworld.peon.affiche();
         myworld.bugs1.affiche();
         System.out.println("================fin test deplace================");
-        
+
         //test combat contact
         System.out.println("================test combat contact================");
         myworld.bugs1.setPos(new Point2D(myworld.grosBill.getPos().getX() + 1, myworld.grosBill.getPos().getY()));
@@ -67,5 +88,3 @@ public class TestWoE {
         myworld.robin.affiche();
         System.out.println("================fin test combat a distance================");
         */
-    }
-}

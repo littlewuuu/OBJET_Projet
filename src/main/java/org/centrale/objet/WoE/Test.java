@@ -8,12 +8,11 @@ package org.centrale.objet.WoE;
 import java.util.Random;
 
 /**
- *
  * @author wuzilong
  * @author Zou Kang
  */
 public class Test {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Random generateRandom = new Random();
         int x, y;
         x = y = 0;
@@ -25,6 +24,6 @@ public class Test {
             }
         } while (true);
 
-        System.out.println("x="+x+"y="+y);
+        System.out.println("x=" + x + "y=" + y);
     }
 }
