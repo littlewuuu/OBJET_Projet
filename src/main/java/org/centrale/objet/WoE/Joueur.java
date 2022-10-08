@@ -119,11 +119,15 @@ public class Joueur {
     }
 
     public void moveUp() {
-        if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1) != 0) { //can't move up
-            System.out.println("Position is already occupied by : " +World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1) );
-
+        if(perso.getPos().getY() <= 0 ){
+            System.out.println("border!");
             return;
         }
+        if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1) != 0) { //can't move up
+            System.out.println("Position is already occupied by : " +World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1) );
+            return;
+        }
+
         perso.setPos(new Point2D(perso.getPos().getX(), perso.getPos().getY() - 1));
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1, 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
@@ -132,10 +136,15 @@ public class Joueur {
     }
 
     public void moveDown() {
+        if(perso.getPos().getY() >= 99 ){
+            System.out.println("border!");
+            return;
+        }
         if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1) != 0) { //can't move down
             System.out.println("Position is already occupied by : " +World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1) );
             return;
         }
+
         perso.setPos(new Point2D(perso.getPos().getX(), perso.getPos().getY() + 1));
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1, 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
@@ -145,10 +154,15 @@ public class Joueur {
     }
 
     public void moveLeft() {
+        if(perso.getPos().getX() <= 0 ){
+            System.out.println("border!");
+            return;
+        }
         if (World.getOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY()) != 0) { //can't move left
             System.out.println("Position is already occupied by : " + World.getOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY() ));
             return;
         }
+
         perso.setPos(new Point2D(perso.getPos().getX() - 1, perso.getPos().getY()));
         World.setOCCUPIED(perso.getPos().getX() + 1, perso.getPos().getY(), 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
@@ -157,10 +171,15 @@ public class Joueur {
     }
 
     public void moveRight() {
+        if(perso.getPos().getX() >= 99 ){
+            System.out.println("border!");
+            return;
+        }
         if (World.getOCCUPIED(perso.getPos().getX() + 1, perso.getPos().getY()) != 0) { //can't move right
             System.out.println("Position is already occupied by : " + World.getOCCUPIED(perso.getPos().getX() + 1, perso.getPos().getY()));
             return;
         }
+
         perso.setPos(new Point2D(perso.getPos().getX() + 1, perso.getPos().getY()));
         World.setOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY(), 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
