@@ -51,4 +51,5 @@ Guerrier 不能捡起 Fleche
 
 ## 4. 效果
 
+<img width="1047" alt="Screenshot 2022-10-08 at 17 50 59" src="https://user-images.githubusercontent.com/95653923/194716114-78b1f22d-e30b-44be-b4c2-86c036bed395.png">
 
