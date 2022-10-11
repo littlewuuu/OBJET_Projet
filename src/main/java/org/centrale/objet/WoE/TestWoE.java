@@ -15,10 +15,7 @@ public class TestWoE extends JFrame {
     MyPanel mp = null;
 
     public static void main(String[] args) {
-
         TestWoE testWoE = new TestWoE();
-
-
     }
 
     public TestWoE(){

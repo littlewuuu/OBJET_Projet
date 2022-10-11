@@ -18,7 +18,6 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
     private int ptPar = 10;
     private int pageAtt = 70;
     private int pagePar = 60;
-    private Point2D pos;
 
     /**
      * 1:Joueur
@@ -31,7 +30,6 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
      * 8:Lapin
      * 9:Loup
      */
-    private int type;
 
 
     /**
@@ -45,12 +43,12 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
      * @param pos     position
      */
     public Creature(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
+        super(pos);
         this.ptVie = ptVie;
         this.degAtt = degAtt;
         this.ptPar = ptPar;
         this.pageAtt = pageAtt;
         this.pagePar = pagePar;
-        this.pos = new Point2D(pos);
     }
 
     /**
@@ -59,10 +57,11 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
      * @param m creature
      */
     public Creature(Creature m) {
+        super(m.getPos());
         this.degAtt = m.degAtt;
         this.pageAtt = m.pageAtt;
         this.pagePar = m.pagePar;
-        this.pos = new Point2D(m.pos);
+
         //this.pos = m.pos;
         this.ptPar = m.ptPar;
         this.ptVie = m.ptVie;
@@ -74,23 +73,24 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
      * @param p position
      */
     public Creature(Point2D p) {
-        this.pos = new Point2D(p);
+        super(p);
     }
 
     /**
      * initialize by random.
      */
     public Creature() {
+        super();
         Point2D pos = new Point2D(World.createPoints(getType()));
-        this.pos = new Point2D(pos);
+        setPos( new Point2D(pos));
     }
 
     public int getType() {
-        return type;
+        return super.getType();
     }
 
     public void setType(int type) {
-        this.type = type;
+        super.setType(type);
     }
 
     /**
@@ -186,23 +186,23 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
         this.pagePar = pagePar;
     }
 
-    /**
-     * Get position
-     *
-     * @return Point2D, position
-     */
-    public Point2D getPos() {
-        return pos;
-    }
-
-    /**
-     * Set position
-     *
-     * @param pos position
-     */
-    public void setPos(Point2D pos) {
-        this.pos = new Point2D(pos);
-    }
+//    /**
+//     * Get position
+//     *
+//     * @return Point2D, position
+//     */
+//    public Point2D getPos() {
+//        return super.getPos();
+//    }
+//
+//    /**
+//     * Set position
+//     *
+//     * @param pos position
+//     */
+//    public void setPos(Point2D pos) {
+//        super.setPos(new Point2D(pos));
+//    }
 
     /**
      * Il s'agit d'une fonction qui se déplace de manière aléatoire dans
@@ -226,7 +226,7 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
             }
         } while (true);
         World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), 0);
-        pos.translate(x, y);
+        getPos().translate(x, y);
         World.setOCCUPIED(this.getPos().getX(), this.getPos().getY(), getType());
     }
 
@@ -234,7 +234,7 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
      * print out all information.
      */
     public void affiche() {
-        System.out.println("ptVie=" + ptVie + ", degAtt=" + degAtt + ", ptPar=" + ptPar + ", pageAtt=" + pageAtt + ", pagePar=" + pagePar + ", pos=" + pos + "\n");
+        System.out.println("ptVie=" + ptVie + ", degAtt=" + degAtt + ", ptPar=" + ptPar + ", pageAtt=" + pageAtt + ", pagePar=" + pagePar + ", pos=" + super.getPos() + "\n");
     }
 
     @Override

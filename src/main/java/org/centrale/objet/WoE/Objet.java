@@ -15,7 +15,7 @@ public class Objet extends ElementDeJeu{
      */
     private int life = 100;
 
-    private Point2D pos;
+
     /**
      * combien cela coûte-t-il d'acheter
      */
@@ -28,8 +28,9 @@ public class Objet extends ElementDeJeu{
     private int state = 0;
 
     public Objet(int life, Point2D pos, int valeur, String name) {
+        super(new Point2D(pos));
         this.life = life;
-        this.pos = new Point2D(pos);
+
         this.valeur = valeur;
         this.name = name;
     }
@@ -55,13 +56,13 @@ public class Objet extends ElementDeJeu{
 
     }
 
-    public Point2D getPos() {
-        return pos;
-    }
-
-    public void setPos(Point2D pos) {
-        this.pos = pos;
-    }
+//    public Point2D getPos() {
+//        return pos;
+//    }
+//
+//    public void setPos(Point2D pos) {
+//        this.pos = pos;
+//    }
 
     public String getName() {
         return name;
@@ -88,12 +89,13 @@ public class Objet extends ElementDeJeu{
     }
 
     public void affiche() {
-        System.out.println("life : " + life + " postion:" + pos);
+        System.out.println("life : " + life + " postion:" + getPos());
     }
 
     public Objet(Objet o){
+        super(o.getPos());
         this.life = o.getLife();
-        this.pos = new Point2D(o.getPos());
+        //this.pos = new Point2D(o.getPos());
         this.valeur =o.getValeur();
         this.name = o.getName();
         this.state=o.getState();
