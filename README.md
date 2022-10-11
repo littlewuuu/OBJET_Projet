@@ -17,11 +17,13 @@ UML diagram: https://drive.google.com/file/d/104r5bmn8PTezpQTqheFJOeT6hGcsbT_8/v
 
 在 run() 方法中更改时间。
 
+玩家在 NuageToxique 的一定范围内会受到持续伤害:
+    在 MyPanel 类中的 run() 方法中进行判断。
 
 ## 1. 玩家选择
 用户首先选择玩家类型: Archer or Guerrier
 
-Archer 不能捡起 Epee
+Archer 不能捡起 Epee, Archer 初始有 10 只 fleche
 
 Guerrier 不能捡起 Fleche
 
@@ -37,6 +39,7 @@ Guerrier 不能捡起 Fleche
 3. C 键：攻击，只能攻击正前方的生物（direction 属性判断），有近战和远战
 
     远战：Archer 使用Fleche；Guerrier 使用 Epee
+    未完成：当 Archer 攻击时，会根据 Archer 的位置和方向生成 fleche 线程，在 MyPanel 上显示 fleche 的移动。判断边界条件。
 
 4. K 键：为了测试药品使用，可以使用 k 键直接使玩家生命-10。
 
