@@ -114,6 +114,7 @@ public class NuageToxique extends Objet implements Combattant,Deplacable,Runnabl
         }
     }
 
+
     public void affiche(){
         System.out.print("NuageToxique : ");
         super.affiche();

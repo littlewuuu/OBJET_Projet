@@ -7,10 +7,13 @@ package org.centrale.objet.WoE;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * @author wuzilong
@@ -20,11 +23,14 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     Joueur joueur;
     World world;
 
+    Boolean buttonPressed = false;
     int zoom = 8;
+    JButton button = new JButton();
 
 
     MyPanel() {
         joueur = new Joueur();
+
         joueur.affiche();
         world = new World();
         world.creerMondeAlea();
@@ -106,7 +112,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         g.drawString(joueur.perso.getPos()+"",World.TAILLE*zoom + 100,600);
 
         g.drawString("direction: ",World.TAILLE*zoom + 10,620);
-        int direction = joueur.getDirection();
+        int direction = joueur.perso.getDirection();
         switch (direction){
             case 1:
                 g.drawString("up",World.TAILLE*zoom + 100,620);
@@ -166,7 +172,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         drawJoueur(g);
         drawWorldCreature(g);
         drawWorldObjet(g);
-
+        drawNuageToxique(g);
+        drawFleche(g);
     }
 
     /**
@@ -180,10 +187,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             if(objet.getState() == 1){continue;}
             int type = objet.getType();
             switch (type){
-                case -1:
-                    g.setColor(new Color(0,228,114));
-                    g.fillOval(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom+3);
-                    break;
+
                 case 2:
                     g.setColor(new Color(250,128,114));
                     g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
@@ -200,11 +204,22 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    public void drawNuageToxique(Graphics g){
+        Iterator<NuageToxique> nuageToxiqueIterator = World.nuageToxiques.iterator();
+        while (nuageToxiqueIterator.hasNext()){
+            Objet nuage = nuageToxiqueIterator.next();
+            g.setColor(new Color(0,228,114));
+            g.fillOval(nuage.getPos().getX()*zoom-zoom/2,nuage.getPos().getY()*zoom-zoom/2,zoom,zoom+3);
+        }
+    }
     /**
      * Draw Joueur
      * @param g
      */
     public void drawJoueur(Graphics g){
+        if(joueur.perso.getPtVie() <= 0){ //玩家生命值为 0 就不画
+            return;
+        }
         g.setColor(Color.CYAN);
         g.fillOval(joueur.perso.getPos().getX()*zoom-zoom/2,joueur.perso.getPos().getY()*zoom-zoom/2,zoom,zoom);
     }
@@ -255,6 +270,12 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 e.printStackTrace();
             }
 
+            //判断玩家是否在 nuageToxiques 周围，在周围就会收到攻击
+            try {
+                nuageAttack(World.nuageToxiques);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             this.repaint();
         }
     }
@@ -262,6 +283,20 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     @Override
     public void keyTyped(KeyEvent e) {
 
+    }
+
+    //**************显示 Fleche 的移动轨迹，没写完
+    public void drawFleche(Graphics g){
+        if(joueur.perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")){
+            Archer a = (Archer) joueur.perso;
+            Vector<Fleche> fleches = a.getFleches();
+
+                Fleche fleche = fleches.lastElement();
+
+                    g.setColor(new Color(255 ,255 ,255));
+                    g.fillOval(fleche.getPos().getX()*zoom-zoom/2,fleche.getPos().getY()*zoom-zoom/2,zoom,zoom);
+
+        }
     }
 
     /**
@@ -297,6 +332,28 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         this.repaint();
     }
 
+
+
+    /**
+     * 判断玩家是否在 huageToxique 的攻击范围内，如果是，则攻击
+     * @param nuageToxiques
+     */
+    public void nuageAttack(Vector<NuageToxique> nuageToxiques) throws InterruptedException {
+        Thread.sleep(1000);
+        Iterator<NuageToxique> nuageToxiqueIterator = nuageToxiques.iterator();
+        while (nuageToxiqueIterator.hasNext()){
+            NuageToxique nuageToxique1 = nuageToxiqueIterator.next();
+
+            if(nuageToxique1.getLife() <=0) { //若生命为0，则把该 nuageToxique 移除
+                nuageToxiques.remove(nuageToxique1);
+                continue;
+            }
+            if(Point2D.distance(nuageToxique1.getPos().getX(),nuageToxique1.getPos().getY(),joueur.perso.getPos().getX(), joueur.perso.getPos().getY()) <= nuageToxique1.getAttackRange())//玩家在攻击范围内
+            {
+                joueur.perso.setPtVie(joueur.perso.getPtVie() - nuageToxique1.getDamage());
+            }
+        }
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {

@@ -5,10 +5,7 @@
  */
 package org.centrale.objet.WoE;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 /**
  * The class {@link org.centrale.objet.WoE.World} represents a world that
@@ -186,11 +183,12 @@ public class World {
         }
     }
 
+    public static Vector<NuageToxique> nuageToxiques = new Vector<>();
     public void geneNuageToxique(int num){
         for (int i = 0; i < num; i++) {
             NuageToxique nuageToxique = new NuageToxique();
             new Thread(nuageToxique).start();
-            objets.add(nuageToxique);
+            nuageToxiques.add(nuageToxique);
         }
     }
 

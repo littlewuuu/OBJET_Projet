@@ -17,7 +17,7 @@ public class Joueur {
     public Vector<Objet> potionSoins = new Vector<>();
     public Vector<Objet> epees = new Vector<>();
 
-    public static int nbFleche = 0;
+    public static int nbFleche = 10;
     public static int nbEpee = 0;
     public static int nbPotionSoin = 0;
 
@@ -27,7 +27,7 @@ public class Joueur {
      * 3:down
      * 4:left
      */
-    private int direction = 1;
+
 
     Joueur() {
         choosePersonnage();
@@ -49,13 +49,6 @@ public class Joueur {
         return type;
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
 
     /**
      * A method provided for Joueur to choose his Personnage and name.
@@ -131,8 +124,8 @@ public class Joueur {
         perso.setPos(new Point2D(perso.getPos().getX(), perso.getPos().getY() - 1));
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1, 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
-        setDirection(1);
-        System.out.println("joueur position : " + perso.getPos() + "; direction : " + direction);
+        perso.setDirection(1);
+        System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
     public void moveDown() {
@@ -148,8 +141,8 @@ public class Joueur {
         perso.setPos(new Point2D(perso.getPos().getX(), perso.getPos().getY() + 1));
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1, 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
-        setDirection(3);
-        System.out.println("joueur position : " + perso.getPos() + "; direction : " + direction);
+        perso.setDirection(3);
+        System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
 
     }
 
@@ -166,8 +159,8 @@ public class Joueur {
         perso.setPos(new Point2D(perso.getPos().getX() - 1, perso.getPos().getY()));
         World.setOCCUPIED(perso.getPos().getX() + 1, perso.getPos().getY(), 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
-        setDirection(4);
-        System.out.println("joueur position : " + perso.getPos() + "; direction : " + direction);
+        perso.setDirection(4);
+        System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
     public void moveRight() {
@@ -183,15 +176,15 @@ public class Joueur {
         perso.setPos(new Point2D(perso.getPos().getX() + 1, perso.getPos().getY()));
         World.setOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY(), 0);
         World.setOCCUPIED(perso.getPos().getX(), perso.getPos().getY(), 1);
-        setDirection(2);
-        System.out.println("joueur position : " + perso.getPos() + "; direction : " + direction);
+        perso.setDirection(2);
+        System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
     public void pickObjet() {
         Point2D p = new Point2D(perso.getPos()); //joueur 的坐标
         if (perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")) { //is Archer
             Archer a = (Archer) perso;
-            switch (direction) {
+            switch (perso.getDirection()) {
                 case 1:
                     Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//物品的坐标
                     int type = World.getOCCUPIED(p.getX(), p.getY() - 1);
@@ -306,7 +299,7 @@ public class Joueur {
             }
         } else { // is Guerrier
             Guerrier a = (Guerrier) perso;
-            switch (direction) {
+            switch (perso.getDirection()) {
                 case 1:
                     Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//物品的坐标
                     int type = World.getOCCUPIED(p.getX(), p.getY() - 1);
@@ -429,7 +422,7 @@ public class Joueur {
     public void combattre() {
         if (perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")) { //Joueur's perso is Archer
             Archer a = (Archer) perso;
-            switch (direction) {
+            switch (perso.getDirection()) {
                 case 1:
                     Creature c1 = getTarget();
                     if(c1 == null){
@@ -481,7 +474,7 @@ public class Joueur {
             }
         } else {
             Guerrier g = (Guerrier) perso;
-            switch (direction) {
+            switch (perso.getDirection()) {
                 case 1:
                     Creature c1 = getTarget();
                     if(c1 == null){
@@ -542,7 +535,7 @@ public class Joueur {
     public Creature getTarget(){
         Creature c = null;
         int distance = 0;
-        switch (direction){
+        switch (perso.getDirection()){
             case 1:
                 if(perso.getPos().getY() < perso.getDistAttMax()){distance = perso.getPos().getY(); }else{distance = perso.getDistAttMax();} //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
                 for(int i = 1; i <= distance;i++){
@@ -562,7 +555,7 @@ public class Joueur {
                 }
             case 3:
                 if(perso.getPos().getY() > World.TAILLE -1 - perso.getDistAttMax()){distance =World.TAILLE - 1 - perso.getPos().getY(); }else{distance = perso.getDistAttMax();}
-                for(int i = 1; i <= perso.getDistAttMax();i++){
+                for(int i = 1; i <=distance;i++){
                     if(World.getOCCUPIED(perso.getPos().getX(),perso.getPos().getY()+i) >= 5 ){ //代表是生物，可以攻击
                         c = World.getCreature(perso.getPos().getX(),perso.getPos().getY()+i);
                         break;
@@ -570,7 +563,7 @@ public class Joueur {
                 }
             case 4:
                 if(perso.getPos().getX() < perso.getDistAttMax()){distance = perso.getPos().getX(); }else{distance = perso.getDistAttMax();}
-                for(int i = 1; i <= perso.getDistAttMax();i++){
+                for(int i = 1; i <= distance;i++){
                     if(World.getOCCUPIED(perso.getPos().getX()-i,perso.getPos().getY()) >= 5 ){ //代表是生物，可以攻击
                         c = World.getCreature(perso.getPos().getX()-i,perso.getPos().getY());
                         break;

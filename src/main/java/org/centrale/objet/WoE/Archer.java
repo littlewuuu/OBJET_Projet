@@ -50,6 +50,9 @@ public class Archer extends Personnage implements Combattant {
     public Archer() {
         super();
         setType(5);
+        for (int i = 0; i < 10; i++) {
+            fleches.add(new Fleche());
+        }
     }
 
     @Override
@@ -80,12 +83,18 @@ public class Archer extends Personnage implements Combattant {
         fleches.add(f);
     }
 
-    public void useFleche() {
+    /**
+     * 返回用掉的箭
+     * @return
+     */
+    public Fleche useFleche() {
         if (fleches.size() == 0) {
             System.out.print("you have no fleche");
-            return;
+            return null;
         }
+        Fleche fleche = fleches.get(fleches.size() - 1);
         fleches.removeElementAt(fleches.size() - 1);
+        return fleche;
     }
 
     /**
@@ -116,10 +125,18 @@ public class Archer extends Personnage implements Combattant {
                 int randdis = generateRandom.nextInt(100) + 1;
                 if (randdis > c.getPageAtt()) {
                     Joueur.setNbFleche(Joueur.getNbFleche()-1); //没击中也会损耗 Fleche
-                    useFleche();
+                    //************为了显示箭的移动轨迹，没写完
+                    Fleche fleche = useFleche();
+                    fleche.setDirection(super.getDirection());
+                    fleche.setPos(new Point2D(getPos().getX(),getPos().getY()));
+                    new Thread(fleche).start();
                 } else {
                     c.setPtVie(c.getPtVie() - fleches.lastElement().getDommage());
-                    useFleche();
+                    //***********为了显示箭的移动轨迹，没写完
+                    Fleche fleche = useFleche();
+                    fleche.setDirection(super.getDirection());
+                    fleche.setPos(new Point2D(getPos().getX(),getPos().getY()));
+                    new Thread(fleche).start();
                     Joueur.setNbFleche(Joueur.getNbFleche()-1);
                 }
             } else {

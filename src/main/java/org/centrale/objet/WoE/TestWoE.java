@@ -21,6 +21,7 @@ public class TestWoE extends JFrame {
     public TestWoE(){
         JFrame frame = new JFrame();
         mp = new MyPanel();
+
         frame.setContentPane(mp);
 
         Thread thread = new Thread(mp);
