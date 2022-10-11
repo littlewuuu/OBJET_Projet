@@ -432,6 +432,8 @@ public class Joueur {
                     a.combattre(c1);
                     c1.affiche();
                     if(c1.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c1.getPos(),1));
+                        World.creatures.remove(c1);
                         World.setOCCUPIED(c1.getPos().getX(),c1.getPos().getY(),0);
                     }
                     break;
@@ -444,6 +446,8 @@ public class Joueur {
                     a.combattre(c2);
                     c2.affiche();
                     if(c2.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c2.getPos(),1));
+                        World.creatures.remove(c2);
                         World.setOCCUPIED(c2.getPos().getX(),c2.getPos().getY(),0);
                     }
                     break;
@@ -456,6 +460,8 @@ public class Joueur {
                     a.combattre(c3);
                     c3.affiche();
                     if(c3.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c3.getPos(),1));
+                        World.creatures.remove(c3);
                         World.setOCCUPIED(c3.getPos().getX(),c3.getPos().getY(),0);
                     }
                     break;
@@ -468,6 +474,8 @@ public class Joueur {
                     a.combattre(c4);
                    c4.affiche();
                     if(c4.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c4.getPos(),1));
+                        World.creatures.remove(c4);
                         World.setOCCUPIED(c4.getPos().getX(),c4.getPos().getY(),0);
                     }
                     break;
@@ -484,6 +492,8 @@ public class Joueur {
                     g.combattre(c1);
                     c1.affiche();
                     if(c1.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c1.getPos(),1));
+                        World.creatures.remove(c1);
                         World.setOCCUPIED(c1.getPos().getX(),c1.getPos().getY(),0);
                     }
                     break;
@@ -496,6 +506,8 @@ public class Joueur {
                     g.combattre(c2);
                     c2.affiche();
                     if(c2.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c2.getPos(),1));
+                        World.creatures.remove(c2);
                         World.setOCCUPIED(c2.getPos().getX(),c2.getPos().getY(),0);
                     }
                     break;
@@ -508,6 +520,8 @@ public class Joueur {
                     g.combattre(c3);
                     c3.affiche();;
                     if(c3.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c3.getPos(),1));
+                        World.creatures.remove(c3);
                         World.setOCCUPIED(c3.getPos().getX(),c3.getPos().getY(),0);
                     }
                     break;
@@ -520,6 +534,8 @@ public class Joueur {
                     g.combattre(c4);
                     c4.affiche();
                     if(c4.getPtVie() <= 0){
+                        MyPanel.bombs.add(new Bomb(c4.getPos(),1));
+                        World.creatures.remove(c4);
                         World.setOCCUPIED(c4.getPos().getX(),c4.getPos().getY(),0);
                     }
                     break;
@@ -544,6 +560,7 @@ public class Joueur {
                        break;
                     }
                 }
+                break;
             case 2:
                 if(perso.getPos().getX() > World.TAILLE -1 - perso.getDistAttMax()){distance =World.TAILLE - 1 - perso.getPos().getX(); }else{distance = perso.getDistAttMax();} //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
 
@@ -553,6 +570,7 @@ public class Joueur {
                         break;
                     }
                 }
+                break;
             case 3:
                 if(perso.getPos().getY() > World.TAILLE -1 - perso.getDistAttMax()){distance =World.TAILLE - 1 - perso.getPos().getY(); }else{distance = perso.getDistAttMax();}
                 for(int i = 1; i <=distance;i++){
@@ -561,6 +579,7 @@ public class Joueur {
                         break;
                     }
                 }
+                break;
             case 4:
                 if(perso.getPos().getX() < perso.getDistAttMax()){distance = perso.getPos().getX(); }else{distance = perso.getDistAttMax();}
                 for(int i = 1; i <= distance;i++){
@@ -569,6 +588,7 @@ public class Joueur {
                         break;
                     }
                 }
+                break;
         }
 
         return c;

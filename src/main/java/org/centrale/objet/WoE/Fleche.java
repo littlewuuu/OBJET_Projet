@@ -47,6 +47,9 @@ public class Fleche extends Objet implements Runnable {
         setPos(World.createPoints(type));
     }
 
+    //在最开始初始化 Archer 的时候有 10 只 Fleche，防止其在地图上占位置
+    public Fleche(Boolean i){}
+
 
     public int getDommage() {
         return dommage;

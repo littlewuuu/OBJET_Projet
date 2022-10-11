@@ -258,6 +258,7 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
             }
             deplacer();
             if(this.getPtVie()<=0)
+
                 break;
         }
     }

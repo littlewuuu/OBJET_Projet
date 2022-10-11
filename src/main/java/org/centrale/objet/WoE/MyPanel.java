@@ -23,10 +23,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     Joueur joueur;
     World world;
 
-    Boolean buttonPressed = false;
     int zoom = 8;
-    JButton button = new JButton();
 
+    static Vector<Bomb> bombs = new Vector<>();
+    Image image = null;
 
     MyPanel() {
         joueur = new Joueur();
@@ -36,6 +36,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         world.creerMondeAlea();
 
         world.afficheWorld();
+
+        //初始化图片
+        this.image = Toolkit.getDefaultToolkit().getImage("image/bomb.jpeg");
     }
 
     /**
@@ -173,7 +176,23 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         drawWorldCreature(g);
         drawWorldObjet(g);
         drawNuageToxique(g);
-        drawFleche(g);
+        //drawFleche(g);
+        try {
+            drawBomb(g);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
+    public void drawBomb(Graphics g) throws InterruptedException {
+        for (int i = 0; i < bombs.size(); i++) {
+            Bomb bomb = bombs.get(i);
+            g.drawImage(image,bomb.getPos().getX(),bomb.getPos().getY(),110,110 ,this);
+            bombs.remove(bomb);
+        }
     }
 
     /**

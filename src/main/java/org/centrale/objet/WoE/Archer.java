@@ -51,7 +51,7 @@ public class Archer extends Personnage implements Combattant {
         super();
         setType(5);
         for (int i = 0; i < 10; i++) {
-            fleches.add(new Fleche());
+            fleches.add(new Fleche(true));
         }
     }
 
