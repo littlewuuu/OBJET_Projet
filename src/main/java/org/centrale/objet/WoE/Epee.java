@@ -7,18 +7,26 @@ package org.centrale.objet.WoE;
 
 /**
  * @author wuzilong
+ * @author Zou Kang
  */
 public class Epee extends Objet {
-    private int dommage;
+    /**
+     * Used to indicate on the OOCUPIED table that the position is occupied by Epee
+     */
+    private final int type = 3;
+    private int dommage = 6;
 
     /**
-     * initialize
+     * Initialize.
      */
     public Epee() {
+        super();
+        dommage = 6;
+        setPos(World.createPoints(type));
     }
 
     /**
-     * initialize
+     * Initialize
      *
      * @param dommage point of hurt
      * @param life    points of life
@@ -27,10 +35,11 @@ public class Epee extends Objet {
     public Epee(int dommage, int life, int valeur) {
         super(life, valeur);
         this.dommage = dommage;
+        setPos(World.createPoints(type));
     }
 
     /**
-     * initialize
+     * Initialize
      *
      * @param dommage int
      */
@@ -38,18 +47,22 @@ public class Epee extends Objet {
         this.dommage = dommage;
     }
 
+    public Epee(Epee e){
+        super(e);
+        dommage = e.dommage;
+    }
 
     /**
-     * 放伤害
+     * Dealing damage to a creature.
      *
-     * @param c creature
+     * @param c creature target
      */
     public void Blesser(Creature c) {
         c.setPtVie(c.getPtVie() - dommage);
     }
 
     /**
-     * get dommage
+     * Get dommage.
      *
      * @return int dommage
      */
@@ -58,7 +71,7 @@ public class Epee extends Objet {
     }
 
     /**
-     * set dommage
+     * Set dommage.
      *
      * @param dommage, int
      */
@@ -66,4 +79,13 @@ public class Epee extends Objet {
         this.dommage = dommage;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    @Override
+    public void affiche() {
+        System.out.printf("Epee : ");
+        super.affiche();
+    }
 }

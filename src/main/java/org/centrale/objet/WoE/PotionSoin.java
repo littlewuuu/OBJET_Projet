@@ -6,23 +6,40 @@
 package org.centrale.objet.WoE;
 
 /**
- *
  * @author wuzilong
+ * @author Zou Kang
  */
-public class PotionSoin extends Objet{
+public class PotionSoin extends Objet {
+    /**
+     * Used to indicate on the OOCUPIED table that the position is occupied by PotionSoin
+     */
+    private final int type = 4;
+    /**
+     * The number of life points that can be restored by the PotionSoin.
+     */
     private int recover = 5;
-   
 
-        
-    public PotionSoin(){}
+    public PotionSoin() {
+        super();
+        setPos(World.createPoints(type));
+    }
+
+    public PotionSoin(PotionSoin p){
+        super(p);
+        this.recover = p.recover;
+    }
     public PotionSoin(int recouver, int life, int valeur) {
         super(life, valeur);
         this.recover = recouver;
     }
-    
-    //补充生命值
-    public void Guerir(Creature c){
-        c.setPtVie(c.getPtVie()+recover);
+
+    /**
+     * Recovery of life value.
+     *
+     * @param c Target of recovery
+     */
+    public void Guerir(Creature c) {
+        c.setPtVie(c.getPtVie() + recover);
     }
 
     public int getRecover() {
@@ -33,7 +50,13 @@ public class PotionSoin extends Objet{
         this.recover = recover;
     }
 
- 
-    
-    
+    public void affiche() {
+        System.out.printf("PotionSoin : ");
+        super.affiche();
+    }
+
+    @Override
+    public int getType() {
+        return type;
+    }
 }

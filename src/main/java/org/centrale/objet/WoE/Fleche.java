@@ -6,21 +6,50 @@
 package org.centrale.objet.WoE;
 
 /**
- *
  * @author wuzilong
+ * @author Zou Kang
  */
-public class Fleche extends Objet {
-    //Injuries caused by Fleche
-    private int dommage= 4;
+public class Fleche extends Objet implements Runnable {
+    /**
+     * Used to indicate on the OOCUPIED table that the position is occupied by Fleche
+     */
+    private final int type = 2;
+    /**
+     * Injuries caused by Fleche
+     */
+    private int dommage = 4;
+
+    //*****为了显示箭的移动，值为 Joueur 的方向
+    private int direction;
+
+    private int speed = 1;
+
+
+    private Boolean isLive = true;
 
     public Fleche(int dommage, int life, int valeur) {
         super(life, valeur);
         this.dommage = dommage;
+        setPos(World.createPoints(type));
     }
 
     public Fleche(int dommage) {
         this.dommage = dommage;
+        setPos(World.createPoints(type));
     }
+
+    public Fleche(Fleche f) {
+        super(f);
+        dommage = f.getDommage();
+    }
+
+    public Fleche() {
+        setPos(World.createPoints(type));
+    }
+
+    //在最开始初始化 Archer 的时候有 10 只 Fleche，防止其在地图上占位置
+    public Fleche(Boolean i){}
+
 
     public int getDommage() {
         return dommage;
@@ -29,6 +58,64 @@ public class Fleche extends Objet {
     public void setDommage(int dommage) {
         this.dommage = dommage;
     }
-    
-    
+
+    public int getType() {
+        return type;
+    }
+
+    public void affiche() {
+        System.out.printf("Fleche : ");
+        super.affiche();
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public Boolean getIsLive() {
+        return isLive;
+    }
+
+    public void setIsLive(Boolean live) {
+        isLive = live;
+    }
+
+
+    //********为了实现箭的移动，没写完
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (!isLive || this.getPos().getX() <= 0
+                    || this.getPos().getX() >= World.TAILLE
+                    || this.getPos().getY() <= 0
+                    || this.getPos().getY() >= World.TAILLE) {
+                break;
+            }
+
+            switch (direction) {
+                case 1:
+                    setPos(new Point2D(getPos().getX(), getPos().getY() - speed));
+                    break;
+                case 2:
+                    setPos(new Point2D(getPos().getX() + speed, getPos().getY()));
+                    break;
+                case 3:
+                    setPos(new Point2D(getPos().getX(), getPos().getY() + speed));
+                    break;
+                case 4:
+                    setPos(new Point2D(getPos().getX() - speed, getPos().getY()));
+                    break;
+            }
+
+        }
+    }
 }

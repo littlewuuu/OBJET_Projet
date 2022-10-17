@@ -6,18 +6,20 @@
 package org.centrale.objet.WoE;
 
 import java.util.Random;
+import java.util.Vector;
 
 /**
- * @author wuzilong et zoukang
+ * @author wuzilong
+ * @author Zou Kang
  */
-public class Archer extends Personnage {
+public class Archer extends Personnage implements Combattant {
 
-
-    private Fleche fleche = new Fleche(10);
-    private int nbFleche = 10;
+    final private int type = 5;
+    private Vector<Fleche> fleches = new Vector<>();
+    private Vector<Epee> epees = new Vector<>();
 
     /**
-     * initial Archer
+     * initialize Archer
      *
      * @param nom        name
      * @param ptVie      point of life
@@ -30,10 +32,11 @@ public class Archer extends Personnage {
      */
     public Archer(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
         super(nom, ptVie, degAtt, ptPar, pageAtt, pagePar, distAttMax, pos);
+
     }
 
     /**
-     * Use an Archer to initial an Archer
+     * Use an Archer to initialize an Archer
      *
      * @param a an instance of Archer
      */
@@ -46,19 +49,29 @@ public class Archer extends Personnage {
      */
     public Archer() {
         super();
+        setType(5);
+        for (int i = 0; i < 10; i++) {
+            fleches.add(new Fleche(true));
+        }
+    }
+
+    @Override
+    public int getType() {
+        return type;
     }
 
     /**
-     * Initial Archer with name
+     * Initialize Archer with name
      *
      * @param name name of Archer
      */
     public Archer(String name) {
         super(name);
+        setType(5);
     }
 
     /**
-     * initial with position
+     * initialize with position
      *
      * @param p position, Class of Point2D
      */
@@ -66,18 +79,38 @@ public class Archer extends Personnage {
         super(p);
     }
 
+    public void trouFleche(Fleche f) {
+        fleches.add(f);
+    }
+
     /**
-     * Il s'agit d'un système de combat pour combattre une autre créature.
-     * Il reconnaît les attaques à distance ou les combats de mêlée et simule la
-     * probabilité de toucher et de se défendre au moyen de nombres aléatoires.
-     *
-     * @param c Creature
+     * 返回用掉的箭
+     * @return
      */
-    void combattre(Creature c) {
+    public Fleche useFleche() {
+        if (fleches.size() == 0) {
+            System.out.print("you have no fleche");
+            return null;
+        }
+        Fleche fleche = fleches.get(fleches.size() - 1);
+        fleches.removeElementAt(fleches.size() - 1);
+        return fleche;
+    }
+
+    /**
+     * Attack a creature according to the position of the target.
+     * If the distance is 1, then it is melee, otherwise it is long range.
+     * For each type of combat, we have a certain probability that the attack will fail,
+     * and if it fails, there is no damage. After a successful attack. The target object has
+     * a certain chance to succeed in defense, and if it succeeds, the damage is cut.
+     *
+     * @param c Target creature of the attack.
+     */
+    public void combattre(Creature c) {
         Random generateRandom = new Random();
         int randatt = generateRandom.nextInt(100) + 1;
         int randdef = generateRandom.nextInt(100) + 1;
-        double distance = Point2D.distance(this.getPos().getX(), c.getPos().getX(), this.getPos().getY(), c.getPos().getY());
+        double distance = Point2D.distance(this.getPos().getX(),  this.getPos().getY(),c.getPos().getX(), c.getPos().getY());
         if (distance == 1) { // combat contact
             if (randatt > c.getPageAtt()) {//rate
             } else {//reussie
@@ -87,29 +120,45 @@ public class Archer extends Personnage {
                     c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
                 }
             }
-        } else if (distance > 1 && distance < this.getDistAttMax()) { //combat a distance
-            if (nbFleche > 0) {
+        } else if (distance > 1 && distance < this.getDistAttMax()) { //combat a distance through Fleche
+            if (fleches.size() > 0) {
                 int randdis = generateRandom.nextInt(100) + 1;
-                if (randdis > this.getPageAtt()) {
-
+                if (randdis > c.getPageAtt()) {
+                    Joueur.setNbFleche(Joueur.getNbFleche()-1); //没击中也会损耗 Fleche
+                    //************为了显示箭的移动轨迹，没写完
+                    Fleche fleche = useFleche();
+                    fleche.setDirection(super.getDirection());
+                    fleche.setPos(new Point2D(getPos().getX(),getPos().getY()));
+                    new Thread(fleche).start();
                 } else {
-                    c.setPtVie(c.getPtVie() - fleche.getDommage());
-                    nbFleche--;
+                    c.setPtVie(c.getPtVie() - fleches.lastElement().getDommage());
+                    //***********为了显示箭的移动轨迹，没写完
+                    Fleche fleche = useFleche();
+                    fleche.setDirection(super.getDirection());
+                    fleche.setPos(new Point2D(getPos().getX(),getPos().getY()));
+                    new Thread(fleche).start();
+                    Joueur.setNbFleche(Joueur.getNbFleche()-1);
                 }
             } else {
-                System.out.println("pas de Fleche");
+                System.out.println("There is no Fleche in your bag!");
             }
         }
     }
 
     /**
-     * print out information of archer
+     * Print information of archer.
      */
     public void affiche() {
         System.out.println("Archer: ");
-        System.out.println("nbFleche=" + nbFleche + " ");
-
+        System.out.print("nbFleche=" + fleches.size() + " ");
         super.affiche();
     }
 
+    public Vector<Fleche> getFleches() {
+        return fleches;
+    }
+
+    public Vector<Epee> getEpees() {
+        return epees;
+    }
 }

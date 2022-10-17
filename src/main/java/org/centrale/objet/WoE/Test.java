@@ -1,29 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.centrale.objet.WoE;
 
-import java.util.Random;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-/**
- *
- * @author wuzilong
- */
 public class Test {
-    public static void main(String[] args){
-        Random generateRandom = new Random();
-        int x, y;
-        x = y = 0;
-        do {
-            x = generateRandom.nextInt(2);
-            y = generateRandom.nextInt(2);
-            if (x != 0 || y != 0) {
-                break;
-            }
-        } while (true);
 
-        System.out.println("x="+x+"y="+y);
+    public static void main(String[] args) {
+        JFrame jf = new JFrame("测试窗口");
+        jf.setSize(200, 200);
+        jf.setLocationRelativeTo(null);
+        jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+
+        // 创建一个按钮
+        final JButton btn = new JButton("测试按钮");
+
+        // 添加按钮的点击事件监听器
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 获取到的事件源就是按钮本身
+                // JButton btn = (JButton) e.getSource();
+
+                System.out.println("按钮被点击");
+            }
+        });
+
+        panel.add(btn);
+
+        jf.setContentPane(panel);
+        jf.setVisible(true);
     }
+
 }

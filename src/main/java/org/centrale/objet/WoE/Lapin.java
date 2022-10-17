@@ -6,10 +6,12 @@
 package org.centrale.objet.WoE;
 
 /**
- *
- * @author wuzilong et zoukang
+ * @author wuzilong
+ * @author Zou Kang
  */
 public class Lapin extends Monstre {
+
+    private final int type = 8;
 
     public Lapin(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
@@ -20,21 +22,23 @@ public class Lapin extends Monstre {
     }
 
     public Lapin() {
+        super();
+        setType(8);
     }
-    
-    public Lapin(Point2D p){
+
+    public Lapin(Point2D p) {
         super(p);
     }
-    
-     public void affiche(){
-         System.out.println("Lapin:");
+
+    @Override
+    public int getType() {
+        return type;
+    }
+
+    public void affiche() {
+        System.out.println("Lapin:");
         super.affiche();
     }
-    
- 
-    
-    
-    
-  
+
 
 }
