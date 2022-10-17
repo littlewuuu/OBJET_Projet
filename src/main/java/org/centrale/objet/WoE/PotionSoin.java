@@ -9,7 +9,7 @@ package org.centrale.objet.WoE;
  * @author wuzilong
  * @author Zou Kang
  */
-public class PotionSoin extends Objet {
+public class PotionSoin extends Objet implements Utilisable {
     /**
      * Used to indicate on the OOCUPIED table that the position is occupied by PotionSoin
      */

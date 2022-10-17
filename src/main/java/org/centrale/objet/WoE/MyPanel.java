@@ -7,11 +7,8 @@ package org.centrale.objet.WoE;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -20,7 +17,7 @@ import java.util.Vector;
  */
 public class MyPanel extends JPanel implements KeyListener, Runnable {
 
-    Joueur joueur;
+    static Joueur joueur;
     World world;
 
     int zoom = 8;
@@ -39,6 +36,12 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
         //初始化图片
         this.image = Toolkit.getDefaultToolkit().getImage("image/bomb.jpeg");
+    }
+
+
+
+    public static void resetJoueurVie() {
+        joueur.perso.setPtVie(100);
     }
 
     /**
@@ -131,7 +134,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 break;
         }
 
-
+        g.drawString("DegAtt: ",World.TAILLE*zoom + 10,640);
+        g.drawString(joueur.perso.getDegAtt()+"",World.TAILLE*zoom + 100,640);
 
     }
 
@@ -159,6 +163,13 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         g.drawString("PotionSoin ",World.TAILLE*zoom + 30,70);
         String numPotionSoin = joueur.nbPotionSoin+"";
         g.drawString(numPotionSoin,World.TAILLE*zoom + 120,70);
+
+        g.setColor(new Color(255 ,19 ,19));
+        g.fillRect(World.TAILLE*zoom +10,80 ,zoom,zoom);
+        g.drawString("Epinard ",World.TAILLE*zoom + 30,90);
+        String numEpinard = joueur.nbEpinard+"";
+        g.drawString(numEpinard,World.TAILLE*zoom + 120,90);
+
 
     }
 
@@ -206,7 +217,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             if(objet.getState() == 1){continue;}
             int type = objet.getType();
             switch (type){
-
                 case 2:
                     g.setColor(new Color(250,128,114));
                     g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
@@ -217,6 +227,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                     break;
                 case 4:
                     g.setColor(new Color(0 ,139 ,139));
+                    g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
+                    break;
+                case 10:
+                    g.setColor(new Color(255 ,19 ,19));
                     g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
                     break;
             }
@@ -231,6 +245,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             g.fillOval(nuage.getPos().getX()*zoom-zoom/2,nuage.getPos().getY()*zoom-zoom/2,zoom,zoom+3);
         }
     }
+
+
     /**
      * Draw Joueur
      * @param g
@@ -283,6 +299,12 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
     public void run() {
         while (true) {
+
+            //玩家死亡后地图不刷新
+            if(World.GAMESTATUESTATUS == 0){
+                continue;
+            }
+
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -296,8 +318,17 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 throw new RuntimeException(e);
             }
             this.repaint();
+
+            //玩家生命值 <= 0 就结束游戏
+            if(joueur.perso.getPtVie() <= 0){
+                World.setGAMESTATUESTATUS(0);
+                TestWoE.endOfGame();//结束游戏
+            }
+
         }
     }
+
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -347,6 +378,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         {
             joueur.perso.setPtVie(joueur.perso.getPtVie() - 10);
             joueur.perso.affiche();
+        }
+        if(e.getKeyCode() == KeyEvent.VK_L){
+            joueur.perso.useEpinard();
         }
         this.repaint();
     }

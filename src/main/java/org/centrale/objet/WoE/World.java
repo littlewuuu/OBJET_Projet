@@ -23,6 +23,33 @@ import java.util.*;
 public class World {
 
     /**
+     * 1 表示游戏进行
+     * 0 表示游戏结束
+     */
+    public static int GAMESTATUESTATUS = 1;
+
+    /**
+     * 记录游戏的轮数
+     */
+    public static int gameCount = 0;
+
+    public static int getGameCount() {
+        return gameCount;
+    }
+
+    public static void setGameCount(int gameCount) {
+        World.gameCount = gameCount;
+    }
+
+    public static int getGAMESTATUESTATUS() {
+        return GAMESTATUESTATUS;
+    }
+
+    public static void setGAMESTATUESTATUS(int GAMESTATUESTATUS) {
+        World.GAMESTATUESTATUS = GAMESTATUESTATUS;
+    }
+
+    /**
      * The size of the World : TAILLE x TAILLE.
      */
     public final static int TAILLE = 100;
@@ -42,17 +69,12 @@ public class World {
      * To store different objets
      */
     public static ArrayList<Objet> objets = new ArrayList<>();
-    /**
-     * A player.
-     */
-    Joueur joueur;
+
 
     /**
      * Default parameterless constructor
      */
-    public World() {
-
-    }
+    public World() {}
 
     /**
      * @param x x-coordinate of the World
@@ -122,6 +144,8 @@ public class World {
 
 
 
+
+
     public void afficheWorld() {
         Iterator<Creature> iterator = creatures.iterator();
         while (iterator.hasNext()) {
@@ -132,6 +156,7 @@ public class World {
         while (i.hasNext()) {
             i.next().affiche();
         }
+
 
         for (int k = TAILLE-1; k >=0; k--) {
             for (int j = TAILLE-1; j >= 0; j--) {
@@ -149,6 +174,7 @@ public class World {
         geneCreature(50);
         geneObjet(20);
         geneNuageToxique(10);
+        geneEpinard(20);
     }
 
 
@@ -184,6 +210,14 @@ public class World {
     }
 
     public static Vector<NuageToxique> nuageToxiques = new Vector<>();
+
+    public void geneEpinard(int num){
+        for (int i = 0; i < num; i++) {
+            Epinard epinard = new Epinard();
+            objets.add(epinard);
+        }
+    }
+
     public void geneNuageToxique(int num){
         for (int i = 0; i < num; i++) {
             NuageToxique nuageToxique = new NuageToxique();

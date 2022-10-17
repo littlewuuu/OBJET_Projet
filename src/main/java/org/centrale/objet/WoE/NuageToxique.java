@@ -7,7 +7,7 @@ import java.util.Random;
 public class NuageToxique extends Objet implements Combattant,Deplacable,Runnable{
 
     private int attackRange = 2;
-    private int damage = 6;
+    private int damage = 30;
 
     private final int type = -1;
 
@@ -91,6 +91,12 @@ public class NuageToxique extends Objet implements Combattant,Deplacable,Runnabl
     @Override
     public void run() {
         while (true) {
+
+            //玩家死亡后不移动
+            if(World.GAMESTATUESTATUS == 0){
+                continue;
+            }
+
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -98,7 +104,7 @@ public class NuageToxique extends Objet implements Combattant,Deplacable,Runnabl
             }
             deplacer();
 
-            //************还没写完***********
+
             //判断 attackRange 里面有没有可攻击的生物
             for(int i = - attackRange; i <= attackRange;i++)
             {

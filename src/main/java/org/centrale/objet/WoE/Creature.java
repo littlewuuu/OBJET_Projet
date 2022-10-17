@@ -11,7 +11,7 @@ import java.util.Random;
  * @author wuzilong
  * @author zoukang
  */
-public class Creature extends ElementDeJeu implements Deplacable,Runnable {
+public abstract class Creature extends ElementDeJeu implements Deplacable,Runnable {
 
     private int ptVie = 100;
     private int degAtt = 20;
@@ -251,6 +251,11 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
     @Override
     public void run() {
         while (true) {
+            //玩家死亡后就暂停不移动
+            if(World.GAMESTATUESTATUS == 0){
+                continue;
+            }
+            System.out.println("creature moving");
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
@@ -258,7 +263,6 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
             }
             deplacer();
             if(this.getPtVie()<=0)
-
                 break;
         }
     }

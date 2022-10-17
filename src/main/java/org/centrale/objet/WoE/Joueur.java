@@ -21,6 +21,8 @@ public class Joueur {
     public static int nbEpee = 0;
     public static int nbPotionSoin = 0;
 
+    public static int nbEpinard = 0;
+
     /**
      * 1:up
      * 2:right
@@ -31,6 +33,14 @@ public class Joueur {
 
     Joueur() {
         choosePersonnage();
+    }
+
+    public static int getNbEpinard() {
+        return nbEpinard;
+    }
+
+    public static void setNbEpinard(int nbEpinard) {
+        Joueur.nbEpinard = nbEpinard;
     }
 
     public Vector<Objet> getFleches() {
@@ -188,7 +198,7 @@ public class Joueur {
                 case 1:
                     Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//物品的坐标
                     int type = World.getOCCUPIED(p.getX(), p.getY() - 1);
-                    if (type == 2 || type == 4) {
+                    if (type == 2 || type == 4 || type == 10) {
                         Objet o = World.getObjet(p1.getX(), p1.getY());
                         switch (type) {
                             case 2:
@@ -209,13 +219,21 @@ public class Joueur {
                                 World.setOCCUPIED(p1.getX(), p1.getY(), 0);
                                 System.out.println("捡起 PotionSoin");
                                 break;
+                            case 10:
+                                Epinard epinard =(Epinard)o;
+                                epinard.setState(1);
+                                a.getEpinard().add(epinard);
+                                nbEpinard = a.getEpinard().size();
+                                World.setOCCUPIED(p1.getX(), p1.getY(), 0);
+                                System.out.println("捡起 Epianrd");
+                                break;
                         }
                     }
                     break;
                 case 2:
                     Point2D p2 = new Point2D(p.getX() + 1, p.getY());//物品的坐标
                     int type2 = World.getOCCUPIED(p.getX() + 1, p.getY());
-                    if (type2 == 2 || type2 == 4) {
+                    if (type2 == 2 || type2 == 4 || type2 == 10) {
                         Objet o = World.getObjet(p2.getX(), p2.getY());
                         switch (type2) {
                             case 2:
@@ -237,13 +255,21 @@ public class Joueur {
                                 World.setOCCUPIED(p2.getX(), p2.getY(), 0);
                                 System.out.println("捡起 PotionSoin");
                                 break;
+                            case 10:
+                                Epinard epinard =(Epinard)o;
+                                epinard.setState(1);
+                                a.getEpinard().add(epinard);
+                                nbEpinard = a.getEpinard().size();
+                                World.setOCCUPIED(p2.getX(), p2.getY(), 0);
+                                System.out.println("捡起 Epianrd");
+                                break;
                         }
                     }
                     break;
                 case 3:
                     Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//物品的坐标
                     int type3 = World.getOCCUPIED(p.getX(), p.getY() + 1);
-                    if (type3 == 2  || type3 == 4) {
+                    if (type3 == 2  || type3 == 4 || type3 == 10) {
                         Objet o = World.getObjet(p3.getX(), p3.getY());
                         switch (type3) {
                             case 2:
@@ -265,13 +291,21 @@ public class Joueur {
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
                                 System.out.println("捡起 PotionSoin");
                                 break;
+                            case 10:
+                                Epinard epinard =(Epinard)o;
+                                epinard.setState(1);
+                                a.getEpinard().add(epinard);
+                                nbEpinard = a.getEpinard().size();
+                                World.setOCCUPIED(p3.getX(), p3.getY(), 0);
+                                System.out.println("捡起 Epianrd");
+                                break;
                         }
                     }
                     break;
                 case 4:
                     Point2D p4 = new Point2D(p.getX() - 1, p.getY());//物品的坐标
                     int type4 = World.getOCCUPIED(p.getX() - 1, p.getY());
-                    if (type4 == 2  || type4 == 4) {
+                    if (type4 == 2  || type4 == 4 || type4 == 10) {
                         Objet o = World.getObjet(p4.getX(), p4.getY());
                         switch (type4) {
                             case 2:
@@ -292,6 +326,14 @@ public class Joueur {
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p4.getX(), p4.getY(), 0);
                                 System.out.println("捡起 PotionSoin");
+                                break;
+                            case 10:
+                                Epinard epinard =(Epinard)o;
+                                epinard.setState(1);
+                                a.getEpinard().add(epinard);
+                                nbEpinard = a.getEpinard().size();
+                                World.setOCCUPIED(p4.getX(), p4.getY(), 0);
+                                System.out.println("捡起 Epianrd");
                                 break;
                         }
                     }

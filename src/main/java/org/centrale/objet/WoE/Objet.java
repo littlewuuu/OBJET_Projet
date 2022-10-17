@@ -8,7 +8,7 @@ package org.centrale.objet.WoE;
 /**
  * @author wuzilong
  */
-public class Objet extends ElementDeJeu{
+public abstract class Objet extends ElementDeJeu{
 
     /**
      * Durée d'utilisation
@@ -53,7 +53,6 @@ public class Objet extends ElementDeJeu{
     }
 
     public Objet() {
-
     }
 
 //    public Point2D getPos() {
