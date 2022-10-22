@@ -24,5 +24,6 @@ public class ElementDeJeu {
     public void setType(int type) {
         this.type = type;
     }
+
 }
 

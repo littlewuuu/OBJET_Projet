@@ -125,4 +125,9 @@ public class NuageToxique extends Objet implements Combattant,Deplacable,Runnabl
         System.out.print("NuageToxique : ");
         super.affiche();
     }
+
+    @Override
+    public String toString() {
+        return "NuageToxique " + attackRange + " " + damage + " " + type + " " + getLife() + " " + getValeur() + " " + getName() + " " + type + " " + getState() + " " + getPos().getX() + " " + getPos().getY()+'\n';
+    }
 }

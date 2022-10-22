@@ -68,6 +68,7 @@ public class Archer extends Personnage implements Combattant {
     public Archer(String name) {
         super(name);
         setType(5);
+
     }
 
     /**
@@ -116,6 +117,7 @@ public class Archer extends Personnage implements Combattant {
             } else {//reussie
                 if (randdef > c.getPagePar()) { //防御失败
                     c.setPtVie(c.getPtVie() - this.getDegAtt());
+                    System.out.println("生命值" + c.getPtVie());
                 } else {//防御成功
                     c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
                 }
@@ -127,16 +129,11 @@ public class Archer extends Personnage implements Combattant {
                     Joueur.setNbFleche(Joueur.getNbFleche()-1); //没击中也会损耗 Fleche
                     //************为了显示箭的移动轨迹，没写完
                     Fleche fleche = useFleche();
-                    fleche.setDirection(super.getDirection());
-                    fleche.setPos(new Point2D(getPos().getX(),getPos().getY()));
-                    new Thread(fleche).start();
+
                 } else {
                     c.setPtVie(c.getPtVie() - fleches.lastElement().getDommage());
                     //***********为了显示箭的移动轨迹，没写完
                     Fleche fleche = useFleche();
-                    fleche.setDirection(super.getDirection());
-                    fleche.setPos(new Point2D(getPos().getX(),getPos().getY()));
-                    new Thread(fleche).start();
                     Joueur.setNbFleche(Joueur.getNbFleche()-1);
                 }
             } else {
@@ -160,5 +157,10 @@ public class Archer extends Personnage implements Combattant {
 
     public Vector<Epee> getEpees() {
         return epees;
+    }
+
+    @Override
+    public String toString() {
+        return "Archer "+ getNom() + " " + type+ " " + getNom()+ " " + getDistAttMax() + " "+ getPtVie() + " "+ getDegAtt()+ " " + getPtPar()+ " " + getPageAtt()+ " " + getPagePar()+ " " + getDirection() + " "+ getPos().getX() + " "+ getPos().getY()+ '\n';
     }
 }

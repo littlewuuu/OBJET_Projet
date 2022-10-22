@@ -43,6 +43,8 @@ public class TestWoE extends JFrame {
             }
         }
 
+
+
         World.setOCCUPIED(MyPanel.joueur.perso.getPos().getX(),MyPanel.joueur.perso.getPos().getX(),0);//地图上抹掉玩家的位置信息
         Scanner scanner= new Scanner(System.in);
         System.out.println("open a new game? (enter 1 restart)");
@@ -50,6 +52,8 @@ public class TestWoE extends JFrame {
         if(i == 1){ //restart
           reStart();
         }
+
+
 
     }
 

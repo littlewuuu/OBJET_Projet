@@ -18,11 +18,11 @@ public class Loup extends Monstre implements Combattant {
     /**
      * The longest distance a Loup can attack.
      */
-    private int distAttMax = 5;
+    private int distAttMax = 3;
     /**
      * The damage that wolves can cause.
      */
-    private final int degAtt = 5;
+    private final int degAtt = 6;
 
     public Loup(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
@@ -79,18 +79,25 @@ public class Loup extends Monstre implements Combattant {
         }
     }
 
-    public int getGetDistAttMax() {
+    public int getDistAttMax() {
         return distAttMax;
     }
 
-    public void setGetDistAttMax(int getDistAttMax) {
-        this.distAttMax = getDistAttMax;
+    public void setDistAttMax(int distAttMax) {
+        this.distAttMax = distAttMax;
     }
-
 
     public void affiche() {
         System.out.println("Loup: ");
         super.affiche();
     }
 
+    @Override
+    public int getDegAtt() {
+        return degAtt;
+    }
+
+    public String toString() {
+        return "Lapin " + type + " " + distAttMax + " " + degAtt + " " + getPtVie()+ " " + getDegAtt()+ " " +getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY() + '\n';
+    }
 }

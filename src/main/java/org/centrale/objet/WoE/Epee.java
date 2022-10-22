@@ -88,4 +88,9 @@ public class Epee extends Objet {
         System.out.printf("Epee : ");
         super.affiche();
     }
+
+    @Override
+    public String toString() {
+        return "Epee " + type + " " + dommage +  " " + getLife() + " "+ getValeur() + " " + getName() + " " + getState() + " " + getPos().getX()+ " " +getPos().getY()+ '\n';
+    }
 }

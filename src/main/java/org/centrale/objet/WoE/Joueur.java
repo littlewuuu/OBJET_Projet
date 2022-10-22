@@ -5,6 +5,10 @@ import java.util.Vector;
 
 public class Joueur {
 
+    public static int nbFleche = 10;
+    public static int nbEpee = 0;
+    public static int nbPotionSoin = 0;
+    public static int nbEpinard = 0;
     /**
      * Used to indicate on the OOCUPIED table that the position is occupied by Joueur
      */
@@ -16,12 +20,6 @@ public class Joueur {
     public Vector<Objet> fleches = new Vector<>();
     public Vector<Objet> potionSoins = new Vector<>();
     public Vector<Objet> epees = new Vector<>();
-
-    public static int nbFleche = 10;
-    public static int nbEpee = 0;
-    public static int nbPotionSoin = 0;
-
-    public static int nbEpinard = 0;
 
     /**
      * 1:up
@@ -43,22 +41,65 @@ public class Joueur {
         Joueur.nbEpinard = nbEpinard;
     }
 
+    public static int getNbFleche() {
+        return nbFleche;
+    }
+
+    public static void setNbFleche(int nb) {
+        nbFleche = nb;
+    }
+
+    public static int getNbEpee() {
+        return nbEpee;
+    }
+
+    public static void setNbEpee(int nb) {
+        nbEpee = nb;
+    }
+
+    public static int getNbPotionSoin() {
+        return nbPotionSoin;
+    }
+
+    public static void setNbPotionSoin(int nb) {
+        nbPotionSoin = nb;
+    }
+
+    public Personnage getPerso() {
+        return perso;
+    }
+
+    public void setPerso(Personnage perso) {
+        this.perso = perso;
+    }
+
     public Vector<Objet> getFleches() {
         return fleches;
+    }
+
+    public void setFleches(Vector<Objet> fleches) {
+        this.fleches = fleches;
     }
 
     public Vector<Objet> getPotionSoins() {
         return potionSoins;
     }
 
+    public void setPotionSoins(Vector<Objet> potionSoins) {
+        this.potionSoins = potionSoins;
+    }
+
     public Vector<Objet> getEpees() {
         return epees;
+    }
+
+    public void setEpees(Vector<Objet> epees) {
+        this.epees = epees;
     }
 
     public int getType() {
         return type;
     }
-
 
     /**
      * A method provided for Joueur to choose his Personnage and name.
@@ -93,41 +134,17 @@ public class Joueur {
         }
     }
 
-    public static int getNbFleche() {
-        return nbFleche;
-    }
-
-    public static void setNbFleche(int nb) {
-        nbFleche = nb;
-    }
-
-    public static int getNbEpee() {
-        return nbEpee;
-    }
-
-    public static void setNbEpee(int nb) {
-        nbEpee = nb;
-    }
-
-    public static int getNbPotionSoin() {
-        return nbPotionSoin;
-    }
-
-    public static void setNbPotionSoin(int nb) {
-        nbPotionSoin = nb;
-    }
-
     public void affiche() {
         perso.affiche();
     }
 
     public void moveUp() {
-        if(perso.getPos().getY() <= 0 ){
+        if (perso.getPos().getY() <= 0) {
             System.out.println("border!");
             return;
         }
         if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1) != 0) { //can't move up
-            System.out.println("Position is already occupied by : " +World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1) );
+            System.out.println("Position is already occupied by : " + World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - 1));
             return;
         }
 
@@ -139,12 +156,12 @@ public class Joueur {
     }
 
     public void moveDown() {
-        if(perso.getPos().getY() >= 99 ){
+        if (perso.getPos().getY() >= 99) {
             System.out.println("border!");
             return;
         }
         if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1) != 0) { //can't move down
-            System.out.println("Position is already occupied by : " +World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1) );
+            System.out.println("Position is already occupied by : " + World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + 1));
             return;
         }
 
@@ -157,12 +174,12 @@ public class Joueur {
     }
 
     public void moveLeft() {
-        if(perso.getPos().getX() <= 0 ){
+        if (perso.getPos().getX() <= 0) {
             System.out.println("border!");
             return;
         }
         if (World.getOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY()) != 0) { //can't move left
-            System.out.println("Position is already occupied by : " + World.getOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY() ));
+            System.out.println("Position is already occupied by : " + World.getOCCUPIED(perso.getPos().getX() - 1, perso.getPos().getY()));
             return;
         }
 
@@ -174,7 +191,7 @@ public class Joueur {
     }
 
     public void moveRight() {
-        if(perso.getPos().getX() >= 99 ){
+        if (perso.getPos().getX() >= 99) {
             System.out.println("border!");
             return;
         }
@@ -220,7 +237,7 @@ public class Joueur {
                                 System.out.println("捡起 PotionSoin");
                                 break;
                             case 10:
-                                Epinard epinard =(Epinard)o;
+                                Epinard epinard = (Epinard) o;
                                 epinard.setState(1);
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
@@ -256,7 +273,7 @@ public class Joueur {
                                 System.out.println("捡起 PotionSoin");
                                 break;
                             case 10:
-                                Epinard epinard =(Epinard)o;
+                                Epinard epinard = (Epinard) o;
                                 epinard.setState(1);
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
@@ -269,7 +286,7 @@ public class Joueur {
                 case 3:
                     Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//物品的坐标
                     int type3 = World.getOCCUPIED(p.getX(), p.getY() + 1);
-                    if (type3 == 2  || type3 == 4 || type3 == 10) {
+                    if (type3 == 2 || type3 == 4 || type3 == 10) {
                         Objet o = World.getObjet(p3.getX(), p3.getY());
                         switch (type3) {
                             case 2:
@@ -285,14 +302,14 @@ public class Joueur {
                             case 4:
                                 PotionSoin po = (PotionSoin) o;
                                 po.setState(1);
-                               // potionSoins.add(new PotionSoin(po));
+                                // potionSoins.add(new PotionSoin(po));
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
                                 System.out.println("捡起 PotionSoin");
                                 break;
                             case 10:
-                                Epinard epinard =(Epinard)o;
+                                Epinard epinard = (Epinard) o;
                                 epinard.setState(1);
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
@@ -305,7 +322,7 @@ public class Joueur {
                 case 4:
                     Point2D p4 = new Point2D(p.getX() - 1, p.getY());//物品的坐标
                     int type4 = World.getOCCUPIED(p.getX() - 1, p.getY());
-                    if (type4 == 2  || type4 == 4 || type4 == 10) {
+                    if (type4 == 2 || type4 == 4 || type4 == 10) {
                         Objet o = World.getObjet(p4.getX(), p4.getY());
                         switch (type4) {
                             case 2:
@@ -328,7 +345,7 @@ public class Joueur {
                                 System.out.println("捡起 PotionSoin");
                                 break;
                             case 10:
-                                Epinard epinard =(Epinard)o;
+                                Epinard epinard = (Epinard) o;
                                 epinard.setState(1);
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
@@ -372,7 +389,7 @@ public class Joueur {
                 case 2:
                     Point2D p2 = new Point2D(p.getX() + 1, p.getY());//物品的坐标
                     int type2 = World.getOCCUPIED(p.getX() + 1, p.getY());
-                    if ( type2 == 3 || type2 == 4) {
+                    if (type2 == 3 || type2 == 4) {
                         Objet o = World.getObjet(p2.getX(), p2.getY());
                         switch (type2) {
 
@@ -400,7 +417,7 @@ public class Joueur {
                 case 3:
                     Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//物品的坐标
                     int type3 = World.getOCCUPIED(p.getX(), p.getY() + 1);
-                    if ( type3 == 3 || type3 == 4) {
+                    if (type3 == 3 || type3 == 4) {
                         Objet o = World.getObjet(p3.getX(), p3.getY());
                         switch (type3) {
                             case 3:
@@ -427,7 +444,7 @@ public class Joueur {
                 case 4:
                     Point2D p4 = new Point2D(p.getX() - 1, p.getY());//物品的坐标
                     int type4 = World.getOCCUPIED(p.getX() - 1, p.getY());
-                    if ( type4 == 3 || type4 == 4) {
+                    if (type4 == 3 || type4 == 4) {
                         Objet o = World.getObjet(p4.getX(), p4.getY());
                         switch (type4) {
 
@@ -467,58 +484,57 @@ public class Joueur {
             switch (perso.getDirection()) {
                 case 1:
                     Creature c1 = getTarget();
-                    if(c1 == null){
+                    if (c1 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     a.combattre(c1);
                     c1.affiche();
-                    if(c1.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c1.getPos(),1));
+                    if (c1.getPtVie() <= 0) {
                         World.creatures.remove(c1);
-                        World.setOCCUPIED(c1.getPos().getX(),c1.getPos().getY(),0);
+                        World.setOCCUPIED(c1.getPos().getX(), c1.getPos().getY(), 0);
                     }
                     break;
                 case 2:
                     Creature c2 = getTarget();
-                    if(c2 == null){
+                    if (c2 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     a.combattre(c2);
                     c2.affiche();
-                    if(c2.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c2.getPos(),1));
+                    if (c2.getPtVie() <= 0) {
+
                         World.creatures.remove(c2);
-                        World.setOCCUPIED(c2.getPos().getX(),c2.getPos().getY(),0);
+                        World.setOCCUPIED(c2.getPos().getX(), c2.getPos().getY(), 0);
                     }
                     break;
                 case 3:
                     Creature c3 = getTarget();
-                    if(c3 == null){
+                    if (c3 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     a.combattre(c3);
                     c3.affiche();
-                    if(c3.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c3.getPos(),1));
+                    if (c3.getPtVie() <= 0) {
+
                         World.creatures.remove(c3);
-                        World.setOCCUPIED(c3.getPos().getX(),c3.getPos().getY(),0);
+                        World.setOCCUPIED(c3.getPos().getX(), c3.getPos().getY(), 0);
                     }
                     break;
                 case 4:
                     Creature c4 = getTarget();
-                    if(c4 == null){
+                    if (c4 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     a.combattre(c4);
-                   c4.affiche();
-                    if(c4.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c4.getPos(),1));
+                    c4.affiche();
+                    if (c4.getPtVie() <= 0) {
+
                         World.creatures.remove(c4);
-                        World.setOCCUPIED(c4.getPos().getX(),c4.getPos().getY(),0);
+                        World.setOCCUPIED(c4.getPos().getX(), c4.getPos().getY(), 0);
                     }
                     break;
             }
@@ -527,58 +543,56 @@ public class Joueur {
             switch (perso.getDirection()) {
                 case 1:
                     Creature c1 = getTarget();
-                    if(c1 == null){
+                    if (c1 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     g.combattre(c1);
                     c1.affiche();
-                    if(c1.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c1.getPos(),1));
+                    if (c1.getPtVie() <= 0) {
                         World.creatures.remove(c1);
-                        World.setOCCUPIED(c1.getPos().getX(),c1.getPos().getY(),0);
+                        World.setOCCUPIED(c1.getPos().getX(), c1.getPos().getY(), 0);
                     }
                     break;
                 case 2:
                     Creature c2 = getTarget();
-                    if(c2 == null){
+                    if (c2 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     g.combattre(c2);
                     c2.affiche();
-                    if(c2.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c2.getPos(),1));
+                    if (c2.getPtVie() <= 0) {
                         World.creatures.remove(c2);
-                        World.setOCCUPIED(c2.getPos().getX(),c2.getPos().getY(),0);
+                        World.setOCCUPIED(c2.getPos().getX(), c2.getPos().getY(), 0);
                     }
                     break;
                 case 3:
                     Creature c3 = getTarget();
-                    if(c3 == null){
+                    if (c3 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     g.combattre(c3);
-                    c3.affiche();;
-                    if(c3.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c3.getPos(),1));
+                    c3.affiche();
+                    if (c3.getPtVie() <= 0) {
+
                         World.creatures.remove(c3);
-                        World.setOCCUPIED(c3.getPos().getX(),c3.getPos().getY(),0);
+                        World.setOCCUPIED(c3.getPos().getX(), c3.getPos().getY(), 0);
                     }
                     break;
                 case 4:
                     Creature c4 = getTarget();
-                    if(c4 == null){
+                    if (c4 == null) {
                         System.out.println("there is no target to attack!");
                         break;
                     }
                     g.combattre(c4);
                     c4.affiche();
-                    if(c4.getPtVie() <= 0){
-                        MyPanel.bombs.add(new Bomb(c4.getPos(),1));
+                    if (c4.getPtVie() <= 0) {
+
                         World.creatures.remove(c4);
-                        World.setOCCUPIED(c4.getPos().getX(),c4.getPos().getY(),0);
+                        World.setOCCUPIED(c4.getPos().getX(), c4.getPos().getY(), 0);
                     }
                     break;
             }
@@ -588,45 +602,61 @@ public class Joueur {
 
     /**
      * 得到在 joueur 的正前方攻击范围之内的 Creature
+     *
      * @return
      */
-    public Creature getTarget(){
+    public Creature getTarget() {
         Creature c = null;
         int distance = 0;
-        switch (perso.getDirection()){
+        switch (perso.getDirection()) {
             case 1:
-                if(perso.getPos().getY() < perso.getDistAttMax()){distance = perso.getPos().getY(); }else{distance = perso.getDistAttMax();} //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
-                for(int i = 1; i <= distance;i++){
-                    if(World.getOCCUPIED(perso.getPos().getX(),perso.getPos().getY()-i) >= 5 ){ //代表是生物，可以攻击
-                       c = World.getCreature(perso.getPos().getX(),perso.getPos().getY()-i);
-                       break;
+                if (perso.getPos().getY() < perso.getDistAttMax()) {
+                    distance = perso.getPos().getY();
+                } else {
+                    distance = perso.getDistAttMax();
+                } //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
+                for (int i = 1; i <= distance; i++) {
+                    if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                        c = World.getCreature(perso.getPos().getX(), perso.getPos().getY() - i);
+                        break;
                     }
                 }
                 break;
             case 2:
-                if(perso.getPos().getX() > World.TAILLE -1 - perso.getDistAttMax()){distance =World.TAILLE - 1 - perso.getPos().getX(); }else{distance = perso.getDistAttMax();} //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
-
-                for(int i = 1; i <= distance;i++){
-                    if(World.getOCCUPIED(perso.getPos().getX()+i,perso.getPos().getY()) >= 5 ){ //代表是生物，可以攻击
-                        c = World.getCreature(perso.getPos().getX()+i,perso.getPos().getY());
+                if (perso.getPos().getX() > World.TAILLE - 1 - perso.getDistAttMax()) {
+                    distance = World.TAILLE - 1 - perso.getPos().getX();
+                } else {
+                    distance = perso.getDistAttMax();
+                } //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
+                for (int i = 1; i <= distance; i++) {
+                    if (World.getOCCUPIED(perso.getPos().getX() + i, perso.getPos().getY()) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                        c = World.getCreature(perso.getPos().getX() + i, perso.getPos().getY());
                         break;
                     }
                 }
                 break;
             case 3:
-                if(perso.getPos().getY() > World.TAILLE -1 - perso.getDistAttMax()){distance =World.TAILLE - 1 - perso.getPos().getY(); }else{distance = perso.getDistAttMax();}
-                for(int i = 1; i <=distance;i++){
-                    if(World.getOCCUPIED(perso.getPos().getX(),perso.getPos().getY()+i) >= 5 ){ //代表是生物，可以攻击
-                        c = World.getCreature(perso.getPos().getX(),perso.getPos().getY()+i);
+                if (perso.getPos().getY() > World.TAILLE - 1 - perso.getDistAttMax()) {
+                    distance = World.TAILLE - 1 - perso.getPos().getY();
+                } else {
+                    distance = perso.getDistAttMax();
+                }
+                for (int i = 1; i <= distance; i++) {
+                    if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + i) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                        c = World.getCreature(perso.getPos().getX(), perso.getPos().getY() + i);
                         break;
                     }
                 }
                 break;
             case 4:
-                if(perso.getPos().getX() < perso.getDistAttMax()){distance = perso.getPos().getX(); }else{distance = perso.getDistAttMax();}
-                for(int i = 1; i <= distance;i++){
-                    if(World.getOCCUPIED(perso.getPos().getX()-i,perso.getPos().getY()) >= 5 ){ //代表是生物，可以攻击
-                        c = World.getCreature(perso.getPos().getX()-i,perso.getPos().getY());
+                if (perso.getPos().getX() < perso.getDistAttMax()) {
+                    distance = perso.getPos().getX();
+                } else {
+                    distance = perso.getDistAttMax();
+                }
+                for (int i = 1; i <= distance; i++) {
+                    if (World.getOCCUPIED(perso.getPos().getX() - i, perso.getPos().getY()) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                        c = World.getCreature(perso.getPos().getX() - i, perso.getPos().getY());
                         break;
                     }
                 }
@@ -636,7 +666,7 @@ public class Joueur {
         return c;
     }
 
-    public void guerir(){
+    public void guerir() {
         perso.usePotion();
     }
 

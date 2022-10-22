@@ -108,7 +108,7 @@ public class Guerrier extends Personnage implements Combattant {
 
     @Override
     public String toString() {
-        return "Guerrier{" + '}';
+        return "Guerrier " + " " +type + " " + getNom()+ " " +getDistAttMax()+ " " +getPtVie() + " " + getDegAtt() + " " + getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY()+'\n';
     }
 
     public void affiche() {
@@ -119,4 +119,6 @@ public class Guerrier extends Personnage implements Combattant {
     public Vector<Epee> getEpees() {
         return epees;
     }
+
+
 }

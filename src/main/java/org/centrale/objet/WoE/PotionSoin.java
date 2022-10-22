@@ -59,4 +59,9 @@ public class PotionSoin extends Objet implements Utilisable {
     public int getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Epee " + type + " " + recover +  " " + getLife() + " "+ getValeur() + " " + getName() + " " + getState() + " " +getPos().getX()+ " " +getPos().getY()+ '\n';
+    }
 }

@@ -5,6 +5,9 @@
  */
 package org.centrale.objet.WoE;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -62,14 +65,26 @@ public class World {
      */
     private static final int[][] OCCUPIED = new int[TAILLE][TAILLE];
     /**
-     * To store different creatures
+     * To store different creatures: Archer, Paysan, Lapin, Guerrier, Loup
      */
     public static ArrayList<Creature> creatures = new ArrayList<>();
+
     /**
-     * To store different objets
+     * To store different objets:epinard,fleche,epee,potionSoin
      */
     public static ArrayList<Objet> objets = new ArrayList<>();
 
+    public static ArrayList<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public static ArrayList<Objet> getObjets() {
+        return objets;
+    }
+
+    public static Vector<NuageToxique> getNuageToxiques() {
+        return nuageToxiques;
+    }
 
     /**
      * Default parameterless constructor
@@ -158,11 +173,11 @@ public class World {
         }
 
 
-        for (int k = TAILLE-1; k >=0; k--) {
-            for (int j = TAILLE-1; j >= 0; j--) {
-                System.out.print(OCCUPIED[k][j] + " ");
+        for (int j = TAILLE-1; j >=0; j--) {
+            for (int k = 0; k < TAILLE; k++) {
+                System.out.print(OCCUPIED[j][k]);
             }
-            System.out.print("\n");
+            System.out.println();
         }
     }
 
@@ -209,6 +224,9 @@ public class World {
         }
     }
 
+    /**
+     * To store nuageToxiques.
+     */
     public static Vector<NuageToxique> nuageToxiques = new Vector<>();
 
     public void geneEpinard(int num){
@@ -225,6 +243,16 @@ public class World {
             nuageToxiques.add(nuageToxique);
         }
     }
+
+    /**
+     * 读取世界里的信息
+     * 实现的功能：
+     *
+     */
+    public void chargementPartie(){
+
+    }
+
 
     /**
      * To test if the function SetPosition of the class Creature works well.
@@ -277,7 +305,6 @@ public class World {
      */
     public void geneCreature(int num) {
         int count = 0;
-
         while (true) {
             int type = numberRandom5();
             switch (type) {

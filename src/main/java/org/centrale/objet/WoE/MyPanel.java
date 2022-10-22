@@ -9,8 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author wuzilong
@@ -20,22 +26,19 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     static Joueur joueur;
     World world;
 
+    /**
+     * 显示的地图的放大倍数
+     */
     int zoom = 8;
 
-    static Vector<Bomb> bombs = new Vector<>();
-    Image image = null;
 
     MyPanel() {
         joueur = new Joueur();
-
         joueur.affiche();
         world = new World();
         world.creerMondeAlea();
 
         world.afficheWorld();
-
-        //初始化图片
-        this.image = Toolkit.getDefaultToolkit().getImage("image/bomb.jpeg");
     }
 
 
@@ -170,7 +173,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         String numEpinard = joueur.nbEpinard+"";
         g.drawString(numEpinard,World.TAILLE*zoom + 120,90);
 
-
     }
 
     /**
@@ -188,23 +190,11 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         drawWorldObjet(g);
         drawNuageToxique(g);
         //drawFleche(g);
-        try {
-            drawBomb(g);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
 
     }
 
 
-
-    public void drawBomb(Graphics g) throws InterruptedException {
-        for (int i = 0; i < bombs.size(); i++) {
-            Bomb bomb = bombs.get(i);
-            g.drawImage(image,bomb.getPos().getX(),bomb.getPos().getY(),110,110 ,this);
-            bombs.remove(bomb);
-        }
-    }
 
     /**
      * Draw all the objet in th world.
@@ -304,7 +294,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             if(World.GAMESTATUESTATUS == 0){
                 continue;
             }
-
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -313,21 +302,42 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
             //判断玩家是否在 nuageToxiques 周围，在周围就会收到攻击
             try {
-                nuageAttack(World.nuageToxiques);
+                nuageAttack(World.getNuageToxiques());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
+            try {
+                loupAttack(World.getCreatures());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             this.repaint();
 
             //玩家生命值 <= 0 就结束游戏
             if(joueur.perso.getPtVie() <= 0){
                 World.setGAMESTATUESTATUS(0);
+                save();
                 TestWoE.endOfGame();//结束游戏
             }
 
         }
     }
 
+    public void save(){
+        String fileName = "";
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("please enter filename: (or by default press \"n\")");
+        String s = scanner.next();
+        if(s.equals("n"))
+        {
+            fileName = "sauvegarde" + World.gameCount;
+        }else {
+            fileName= s;
+        }
+        sauvegardePartie(fileName);
+    }
 
 
     @Override
@@ -335,19 +345,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
     }
 
-    //**************显示 Fleche 的移动轨迹，没写完
-    public void drawFleche(Graphics g){
-        if(joueur.perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")){
-            Archer a = (Archer) joueur.perso;
-            Vector<Fleche> fleches = a.getFleches();
-
-                Fleche fleche = fleches.lastElement();
-
-                    g.setColor(new Color(255 ,255 ,255));
-                    g.fillOval(fleche.getPos().getX()*zoom-zoom/2,fleche.getPos().getY()*zoom-zoom/2,zoom,zoom);
-
-        }
-    }
 
     /**
      * Detect whether a button is pressed
@@ -382,9 +379,12 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         if(e.getKeyCode() == KeyEvent.VK_L){
             joueur.perso.useEpinard();
         }
+//        if(e.getKeyCode() == KeyEvent.VK_S)
+//        {
+//            sauvegardePartie("tset.txt");
+//        }
         this.repaint();
     }
-
 
 
     /**
@@ -408,8 +408,113 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    /**
+     * 世界里的狼会随机攻击人类
+     */
+    public void loupAttack(ArrayList<Creature> creatures) throws InterruptedException {
+        Thread.sleep(1000);
+        Iterator<Creature> iterator = creatures.iterator();
+        while (iterator.hasNext()){
+            Creature creature = iterator.next();
+            if(World.getOCCUPIED(creature.getPos().getX(),creature.getPos().getY()) == 9 && creature.getPtVie() > 0) // is loup and is alive
+            {
+                Loup loup = (Loup) creature; //转成 Loup，因为 disAttMax 在 Loup 类里面
+                if(Point2D.distance(loup.getPos().getX(),loup.getPos().getY(),joueur.perso.getPos().getX(), joueur.perso.getPos().getY()) <= (loup.getDistAttMax()))//玩家在Loup攻击范围内
+                {
+                    loup.combattre(joueur.perso);
+                }
+            }
+        }
+    }
+
+    /**
+     * 保存世界的信息到文件里
+     * 因为我们的 joueur world 等都在 mypanel 里面，所以这个也放在 mypanel 里面
+     * 实现的功能：
+     *      保存信息，注意格式
+     *      能够询问使用默认名或者自定义文件名
+     *      每轮游戏提醒玩家保存游戏
+     * @param fileName 保存文件的名字
+     */
+    public void sauvegardePartie(String fileName){
+        try {
+            //创建 FileWriter
+            FileWriter file = new FileWriter(fileName);
+
+            //创建 BufferedWriter
+            BufferedWriter output = new BufferedWriter(file);
+
+
+            //存放世界的 OCCUPIED[][]
+            output.write("OCCUPIED");
+            output.newLine();
+            for (int i = 0; i < World.TAILLE; i++) {
+                for (int j = 0; j < World.TAILLE; j++) {
+                    int a = World.getOCCUPIED(i,j);
+                    output.write(a + " ");
+                  //  System.out.print(World.getOCCUPIED(i,j));
+                }
+                output.newLine();
+                System.out.println();
+            }
+
+            //存放玩家类型
+            output.write("joueur ");
+            String s = joueur.perso.getClass().toString();
+            output.write(s.substring(s.length()-5)+" ");
+
+            //存放玩家的物品信息 fleche epee epinard potionsoin
+            int nb1 = joueur.getNbEpinard();
+            int nb2 =joueur.getNbPotionSoin();
+            int nb3=joueur.getNbEpee();
+            int nb4 = joueur.getNbFleche();
+            output.write(nb1+" ");
+            output.write(nb2+" ");
+            output.write(nb3+" ");
+            output.write(nb4+" ");
+            //存放玩家的生命值等信息
+            output.write(joueur.perso.getNom() + " " + joueur.perso.getDistAttMax() + " " + joueur.perso.getPtVie() + " " + joueur.perso.getDegAtt()+" " + joueur.perso.getPtPar() + " " + joueur.perso.getPageAtt()+" " + joueur.perso.getPagePar() + " " + joueur.perso.getDirection() + " " + joueur.perso.getPos().getX()+" " + joueur.perso.getPos().getY());
+            output.newLine();
+
+            //存放世界中的物品信息
+            Iterator<Objet> iterator = World.getObjets().iterator();
+            while (iterator.hasNext()){
+                Objet o  = iterator.next();
+                String ss = o.toString();
+                output.write(ss);
+            }
+
+            //存放 nuageToxique
+            Iterator<NuageToxique> iterator1 = World.getNuageToxiques().iterator();
+            while (iterator1.hasNext()){
+                NuageToxique n = iterator1.next();
+                String ss = n.toString();
+                output.write(ss);
+            }
+
+            //存放世界中的 creature 信息
+            Iterator<Creature> iterator2 = World.getCreatures().iterator();
+            while (iterator2.hasNext()){
+                Creature c = iterator2.next();
+                String ss = c.toString();
+                output.write(ss);
+            }
+
+            output.flush();
+            output.close();
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+
+        }
+
+    }
+
+
+
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

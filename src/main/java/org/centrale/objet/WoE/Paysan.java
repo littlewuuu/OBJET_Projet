@@ -43,4 +43,9 @@ public class Paysan extends Personnage {
     public int getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Guerrier " + " " +type + " " + getNom()+ " " +getDistAttMax()+ " " +getPtVie() + " " + getDegAtt() + " " + getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY()+'\n';
+    }
 }
