@@ -26,13 +26,13 @@ import java.util.*;
 public class World {
 
     /**
-     * 1 表示游戏进行
-     * 0 表示游戏结束
+     * 1 Indicates that the game is in progress
+     * 0 Indicates that the game is over
      */
     public static int GAMESTATUESTATUS = 1;
 
     /**
-     * 记录游戏的轮数
+     * Record the number of rounds of the game.
      */
     public static int gameCount = 0;
 
@@ -156,8 +156,6 @@ public class World {
     public void tourDeJeu() {
 
     }
-
-
 
 
 
@@ -809,7 +807,7 @@ public class World {
 //    }
 
     /**
-     * 返回世界中该坐标的物品
+     * Returns the item information at this coordinate in the world, which is used to judge whether it is an attackable object when the player attacks.
      * @param x
      * @param y
      * @return

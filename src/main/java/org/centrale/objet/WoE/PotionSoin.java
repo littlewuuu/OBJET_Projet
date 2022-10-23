@@ -35,7 +35,6 @@ public class PotionSoin extends Objet implements Utilisable {
 
     /**
      * Recovery of life value.
-     *
      * @param c Target of recovery
      */
     public void Guerir(Creature c) {

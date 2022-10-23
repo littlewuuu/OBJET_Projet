@@ -22,17 +22,17 @@ public class TestWoE extends JFrame {
 
 
     /**
-     * 结束游戏出现的界面
+     * Called when the game is over.
      */
     public static void endOfGame(){
         System.out.println("Game over :(");
-        World.setGameCount(World.getGameCount() + 1); //游戏轮数加一
-        //在使用的 nourriture 的轮数加一
+        World.setGameCount(World.getGameCount() + 1); //Rounds plus one
+        //Add one to the number of rounds in the nourriture used
         for (Nourriture nou: Personnage.getNourritureInUse()) {
             nou.setCount(nou.getCount()+1);
         }
 
-        //如果 NourritureInUse 里面的 Epinard 效果完了，就恢复 jouer 的属性
+        //If the Nourriture effect in NourritureInUse is over, restore the properties of the jouer
         Iterator<Nourriture> iterator = Personnage.getNourritureInUse().iterator();
         while (iterator.hasNext()){
             Epinard epinard = (Epinard) iterator.next();
@@ -75,9 +75,9 @@ public class TestWoE extends JFrame {
 
         Thread thread = new Thread(mp);
         thread.start();
-        add(mp);//把面板(就是游戏的绘图区域)
+        add(mp);
         setSize(World.TAILLE*8 + 250, World.TAILLE*8+30);
-        addKeyListener(mp);//让JFrame 监听mp的键盘事件
+        addKeyListener(mp);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -85,7 +85,6 @@ public class TestWoE extends JFrame {
 
 
 /*
-
         myworld.robin.affiche();
         myworld.peon.affiche();
         myworld.bugs1.affiche();

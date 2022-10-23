@@ -17,16 +17,6 @@ public class Joueur {
      * The role Joueur can choose: Archer, Guerrier
      */
     public Personnage perso;
-    public Vector<Objet> fleches = new Vector<>();
-    public Vector<Objet> potionSoins = new Vector<>();
-    public Vector<Objet> epees = new Vector<>();
-
-    /**
-     * 1:up
-     * 2:right
-     * 3:down
-     * 4:left
-     */
 
 
     Joueur() {
@@ -73,29 +63,7 @@ public class Joueur {
         this.perso = perso;
     }
 
-    public Vector<Objet> getFleches() {
-        return fleches;
-    }
 
-    public void setFleches(Vector<Objet> fleches) {
-        this.fleches = fleches;
-    }
-
-    public Vector<Objet> getPotionSoins() {
-        return potionSoins;
-    }
-
-    public void setPotionSoins(Vector<Objet> potionSoins) {
-        this.potionSoins = potionSoins;
-    }
-
-    public Vector<Objet> getEpees() {
-        return epees;
-    }
-
-    public void setEpees(Vector<Objet> epees) {
-        this.epees = epees;
-    }
 
     public int getType() {
         return type;
@@ -138,6 +106,9 @@ public class Joueur {
         perso.affiche();
     }
 
+    /**
+     * This method enables the player to move up around the world, and will detect if the target position can be moved to.
+     */
     public void moveUp() {
         if (perso.getPos().getY() <= 0) {
             System.out.println("border!");
@@ -155,6 +126,7 @@ public class Joueur {
         System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
+    //This method enables the player to move down around the world, and will detect if the target position can be moved to.
     public void moveDown() {
         if (perso.getPos().getY() >= 99) {
             System.out.println("border!");
@@ -173,6 +145,7 @@ public class Joueur {
 
     }
 
+    //This method enables the player to move left around the world, and will detect if the target position can be moved to.
     public void moveLeft() {
         if (perso.getPos().getX() <= 0) {
             System.out.println("border!");
@@ -190,6 +163,7 @@ public class Joueur {
         System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
+    //This method enables the player to move right around the world, and will detect if the target position can be moved to.
     public void moveRight() {
         if (perso.getPos().getX() >= 99) {
             System.out.println("border!");
@@ -208,12 +182,12 @@ public class Joueur {
     }
 
     public void pickObjet() {
-        Point2D p = new Point2D(perso.getPos()); //joueur 的坐标
+        Point2D p = new Point2D(perso.getPos()); //joueur's coordinate
         if (perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")) { //is Archer
             Archer a = (Archer) perso;
             switch (perso.getDirection()) {
                 case 1:
-                    Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//物品的坐标
+                    Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//objet's coordinate
                     int type = World.getOCCUPIED(p.getX(), p.getY() - 1);
                     if (type == 2 || type == 4 || type == 10) {
                         Objet o = World.getObjet(p1.getX(), p1.getY());
@@ -225,7 +199,7 @@ public class Joueur {
                                 a.getFleches().add(new Fleche(f));
                                 nbFleche = a.getFleches().size();
                                 World.setOCCUPIED(p1.getX(), p1.getY(), 0);
-                                System.out.println("捡起 Fleche");
+                                System.out.println("pick up Fleche");
                                 break;
                             case 4:
                                 PotionSoin po = (PotionSoin) o;
@@ -234,7 +208,7 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p1.getX(), p1.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                             case 10:
                                 Epinard epinard = (Epinard) o;
@@ -242,13 +216,13 @@ public class Joueur {
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
                                 World.setOCCUPIED(p1.getX(), p1.getY(), 0);
-                                System.out.println("捡起 Epianrd");
+                                System.out.println("pick up Epianrd");
                                 break;
                         }
                     }
                     break;
                 case 2:
-                    Point2D p2 = new Point2D(p.getX() + 1, p.getY());//物品的坐标
+                    Point2D p2 = new Point2D(p.getX() + 1, p.getY());//object's coordinate
                     int type2 = World.getOCCUPIED(p.getX() + 1, p.getY());
                     if (type2 == 2 || type2 == 4 || type2 == 10) {
                         Objet o = World.getObjet(p2.getX(), p2.getY());
@@ -260,7 +234,7 @@ public class Joueur {
                                 a.getFleches().add(new Fleche(f));
                                 nbFleche = a.getFleches().size();
                                 World.setOCCUPIED(p2.getX(), p2.getY(), 0);
-                                System.out.println("捡起 Fleche");
+                                System.out.println("pick up Fleche");
                                 break;
 
                             case 4:
@@ -270,7 +244,7 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p2.getX(), p2.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                             case 10:
                                 Epinard epinard = (Epinard) o;
@@ -278,13 +252,13 @@ public class Joueur {
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
                                 World.setOCCUPIED(p2.getX(), p2.getY(), 0);
-                                System.out.println("捡起 Epianrd");
+                                System.out.println("pick up Epianrd");
                                 break;
                         }
                     }
                     break;
                 case 3:
-                    Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//物品的坐标
+                    Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//object's coordinate
                     int type3 = World.getOCCUPIED(p.getX(), p.getY() + 1);
                     if (type3 == 2 || type3 == 4 || type3 == 10) {
                         Objet o = World.getObjet(p3.getX(), p3.getY());
@@ -296,7 +270,7 @@ public class Joueur {
                                 a.getFleches().add(new Fleche(f));
                                 nbFleche = a.getFleches().size();
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
-                                System.out.println("捡起 Fleche");
+                                System.out.println("pick up Fleche");
                                 break;
 
                             case 4:
@@ -306,7 +280,7 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                             case 10:
                                 Epinard epinard = (Epinard) o;
@@ -314,13 +288,13 @@ public class Joueur {
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
-                                System.out.println("捡起 Epianrd");
+                                System.out.println("pick up Epianrd");
                                 break;
                         }
                     }
                     break;
                 case 4:
-                    Point2D p4 = new Point2D(p.getX() - 1, p.getY());//物品的坐标
+                    Point2D p4 = new Point2D(p.getX() - 1, p.getY());//object's coordinate
                     int type4 = World.getOCCUPIED(p.getX() - 1, p.getY());
                     if (type4 == 2 || type4 == 4 || type4 == 10) {
                         Objet o = World.getObjet(p4.getX(), p4.getY());
@@ -332,7 +306,7 @@ public class Joueur {
                                 a.getFleches().add(new Fleche(f));
                                 nbFleche = a.getFleches().size();
                                 World.setOCCUPIED(p4.getX(), p4.getY(), 0);
-                                System.out.println("捡起 Fleche");
+                                System.out.println("pick up Fleche");
                                 break;
 
                             case 4:
@@ -342,7 +316,7 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p4.getX(), p4.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                             case 10:
                                 Epinard epinard = (Epinard) o;
@@ -350,7 +324,7 @@ public class Joueur {
                                 a.getEpinard().add(epinard);
                                 nbEpinard = a.getEpinard().size();
                                 World.setOCCUPIED(p4.getX(), p4.getY(), 0);
-                                System.out.println("捡起 Epianrd");
+                                System.out.println("pick up Epianrd");
                                 break;
                         }
                     }
@@ -360,7 +334,7 @@ public class Joueur {
             Guerrier a = (Guerrier) perso;
             switch (perso.getDirection()) {
                 case 1:
-                    Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//物品的坐标
+                    Point2D p1 = new Point2D(p.getX(), p.getY() - 1);//object's coordinate
                     int type = World.getOCCUPIED(p.getX(), p.getY() - 1);
                     if (type == 3 || type == 4) {
                         Objet o = World.getObjet(p1.getX(), p1.getY());
@@ -372,7 +346,7 @@ public class Joueur {
                                 a.getEpees().add(e);
                                 nbEpee = a.getEpees().size();
                                 World.setOCCUPIED(p1.getX(), p1.getY(), 0);
-                                System.out.println("捡起 Epee");
+                                System.out.println("pick up  Epee");
                                 break;
                             case 4:
                                 PotionSoin po = (PotionSoin) o;
@@ -381,13 +355,13 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p1.getX(), p1.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                         }
                     }
                     break;
                 case 2:
-                    Point2D p2 = new Point2D(p.getX() + 1, p.getY());//物品的坐标
+                    Point2D p2 = new Point2D(p.getX() + 1, p.getY());//object's coordinate
                     int type2 = World.getOCCUPIED(p.getX() + 1, p.getY());
                     if (type2 == 3 || type2 == 4) {
                         Objet o = World.getObjet(p2.getX(), p2.getY());
@@ -400,7 +374,7 @@ public class Joueur {
                                 a.getEpees().add(e);
                                 nbEpee = a.getEpees().size();
                                 World.setOCCUPIED(p2.getX(), p2.getY(), 0);
-                                System.out.println("捡起 Epee");
+                                System.out.println("pick up Epee");
                                 break;
                             case 4:
                                 PotionSoin po = (PotionSoin) o;
@@ -409,13 +383,13 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p2.getX(), p2.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                         }
                     }
                     break;
                 case 3:
-                    Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//物品的坐标
+                    Point2D p3 = new Point2D(p.getX(), p.getY() + 1);//object's coordinate
                     int type3 = World.getOCCUPIED(p.getX(), p.getY() + 1);
                     if (type3 == 3 || type3 == 4) {
                         Objet o = World.getObjet(p3.getX(), p3.getY());
@@ -427,7 +401,7 @@ public class Joueur {
                                 a.getEpees().add(e);
                                 nbEpee = a.getEpees().size();
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
-                                System.out.println("捡起 Epee");
+                                System.out.println("pick up Epee");
                                 break;
                             case 4:
                                 PotionSoin po = (PotionSoin) o;
@@ -436,13 +410,13 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p3.getX(), p3.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                         }
                     }
                     break;
                 case 4:
-                    Point2D p4 = new Point2D(p.getX() - 1, p.getY());//物品的坐标
+                    Point2D p4 = new Point2D(p.getX() - 1, p.getY());//object's coordinate
                     int type4 = World.getOCCUPIED(p.getX() - 1, p.getY());
                     if (type4 == 3 || type4 == 4) {
                         Objet o = World.getObjet(p4.getX(), p4.getY());
@@ -455,7 +429,7 @@ public class Joueur {
                                 a.getEpees().add(e);
                                 nbEpee = a.getEpees().size();
                                 World.setOCCUPIED(p4.getX(), p4.getY(), 0);
-                                System.out.println("捡起 Epee");
+                                System.out.println("pick up Epee");
                                 break;
                             case 4:
                                 PotionSoin po = (PotionSoin) o;
@@ -464,7 +438,7 @@ public class Joueur {
                                 a.getPotionsoins().add(po);
                                 nbPotionSoin = a.getPotionsoins().size();
                                 World.setOCCUPIED(p4.getX(), p4.getY(), 0);
-                                System.out.println("捡起 PotionSoin");
+                                System.out.println("pick up PotionSoin");
                                 break;
                         }
                     }
@@ -476,7 +450,8 @@ public class Joueur {
     }
 
     /**
-     * 只能攻击正前方的
+     * The attack is carried out by calling the combattre method of Archer or Guerrier.
+     * Can only attack creatures directly in front of it.
      */
     public void combattre() {
         if (perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")) { //Joueur's perso is Archer
@@ -538,7 +513,7 @@ public class Joueur {
                     }
                     break;
             }
-        } else {
+        } else { // is Guerrier
             Guerrier g = (Guerrier) perso;
             switch (perso.getDirection()) {
                 case 1:
@@ -601,8 +576,8 @@ public class Joueur {
     }
 
     /**
-     * 得到在 joueur 的正前方攻击范围之内的 Creature
-     *
+     * Get a Creature within direct attack range of the joueur.
+     * Only the nearest one is returned.
      * @return
      */
     public Creature getTarget() {
@@ -614,9 +589,9 @@ public class Joueur {
                     distance = perso.getPos().getY();
                 } else {
                     distance = perso.getDistAttMax();
-                } //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
+                } //If the distance to the boundary is less than perso.getDistAttMax(), the search range is the distance to the boundary
                 for (int i = 1; i <= distance; i++) {
-                    if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                    if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //Represents a creature that can attack
                         c = World.getCreature(perso.getPos().getX(), perso.getPos().getY() - i);
                         break;
                     }
@@ -627,9 +602,9 @@ public class Joueur {
                     distance = World.TAILLE - 1 - perso.getPos().getX();
                 } else {
                     distance = perso.getDistAttMax();
-                } //距离边界小于perso.getDistAttMax()时，搜索范围为到到边界的距离
+                } //If the distance to the boundary is less than perso.getDistAttMax(), the search range is the distance to the boundary
                 for (int i = 1; i <= distance; i++) {
-                    if (World.getOCCUPIED(perso.getPos().getX() + i, perso.getPos().getY()) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                    if (World.getOCCUPIED(perso.getPos().getX() + i, perso.getPos().getY()) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //Represents a creature that can attack
                         c = World.getCreature(perso.getPos().getX() + i, perso.getPos().getY());
                         break;
                     }
@@ -642,7 +617,7 @@ public class Joueur {
                     distance = perso.getDistAttMax();
                 }
                 for (int i = 1; i <= distance; i++) {
-                    if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + i) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                    if (World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() + i) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //Represents a creature that can attack
                         c = World.getCreature(perso.getPos().getX(), perso.getPos().getY() + i);
                         break;
                     }
@@ -655,7 +630,7 @@ public class Joueur {
                     distance = perso.getDistAttMax();
                 }
                 for (int i = 1; i <= distance; i++) {
-                    if (World.getOCCUPIED(perso.getPos().getX() - i, perso.getPos().getY()) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //代表是生物，可以攻击
+                    if (World.getOCCUPIED(perso.getPos().getX() - i, perso.getPos().getY()) >= 5 && World.getOCCUPIED(perso.getPos().getX(), perso.getPos().getY() - i) != 10) { //Represents a creature that can attack
                         c = World.getCreature(perso.getPos().getX() - i, perso.getPos().getY());
                         break;
                     }

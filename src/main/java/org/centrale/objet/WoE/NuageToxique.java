@@ -92,7 +92,7 @@ public class NuageToxique extends Objet implements Combattant,Deplacable,Runnabl
     public void run() {
         while (true) {
 
-            //玩家死亡后不移动
+            //stop moving when game is over
             if(World.GAMESTATUESTATUS == 0){
                 continue;
             }
@@ -103,16 +103,6 @@ public class NuageToxique extends Objet implements Combattant,Deplacable,Runnabl
                 throw new RuntimeException(e);
             }
             deplacer();
-
-
-            //判断 attackRange 里面有没有可攻击的生物
-            for(int i = - attackRange; i <= attackRange;i++)
-            {
-                for (int j = - attackRange; j <= attackRange; j++) {
-                    Creature c = World.getCreature(this.getPos().getX()+i,this.getPos().getY()+j);
-                    combattre(c);
-                }
-            }
 
             if(this.getLife()<=0)
                 break;

@@ -19,7 +19,6 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
     private int pageAtt = 70;
     private int pagePar = 60;
 
-
     private int direction = 1;
 
     public int getDirection() {

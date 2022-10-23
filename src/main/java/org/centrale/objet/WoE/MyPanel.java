@@ -19,6 +19,7 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * The interface used to display the game, which is convenient for the user to play
  * @author wuzilong
  */
 public class MyPanel extends JPanel implements KeyListener, Runnable {
@@ -27,7 +28,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     World world;
 
     /**
-     * 显示的地图的放大倍数
+     * The magnification of the displayed map.
+     * For better display, we will enlarge the actual size of the map according to this multiple.
      */
     int zoom = 8;
 
@@ -48,22 +50,21 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     * 显示图例信息
+     * Show legend information.
      * @param g
      */
     public void showInfo(Graphics g){
 
 
-        //显示操作信息背景
+        //Background of Operational Information
         g.setColor(Color.pink);
         g.fillRect(World.TAILLE*zoom + 10,240,200,50);
-        //显示操作信息
+        //Operational information
         g.setColor(Color.black);
         g.drawString("Press \" P \" to pick up an objet",World.TAILLE*zoom + 10,250);
         g.drawString("Press \" C \" to fight",World.TAILLE*zoom + 10,270);
         g.drawString("Press \" G \" to use potionsoin",World.TAILLE*zoom + 10,290);
 
-        //显示地图物品的对应关系
         g.setColor(new Color(0,228,114));
         g.fillOval(World.TAILLE*zoom + 10,310,zoom,zoom+3);
         g.drawString("-1:NuageToxique",World.TAILLE*zoom + 20,320);
@@ -107,10 +108,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
 
 
-        //显示玩家信息背景
+
         g.setColor(Color.pink);
         g.fillRect(World.TAILLE*zoom + 10,550,250,80);
-        //显示玩家信息
+        //Show player info
         g.setColor(Color.black);
         g.drawString("Informations of Joueur" ,World.TAILLE*zoom + 10,560);
 
@@ -143,7 +144,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     * Joueur 拥有的物品信息
+     * Displays information about items owned by Joueur.
      * @param g
      */
     public void showInfoObjet(Graphics g){
@@ -176,7 +177,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     * 画出图形
+     *
      * @param g  the <code>Graphics</code> context in which to paint
      */
     public void paint(Graphics g) {
@@ -189,8 +190,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         drawWorldCreature(g);
         drawWorldObjet(g);
         drawNuageToxique(g);
-        //drawFleche(g);
-
 
     }
 
@@ -290,7 +289,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     public void run() {
         while (true) {
 
-            //玩家死亡后地图不刷新
+            //Map does not refresh after player dies
             if(World.GAMESTATUESTATUS == 0){
                 continue;
             }
@@ -300,13 +299,13 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 e.printStackTrace();
             }
 
-            //判断玩家是否在 nuageToxiques 周围，在周围就会收到攻击
+            //Determines if the player is around nuageToxiques and will be attacked if is around
             try {
                 nuageAttack(World.getNuageToxiques());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
+            //Determine whether the player is around the Loup, if so there is a probability of being attacked (by using Loup's combattre method)
             try {
                 loupAttack(World.getCreatures());
             } catch (InterruptedException e) {
@@ -315,11 +314,11 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
             this.repaint();
 
-            //玩家生命值 <= 0 就结束游戏
+            //if player's life <= 0 then ends the game
             if(joueur.perso.getPtVie() <= 0){
                 World.setGAMESTATUESTATUS(0);
                 save();
-                TestWoE.endOfGame();//结束游戏
+                TestWoE.endOfGame();
             }
 
         }
@@ -388,7 +387,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
 
     /**
-     * 判断玩家是否在 huageToxique 的攻击范围内，如果是，则攻击
+     * 判Implement to determine whether the player is within the attack range of huageToxique, if so, attack.
      * @param nuageToxiques
      */
     public void nuageAttack(Vector<NuageToxique> nuageToxiques) throws InterruptedException {
@@ -409,7 +408,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     * 世界里的狼会随机攻击人类
+     * Implement to determine whether the player is within the attack range of Loup, if so, attack by using Loup's combattre method.
      */
     public void loupAttack(ArrayList<Creature> creatures) throws InterruptedException {
         Thread.sleep(1000);
@@ -428,24 +427,19 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     }
 
     /**
-     * 保存世界的信息到文件里
-     * 因为我们的 joueur world 等都在 mypanel 里面，所以这个也放在 mypanel 里面
-     * 实现的功能：
-     *      保存信息，注意格式
-     *      能够询问使用默认名或者自定义文件名
-     *      每轮游戏提醒玩家保存游戏
-     * @param fileName 保存文件的名字
+     * Save world information to txt file.
+     * @param fileName name of file.
      */
     public void sauvegardePartie(String fileName){
         try {
-            //创建 FileWriter
+            //create FileWriter
             FileWriter file = new FileWriter(fileName);
 
-            //创建 BufferedWriter
+            //create BufferedWriter
             BufferedWriter output = new BufferedWriter(file);
 
 
-            //存放世界的 OCCUPIED[][]
+            //save OCCUPIED[][]
             output.write("OCCUPIED");
             output.newLine();
             for (int i = 0; i < World.TAILLE; i++) {
@@ -458,12 +452,12 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 System.out.println();
             }
 
-            //存放玩家类型
+            //Stores the type selected by the player(Archer or Guerrier)
             output.write("joueur ");
             String s = joueur.perso.getClass().toString();
             output.write(s.substring(s.length()-5)+" ");
 
-            //存放玩家的物品信息 fleche epee epinard potionsoin
+            //Store player's item information: fleche, epee, epinard, potionsoin
             int nb1 = joueur.getNbEpinard();
             int nb2 =joueur.getNbPotionSoin();
             int nb3=joueur.getNbEpee();
@@ -472,11 +466,11 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             output.write(nb2+" ");
             output.write(nb3+" ");
             output.write(nb4+" ");
-            //存放玩家的生命值等信息
+            //Store the player's ptVie and other information
             output.write(joueur.perso.getNom() + " " + joueur.perso.getDistAttMax() + " " + joueur.perso.getPtVie() + " " + joueur.perso.getDegAtt()+" " + joueur.perso.getPtPar() + " " + joueur.perso.getPageAtt()+" " + joueur.perso.getPagePar() + " " + joueur.perso.getDirection() + " " + joueur.perso.getPos().getX()+" " + joueur.perso.getPos().getY());
             output.newLine();
 
-            //存放世界中的物品信息
+            //Stores item information in the world
             Iterator<Objet> iterator = World.getObjets().iterator();
             while (iterator.hasNext()){
                 Objet o  = iterator.next();
@@ -484,7 +478,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 output.write(ss);
             }
 
-            //存放 nuageToxique
+            //store nuageToxique
             Iterator<NuageToxique> iterator1 = World.getNuageToxiques().iterator();
             while (iterator1.hasNext()){
                 NuageToxique n = iterator1.next();
@@ -492,22 +486,19 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 output.write(ss);
             }
 
-            //存放世界中的 creature 信息
+            //store all creatures in the world
             Iterator<Creature> iterator2 = World.getCreatures().iterator();
             while (iterator2.hasNext()){
                 Creature c = iterator2.next();
                 String ss = c.toString();
                 output.write(ss);
             }
-
             output.flush();
             output.close();
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }finally {
-
         }
 
     }

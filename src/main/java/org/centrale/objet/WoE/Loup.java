@@ -61,11 +61,11 @@ public class Loup extends Monstre implements Combattant {
         int randdef = generateRandom.nextInt(100) + 1;
         double distance = Point2D.distance(this.getPos().getX(), this.getPos().getY(), c.getPos().getX(), c.getPos().getY());
         if (distance == 1) {//combat contact
-            if (randatt > c.getPageAtt()) {//rate 没击中
+            if (randatt > c.getPageAtt()) {//rate
             } else {//success
-                if (randdef > c.getPagePar()) { //防御失败
+                if (randdef > c.getPagePar()) { //defense failed
                     c.setPtVie(c.getPtVie() - this.getDegAtt());
-                } else {//防御成功
+                } else {//Defense succeeded
                     c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
                 }
             }

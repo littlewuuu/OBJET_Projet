@@ -160,10 +160,10 @@ public abstract class Personnage extends Creature {
     }
 
     /**
-     * 取消 nourriture 的效果，把玩家的 degATT 恢复
+     * Cancels the nourriture effect and restores the player's degAtt
      */
     public static void cancelEpinard(Epinard epinard){
-        MyPanel.joueur.perso.setDegAtt(MyPanel.joueur.perso.getDegAtt() -epinard.getBonus());
+        MyPanel.joueur.perso.setDegAtt(MyPanel.joueur.perso.getDegAtt() - epinard.getBonus());
     }
 
 
