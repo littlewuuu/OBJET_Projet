@@ -13,7 +13,7 @@ package org.centrale.objet.WoE;
  * @author ZouKang
  * @version 1.0
  */
-public class Monstre extends Creature {
+public abstract class Monstre extends Creature {
 
     /**
      * Initializes a newly created Monstre object, so that it represents

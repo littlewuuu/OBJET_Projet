@@ -9,7 +9,7 @@ package org.centrale.objet.WoE;
  * @author wuzilong
  * @author Zou Kang
  */
-public class PotionSoin extends Objet {
+public class PotionSoin extends Objet implements Utilisable {
     /**
      * Used to indicate on the OOCUPIED table that the position is occupied by PotionSoin
      */
@@ -35,7 +35,6 @@ public class PotionSoin extends Objet {
 
     /**
      * Recovery of life value.
-     *
      * @param c Target of recovery
      */
     public void Guerir(Creature c) {
@@ -58,5 +57,10 @@ public class PotionSoin extends Objet {
     @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Epee " + type + " " + recover +  " " + getLife() + " "+ getValeur() + " " + getName() + " " + getState() + " " +getPos().getX()+ " " +getPos().getY()+ '\n';
     }
 }

@@ -23,16 +23,16 @@ UML diagram: https://drive.google.com/file/d/104r5bmn8PTezpQTqheFJOeT6hGcsbT_8/v
 ## 1. 玩家选择
 用户首先选择玩家类型: Archer or Guerrier
 
-Archer 不能捡起 Epee, Archer 初始有 10 只 fleche
+Archer 不能pick up Epee, Archer 初始有 10 只 fleche
 
-Guerrier 不能捡起 Fleche
+Guerrier 不能pick up Fleche
 
-两者都可以捡起 PotionSoin
+两者都可以pick up PotionSoin
 
 ## 2. 操作说明
 键盘上下左右控制人物的移动。
 
-1. P 键：捡起玩家正前方的物品（玩家有 direction 属性判断是否在玩家正前方）。
+1. P 键：pick up玩家正前方的物品（玩家有 direction 属性判断是否在玩家正前方）。
 
 2. G 键：使用药品恢复。
 

@@ -11,14 +11,13 @@ import java.util.Random;
  * @author wuzilong
  * @author zoukang
  */
-public class Creature extends ElementDeJeu implements Deplacable,Runnable {
+public abstract class Creature extends ElementDeJeu implements Deplacable,Runnable {
 
     private int ptVie = 100;
-    private int degAtt = 20;
+    private int degAtt = 15;
     private int ptPar = 10;
     private int pageAtt = 70;
     private int pagePar = 60;
-
 
     private int direction = 1;
 
@@ -29,6 +28,7 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
 
     /**
      * 1:Joueur
@@ -77,6 +77,7 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
         this.ptPar = m.ptPar;
         this.ptVie = m.ptVie;
     }
+
 
     /**
      * initialize
@@ -130,6 +131,8 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
     public int getDegAtt() {
         return degAtt;
     }
+
+
 
     /**
      * Set points of att.
@@ -251,6 +254,11 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
     @Override
     public void run() {
         while (true) {
+            //玩家死亡后就暂停不移动
+            if(World.GAMESTATUESTATUS == 0){
+                continue;
+            }
+
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
@@ -258,7 +266,6 @@ public class Creature extends ElementDeJeu implements Deplacable,Runnable {
             }
             deplacer();
             if(this.getPtVie()<=0)
-
                 break;
         }
     }

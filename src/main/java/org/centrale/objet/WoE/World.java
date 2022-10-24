@@ -5,6 +5,9 @@
  */
 package org.centrale.objet.WoE;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -23,6 +26,33 @@ import java.util.*;
 public class World {
 
     /**
+     * 1 Indicates that the game is in progress
+     * 0 Indicates that the game is over
+     */
+    public static int GAMESTATUESTATUS = 1;
+
+    /**
+     * Record the number of rounds of the game.
+     */
+    public static int gameCount = 0;
+
+    public static int getGameCount() {
+        return gameCount;
+    }
+
+    public static void setGameCount(int gameCount) {
+        World.gameCount = gameCount;
+    }
+
+    public static int getGAMESTATUESTATUS() {
+        return GAMESTATUESTATUS;
+    }
+
+    public static void setGAMESTATUESTATUS(int GAMESTATUESTATUS) {
+        World.GAMESTATUESTATUS = GAMESTATUESTATUS;
+    }
+
+    /**
      * The size of the World : TAILLE x TAILLE.
      */
     public final static int TAILLE = 100;
@@ -35,24 +65,31 @@ public class World {
      */
     private static final int[][] OCCUPIED = new int[TAILLE][TAILLE];
     /**
-     * To store different creatures
+     * To store different creatures: Archer, Paysan, Lapin, Guerrier, Loup
      */
     public static ArrayList<Creature> creatures = new ArrayList<>();
+
     /**
-     * To store different objets
+     * To store different objets:epinard,fleche,epee,potionSoin
      */
     public static ArrayList<Objet> objets = new ArrayList<>();
-    /**
-     * A player.
-     */
-    Joueur joueur;
+
+    public static ArrayList<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public static ArrayList<Objet> getObjets() {
+        return objets;
+    }
+
+    public static Vector<NuageToxique> getNuageToxiques() {
+        return nuageToxiques;
+    }
 
     /**
      * Default parameterless constructor
      */
-    public World() {
-
-    }
+    public World() {}
 
     /**
      * @param x x-coordinate of the World
@@ -133,11 +170,12 @@ public class World {
             i.next().affiche();
         }
 
-        for (int k = TAILLE-1; k >=0; k--) {
-            for (int j = TAILLE-1; j >= 0; j--) {
-                System.out.print(OCCUPIED[k][j] + " ");
+
+        for (int j = TAILLE-1; j >=0; j--) {
+            for (int k = 0; k < TAILLE; k++) {
+                System.out.print(OCCUPIED[j][k]);
             }
-            System.out.print("\n");
+            System.out.println();
         }
     }
 
@@ -149,6 +187,7 @@ public class World {
         geneCreature(50);
         geneObjet(20);
         geneNuageToxique(10);
+        geneEpinard(20);
     }
 
 
@@ -183,7 +222,18 @@ public class World {
         }
     }
 
+    /**
+     * To store nuageToxiques.
+     */
     public static Vector<NuageToxique> nuageToxiques = new Vector<>();
+
+    public void geneEpinard(int num){
+        for (int i = 0; i < num; i++) {
+            Epinard epinard = new Epinard();
+            objets.add(epinard);
+        }
+    }
+
     public void geneNuageToxique(int num){
         for (int i = 0; i < num; i++) {
             NuageToxique nuageToxique = new NuageToxique();
@@ -191,6 +241,16 @@ public class World {
             nuageToxiques.add(nuageToxique);
         }
     }
+
+    /**
+     * 读取世界里的信息
+     * 实现的功能：
+     *
+     */
+    public void chargementPartie(){
+
+    }
+
 
     /**
      * To test if the function SetPosition of the class Creature works well.
@@ -243,7 +303,6 @@ public class World {
      */
     public void geneCreature(int num) {
         int count = 0;
-
         while (true) {
             int type = numberRandom5();
             switch (type) {
@@ -748,7 +807,7 @@ public class World {
 //    }
 
     /**
-     * 返回世界中该坐标的物品
+     * Returns the item information at this coordinate in the world, which is used to judge whether it is an attackable object when the player attacks.
      * @param x
      * @param y
      * @return

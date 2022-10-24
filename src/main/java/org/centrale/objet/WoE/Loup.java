@@ -18,11 +18,11 @@ public class Loup extends Monstre implements Combattant {
     /**
      * The longest distance a Loup can attack.
      */
-    private int distAttMax = 5;
+    private int distAttMax = 3;
     /**
      * The damage that wolves can cause.
      */
-    private final int degAtt = 5;
+    private final int degAtt = 6;
 
     public Loup(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
         super(ptVie, degAtt, ptPar, pageAtt, pagePar, pos);
@@ -61,11 +61,11 @@ public class Loup extends Monstre implements Combattant {
         int randdef = generateRandom.nextInt(100) + 1;
         double distance = Point2D.distance(this.getPos().getX(), this.getPos().getY(), c.getPos().getX(), c.getPos().getY());
         if (distance == 1) {//combat contact
-            if (randatt > c.getPageAtt()) {//rate 没击中
+            if (randatt > c.getPageAtt()) {//rate
             } else {//success
-                if (randdef > c.getPagePar()) { //防御失败
+                if (randdef > c.getPagePar()) { //defense failed
                     c.setPtVie(c.getPtVie() - this.getDegAtt());
-                } else {//防御成功
+                } else {//Defense succeeded
                     c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
                 }
             }
@@ -79,18 +79,25 @@ public class Loup extends Monstre implements Combattant {
         }
     }
 
-    public int getGetDistAttMax() {
+    public int getDistAttMax() {
         return distAttMax;
     }
 
-    public void setGetDistAttMax(int getDistAttMax) {
-        this.distAttMax = getDistAttMax;
+    public void setDistAttMax(int distAttMax) {
+        this.distAttMax = distAttMax;
     }
-
 
     public void affiche() {
         System.out.println("Loup: ");
         super.affiche();
     }
 
+    @Override
+    public int getDegAtt() {
+        return degAtt;
+    }
+
+    public String toString() {
+        return "Lapin " + type + " " + distAttMax + " " + degAtt + " " + getPtVie()+ " " + getDegAtt()+ " " +getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY() + '\n';
+    }
 }

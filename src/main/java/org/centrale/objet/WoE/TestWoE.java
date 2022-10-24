@@ -6,19 +6,68 @@
 package org.centrale.objet.WoE;
 
 import javax.swing.*;
+import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * @author wuzilong
  * @author Zou Kang
  */
 public class TestWoE extends JFrame {
-    MyPanel mp = null;
+    static MyPanel mp = null;
 
     public static void main(String[] args) {
         TestWoE testWoE = new TestWoE();
     }
 
+
+    /**
+     * Called when the game is over.
+     */
+    public static void endOfGame(){
+        System.out.println("Game over :(");
+        World.setGameCount(World.getGameCount() + 1); //Rounds plus one
+        //Add one to the number of rounds in the nourriture used
+        for (Nourriture nou: Personnage.getNourritureInUse()) {
+            nou.setCount(nou.getCount()+1);
+        }
+
+        //If the Nourriture effect in NourritureInUse is over, restore the properties of the jouer
+        Iterator<Nourriture> iterator = Personnage.getNourritureInUse().iterator();
+        while (iterator.hasNext()){
+            Epinard epinard = (Epinard) iterator.next();
+            if(epinard.getCount() == 3){
+                Personnage.cancelEpinard(epinard);
+                iterator.remove();
+                System.out.println("degAtt:" + MyPanel.joueur.perso.getDegAtt());
+            }
+        }
+
+
+
+        World.setOCCUPIED(MyPanel.joueur.perso.getPos().getX(),MyPanel.joueur.perso.getPos().getX(),0);//地图上抹掉玩家的位置信息
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("open a new game? (enter 1 restart)");
+        int i = scanner.nextInt();
+        if(i == 1){ //restart
+          reStart();
+        }
+
+
+
+    }
+
+    public static void reStart(){
+        MyPanel.resetJoueurVie();
+        World.setGAMESTATUESTATUS(1);
+        MyPanel.joueur.perso.setPos(new Point2D(World.createPoints(1)));//重新设置玩家的位置
+        Thread thread = new Thread(mp);
+    }
     public TestWoE(){
+        initWord();
+    }
+
+    public void initWord(){
         JFrame frame = new JFrame();
         mp = new MyPanel();
 
@@ -26,19 +75,16 @@ public class TestWoE extends JFrame {
 
         Thread thread = new Thread(mp);
         thread.start();
-        this.add(mp);//把面板(就是游戏的绘图区域)
-        this.setSize(World.TAILLE*8 + 250, World.TAILLE*8+30);
-        this.addKeyListener(mp);//让JFrame 监听mp的键盘事件
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        add(mp);
+        setSize(World.TAILLE*8 + 250, World.TAILLE*8+30);
+        addKeyListener(mp);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
-
-
 }
 
 
 /*
-
         myworld.robin.affiche();
         myworld.peon.affiche();
         myworld.bugs1.affiche();

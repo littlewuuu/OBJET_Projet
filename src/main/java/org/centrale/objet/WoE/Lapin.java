@@ -40,5 +40,8 @@ public class Lapin extends Monstre {
         super.affiche();
     }
 
-
+    @Override
+    public String toString() {
+        return "Lapin " + type + " " + getPtVie()+ " " + getDegAtt()+ " " +getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY() + '\n';
+    }
 }

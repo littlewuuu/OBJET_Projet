@@ -7,57 +7,64 @@ package org.centrale.objet.WoE;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.GregorianCalendar;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * The interface used to display the game, which is convenient for the user to play
  * @author wuzilong
  */
 public class MyPanel extends JPanel implements KeyListener, Runnable {
 
-    Joueur joueur;
+    static Joueur joueur;
     World world;
 
+    /**
+     * The magnification of the displayed map.
+     * For better display, we will enlarge the actual size of the map according to this multiple.
+     */
     int zoom = 8;
 
-    static Vector<Bomb> bombs = new Vector<>();
-    Image image = null;
 
     MyPanel() {
         joueur = new Joueur();
-
         joueur.affiche();
         world = new World();
         world.creerMondeAlea();
 
         world.afficheWorld();
+    }
 
-        //初始化图片
-        this.image = Toolkit.getDefaultToolkit().getImage("image/bomb.jpeg");
+
+
+    public static void resetJoueurVie() {
+        joueur.perso.setPtVie(100);
     }
 
     /**
-     * 显示图例信息
+     * Show legend information.
      * @param g
      */
     public void showInfo(Graphics g){
 
 
-        //显示操作信息背景
+        //Background of Operational Information
         g.setColor(Color.pink);
         g.fillRect(World.TAILLE*zoom + 10,240,200,50);
-        //显示操作信息
+        //Operational information
         g.setColor(Color.black);
         g.drawString("Press \" P \" to pick up an objet",World.TAILLE*zoom + 10,250);
         g.drawString("Press \" C \" to fight",World.TAILLE*zoom + 10,270);
         g.drawString("Press \" G \" to use potionsoin",World.TAILLE*zoom + 10,290);
 
-        //显示地图物品的对应关系
         g.setColor(new Color(0,228,114));
         g.fillOval(World.TAILLE*zoom + 10,310,zoom,zoom+3);
         g.drawString("-1:NuageToxique",World.TAILLE*zoom + 20,320);
@@ -101,10 +108,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
 
 
-        //显示玩家信息背景
+
         g.setColor(Color.pink);
         g.fillRect(World.TAILLE*zoom + 10,550,250,80);
-        //显示玩家信息
+        //Show player info
         g.setColor(Color.black);
         g.drawString("Informations of Joueur" ,World.TAILLE*zoom + 10,560);
 
@@ -131,12 +138,13 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 break;
         }
 
-
+        g.drawString("DegAtt: ",World.TAILLE*zoom + 10,640);
+        g.drawString(joueur.perso.getDegAtt()+"",World.TAILLE*zoom + 100,640);
 
     }
 
     /**
-     * Joueur 拥有的物品信息
+     * Displays information about items owned by Joueur.
      * @param g
      */
     public void showInfoObjet(Graphics g){
@@ -160,10 +168,16 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         String numPotionSoin = joueur.nbPotionSoin+"";
         g.drawString(numPotionSoin,World.TAILLE*zoom + 120,70);
 
+        g.setColor(new Color(255 ,19 ,19));
+        g.fillRect(World.TAILLE*zoom +10,80 ,zoom,zoom);
+        g.drawString("Epinard ",World.TAILLE*zoom + 30,90);
+        String numEpinard = joueur.nbEpinard+"";
+        g.drawString(numEpinard,World.TAILLE*zoom + 120,90);
+
     }
 
     /**
-     * 画出图形
+     *
      * @param g  the <code>Graphics</code> context in which to paint
      */
     public void paint(Graphics g) {
@@ -176,24 +190,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         drawWorldCreature(g);
         drawWorldObjet(g);
         drawNuageToxique(g);
-        //drawFleche(g);
-        try {
-            drawBomb(g);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 
 
-
-    public void drawBomb(Graphics g) throws InterruptedException {
-        for (int i = 0; i < bombs.size(); i++) {
-            Bomb bomb = bombs.get(i);
-            g.drawImage(image,bomb.getPos().getX(),bomb.getPos().getY(),110,110 ,this);
-            bombs.remove(bomb);
-        }
-    }
 
     /**
      * Draw all the objet in th world.
@@ -206,7 +206,6 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             if(objet.getState() == 1){continue;}
             int type = objet.getType();
             switch (type){
-
                 case 2:
                     g.setColor(new Color(250,128,114));
                     g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
@@ -217,6 +216,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                     break;
                 case 4:
                     g.setColor(new Color(0 ,139 ,139));
+                    g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
+                    break;
+                case 10:
+                    g.setColor(new Color(255 ,19 ,19));
                     g.fillRect(objet.getPos().getX()*zoom-zoom/2,objet.getPos().getY()*zoom-zoom/2,zoom,zoom);
                     break;
             }
@@ -231,6 +234,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             g.fillOval(nuage.getPos().getX()*zoom-zoom/2,nuage.getPos().getY()*zoom-zoom/2,zoom,zoom+3);
         }
     }
+
+
     /**
      * Draw Joueur
      * @param g
@@ -283,40 +288,62 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
     public void run() {
         while (true) {
+
+            //Map does not refresh after player dies
+            if(World.GAMESTATUESTATUS == 0){
+                continue;
+            }
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            //判断玩家是否在 nuageToxiques 周围，在周围就会收到攻击
+            //Determines if the player is around nuageToxiques and will be attacked if is around
             try {
-                nuageAttack(World.nuageToxiques);
+                nuageAttack(World.getNuageToxiques());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            //Determine whether the player is around the Loup, if so there is a probability of being attacked (by using Loup's combattre method)
+            try {
+                loupAttack(World.getCreatures());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             this.repaint();
+
+            //if player's life <= 0 then ends the game
+            if(joueur.perso.getPtVie() <= 0){
+                World.setGAMESTATUESTATUS(0);
+                save();
+                TestWoE.endOfGame();
+            }
+
         }
     }
+
+    public void save(){
+        String fileName = "";
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("please enter filename: (or by default press \"n\")");
+        String s = scanner.next();
+        if(s.equals("n"))
+        {
+            fileName = "sauvegarde" + World.gameCount;
+        }else {
+            fileName= s;
+        }
+        sauvegardePartie(fileName);
+    }
+
 
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
-    //**************显示 Fleche 的移动轨迹，没写完
-    public void drawFleche(Graphics g){
-        if(joueur.perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")){
-            Archer a = (Archer) joueur.perso;
-            Vector<Fleche> fleches = a.getFleches();
-
-                Fleche fleche = fleches.lastElement();
-
-                    g.setColor(new Color(255 ,255 ,255));
-                    g.fillOval(fleche.getPos().getX()*zoom-zoom/2,fleche.getPos().getY()*zoom-zoom/2,zoom,zoom);
-
-        }
-    }
 
     /**
      * Detect whether a button is pressed
@@ -348,13 +375,19 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             joueur.perso.setPtVie(joueur.perso.getPtVie() - 10);
             joueur.perso.affiche();
         }
+        if(e.getKeyCode() == KeyEvent.VK_L){
+            joueur.perso.useEpinard();
+        }
+//        if(e.getKeyCode() == KeyEvent.VK_S)
+//        {
+//            sauvegardePartie("tset.txt");
+//        }
         this.repaint();
     }
 
 
-
     /**
-     * 判断玩家是否在 huageToxique 的攻击范围内，如果是，则攻击
+     * 判Implement to determine whether the player is within the attack range of huageToxique, if so, attack.
      * @param nuageToxiques
      */
     public void nuageAttack(Vector<NuageToxique> nuageToxiques) throws InterruptedException {
@@ -374,8 +407,105 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    /**
+     * Implement to determine whether the player is within the attack range of Loup, if so, attack by using Loup's combattre method.
+     */
+    public void loupAttack(ArrayList<Creature> creatures) throws InterruptedException {
+        Thread.sleep(1000);
+        Iterator<Creature> iterator = creatures.iterator();
+        while (iterator.hasNext()){
+            Creature creature = iterator.next();
+            if(World.getOCCUPIED(creature.getPos().getX(),creature.getPos().getY()) == 9 && creature.getPtVie() > 0) // is loup and is alive
+            {
+                Loup loup = (Loup) creature; //转成 Loup，因为 disAttMax 在 Loup 类里面
+                if(Point2D.distance(loup.getPos().getX(),loup.getPos().getY(),joueur.perso.getPos().getX(), joueur.perso.getPos().getY()) <= (loup.getDistAttMax()))//玩家在Loup攻击范围内
+                {
+                    loup.combattre(joueur.perso);
+                }
+            }
+        }
+    }
+
+    /**
+     * Save world information to txt file.
+     * @param fileName name of file.
+     */
+    public void sauvegardePartie(String fileName){
+        try {
+            //create FileWriter
+            FileWriter file = new FileWriter(fileName);
+
+            //create BufferedWriter
+            BufferedWriter output = new BufferedWriter(file);
+
+
+            //save OCCUPIED[][]
+            output.write("OCCUPIED");
+            output.newLine();
+            for (int i = 0; i < World.TAILLE; i++) {
+                for (int j = 0; j < World.TAILLE; j++) {
+                    int a = World.getOCCUPIED(i,j);
+                    output.write(a + " ");
+                  //  System.out.print(World.getOCCUPIED(i,j));
+                }
+                output.newLine();
+                System.out.println();
+            }
+
+            //Stores the type selected by the player(Archer or Guerrier)
+            output.write("joueur ");
+            String s = joueur.perso.getClass().toString();
+            output.write(s.substring(s.length()-5)+" ");
+
+            //Store player's item information: fleche, epee, epinard, potionsoin
+            int nb1 = joueur.getNbEpinard();
+            int nb2 =joueur.getNbPotionSoin();
+            int nb3=joueur.getNbEpee();
+            int nb4 = joueur.getNbFleche();
+            output.write(nb1+" ");
+            output.write(nb2+" ");
+            output.write(nb3+" ");
+            output.write(nb4+" ");
+            //Store the player's ptVie and other information
+            output.write(joueur.perso.getNom() + " " + joueur.perso.getDistAttMax() + " " + joueur.perso.getPtVie() + " " + joueur.perso.getDegAtt()+" " + joueur.perso.getPtPar() + " " + joueur.perso.getPageAtt()+" " + joueur.perso.getPagePar() + " " + joueur.perso.getDirection() + " " + joueur.perso.getPos().getX()+" " + joueur.perso.getPos().getY());
+            output.newLine();
+
+            //Stores item information in the world
+            Iterator<Objet> iterator = World.getObjets().iterator();
+            while (iterator.hasNext()){
+                Objet o  = iterator.next();
+                String ss = o.toString();
+                output.write(ss);
+            }
+
+            //store nuageToxique
+            Iterator<NuageToxique> iterator1 = World.getNuageToxiques().iterator();
+            while (iterator1.hasNext()){
+                NuageToxique n = iterator1.next();
+                String ss = n.toString();
+                output.write(ss);
+            }
+
+            //store all creatures in the world
+            Iterator<Creature> iterator2 = World.getCreatures().iterator();
+            while (iterator2.hasNext()){
+                Creature c = iterator2.next();
+                String ss = c.toString();
+                output.write(ss);
+            }
+            output.flush();
+            output.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+        }
+
+    }
+
+
+
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

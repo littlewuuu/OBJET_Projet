@@ -17,7 +17,7 @@ import java.util.Vector;
  * @author Zou Kang
  * @version 1.0
  */
-public class Personnage extends Creature {
+public abstract class Personnage extends Creature {
 
     /**
      * The name of a person.
@@ -34,6 +34,16 @@ public class Personnage extends Creature {
      * bottles of potion, we set it as a vector type.
      */
     private Vector<PotionSoin> potionsoins = new Vector();
+
+    private static Vector<Nourriture> nourritureInUse = new Vector();
+
+    private  Vector<Epinard> epinards = new Vector<>();
+
+    public static Vector<Nourriture> getNourritureInUse() {
+        return nourritureInUse;
+    }
+
+
 
     /**
      * Initializes a newly created Personnage object, so that it represents the
@@ -135,6 +145,28 @@ public class Personnage extends Creature {
 
     }
 
+
+    public void useEpinard(){
+        if(epinards.size() == 0){
+            System.out.println("no Epinard for use!");
+            return;
+        }
+        this.setDegAtt(this.getDegAtt() + epinards.lastElement().getBonus());
+        nourritureInUse.add(epinards.lastElement());
+        epinards.removeElementAt(epinards.size() - 1);
+        Joueur.setNbEpinard(Joueur.getNbEpinard() - 1);
+        System.out.println("degATT:"+MyPanel.joueur.perso.getDegAtt());
+        this.affiche();
+    }
+
+    /**
+     * Cancels the nourriture effect and restores the player's degAtt
+     */
+    public static void cancelEpinard(Epinard epinard){
+        MyPanel.joueur.perso.setDegAtt(MyPanel.joueur.perso.getDegAtt() - epinard.getBonus());
+    }
+
+
     /**
      * Get PotionSoin of a class of person
      *
@@ -142,6 +174,10 @@ public class Personnage extends Creature {
      */
     public Vector<PotionSoin> getPotionsoins() {
         return potionsoins;
+    }
+
+    public Vector<Epinard> getEpinard(){
+        return epinards;
     }
 
     /**
