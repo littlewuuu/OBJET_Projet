@@ -8,7 +8,7 @@ package org.centrale.objet.WoE;
 /**
  * @author wuzilong
  */
-public abstract class Objet extends ElementDeJeu{
+public abstract class Objet extends ElementDeJeu {
 
     /**
      * Durée d'utilisation
@@ -41,6 +41,19 @@ public abstract class Objet extends ElementDeJeu{
         this.valeur = valeur;
     }
 
+    public Objet() {
+    }
+
+    public Objet(Objet o) {
+        super(o.getPos());
+        this.life = o.getLife();
+        //this.pos = new Point2D(o.getPos());
+        this.valeur = o.getValeur();
+        this.name = o.getName();
+        this.state = o.getState();
+        this.type = o.getType();
+    }
+
     public int getState() {
         return state;
     }
@@ -49,20 +62,10 @@ public abstract class Objet extends ElementDeJeu{
         this.state = state;
     }
 
+
     public int getType() {
         return type;
     }
-
-    public Objet() {
-    }
-
-//    public Point2D getPos() {
-//        return pos;
-//    }
-//
-//    public void setPos(Point2D pos) {
-//        this.pos = pos;
-//    }
 
     public String getName() {
         return name;
@@ -90,15 +93,5 @@ public abstract class Objet extends ElementDeJeu{
 
     public void affiche() {
         System.out.println("life : " + life + " postion:" + getPos());
-    }
-
-    public Objet(Objet o){
-        super(o.getPos());
-        this.life = o.getLife();
-        //this.pos = new Point2D(o.getPos());
-        this.valeur =o.getValeur();
-        this.name = o.getName();
-        this.state=o.getState();
-        this.type = o.getType();
     }
 }

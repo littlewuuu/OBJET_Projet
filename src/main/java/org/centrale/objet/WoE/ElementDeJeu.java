@@ -4,7 +4,9 @@ public class ElementDeJeu {
     private Point2D pos;
     private int type;
 
-    public ElementDeJeu(){}
+    public ElementDeJeu() {
+    }
+
     public ElementDeJeu(Point2D pos) {
         this.pos = new Point2D(pos);
     }

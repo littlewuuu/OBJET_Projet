@@ -30,6 +30,17 @@ public class Lapin extends Monstre {
         super(p);
     }
 
+    public Lapin(int type6, int vie6, int degatt6, int ptpar, int pageatt, int pageapr, int direction, int x, int y) {
+        setPtVie(vie6);
+        setType(type6);
+        setDegAtt(degatt6);
+        setPtPar(ptpar);
+        setPageAtt(pageatt);
+        setPagePar(pageapr);
+        setDirection(direction);
+        setPos(new Point2D(x, y));
+    }
+
     @Override
     public int getType() {
         return type;
@@ -42,6 +53,6 @@ public class Lapin extends Monstre {
 
     @Override
     public String toString() {
-        return "Lapin " + type + " " + getPtVie()+ " " + getDegAtt()+ " " +getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY() + '\n';
+        return "Lapin " + type + " " + getPtVie() + " " + getDegAtt() + " " + getPtPar() + " " + getPageAtt() + " " + getPagePar() + " " + getDirection() + " " + getPos().getX() + " " + getPos().getY() + '\n';
     }
 }

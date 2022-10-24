@@ -20,30 +20,23 @@ import java.util.Vector;
 public abstract class Personnage extends Creature {
 
     /**
+     * Store the nurriture being used.
+     */
+    private static Vector<Nourriture> nourritureInUse = new Vector();
+    /**
      * The name of a person.
      */
     private String nom;
-
     /**
      * Longest attack distance， default random.
      */
     private int distAttMax = 5;
-
     /**
      * A vector of PotionSoin, Considering that a person can carry several
      * bottles of potion, we set it as a vector type.
      */
     private Vector<PotionSoin> potionsoins = new Vector();
-
-    private static Vector<Nourriture> nourritureInUse = new Vector();
-
-    private  Vector<Epinard> epinards = new Vector<>();
-
-    public static Vector<Nourriture> getNourritureInUse() {
-        return nourritureInUse;
-    }
-
-
+    private Vector<Epinard> epinards = new Vector<>();
 
     /**
      * Initializes a newly created Personnage object, so that it represents the
@@ -66,10 +59,10 @@ public abstract class Personnage extends Creature {
     }
 
 
-
     public Personnage(Point2D p) {
         super(p);
     }
+
 
     /**
      * Initializes a newly created Personnage object by one name So we just set
@@ -105,6 +98,17 @@ public abstract class Personnage extends Creature {
 
     }
 
+    public static Vector<Nourriture> getNourritureInUse() {
+        return nourritureInUse;
+    }
+
+    /**
+     * Cancels the nourriture effect and restores the player's degAtt
+     */
+    public static void cancelEpinard(Epinard epinard) {
+        MyPanel.joueur.perso.setDegAtt(MyPanel.joueur.perso.getDegAtt() - epinard.getBonus());
+    }
+
     /**
      * When find a potion type, put into knapsack We will first check if the
      * input parameter is a potion class, if yes, put into knapsack.
@@ -127,27 +131,30 @@ public abstract class Personnage extends Creature {
             System.out.println("no potion for use!");
             return;
         }
-        if(this.getPtVie() == 100){
+        if (this.getPtVie() == 100) {
             System.out.println("there is no need to use PotionSoin!");
             return;
         }
-        if(100-this.getPtVie() < potionsoins.lastElement().getRecover()) {
+        if (100 - this.getPtVie() < potionsoins.lastElement().getRecover()) {
             potionsoins.removeElementAt(potionsoins.size() - 1);
-            Joueur.setNbPotionSoin(Joueur.getNbPotionSoin()-1);
+            Joueur.setNbPotionSoin(Joueur.getNbPotionSoin() - 1);
             this.setPtVie(100);
             this.affiche();
-        }else {
+        } else {
             this.setPtVie(this.getPtVie() + potionsoins.lastElement().getRecover());
             potionsoins.removeElementAt(potionsoins.size() - 1);
-            Joueur.setNbPotionSoin(Joueur.getNbPotionSoin()-1);
+            Joueur.setNbPotionSoin(Joueur.getNbPotionSoin() - 1);
             this.affiche();
         }
 
     }
 
-
-    public void useEpinard(){
-        if(epinards.size() == 0){
+    /**
+     * This function is called when the player uses an Epinard,
+     * takes the used Epinard from the backpack and increases the player's corresponding ability.
+     */
+    public void useEpinard() {
+        if (epinards.size() == 0) {
             System.out.println("no Epinard for use!");
             return;
         }
@@ -155,39 +162,30 @@ public abstract class Personnage extends Creature {
         nourritureInUse.add(epinards.lastElement());
         epinards.removeElementAt(epinards.size() - 1);
         Joueur.setNbEpinard(Joueur.getNbEpinard() - 1);
-        System.out.println("degATT:"+MyPanel.joueur.perso.getDegAtt());
+        System.out.println("degATT:" + MyPanel.joueur.perso.getDegAtt());
         this.affiche();
     }
 
     /**
-     * Cancels the nourriture effect and restores the player's degAtt
-     */
-    public static void cancelEpinard(Epinard epinard){
-        MyPanel.joueur.perso.setDegAtt(MyPanel.joueur.perso.getDegAtt() - epinard.getBonus());
-    }
-
-
-    /**
-     * Get PotionSoin of a class of person
-     *
+     * Get PotionSoin of a class of person.
      * @return a vector of PotionSoin, PotionSoin is a class of potion, potion were stored in it.
      */
     public Vector<PotionSoin> getPotionsoins() {
         return potionsoins;
     }
 
-    public Vector<Epinard> getEpinard(){
-        return epinards;
-    }
-
     /**
      * Set a person's knapsack of potion with a knapsack's potion.
-     * So we can see it's a vector
-     *
+     * So we can see it's a vector.
      * @param potionsoins a list of PotionSoin(vector)
      */
     public void setPotionsoins(Vector<PotionSoin> potionsoins) {
         this.potionsoins = potionsoins;
+    }
+
+
+    public Vector<Epinard> getEpinard() {
+        return epinards;
     }
 
     /**

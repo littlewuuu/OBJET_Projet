@@ -14,7 +14,14 @@ import java.util.Vector;
  */
 public class Guerrier extends Personnage implements Combattant {
 
+    /**
+     * marker on the map OCCUPIED[][]
+     */
     final private int type = 6;
+
+    /**
+     * Store Epees owned by the Guerrier
+     */
     private Vector<Epee> epees = new Vector<>();
 
     public Guerrier(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
@@ -38,8 +45,22 @@ public class Guerrier extends Personnage implements Combattant {
         super(p);
     }
 
+    public Guerrier(int type10, String name10, int distattmax10, int vie10, int degatt10, int ptpar10, int pageatt10, int pageapr10, int direction10, int x10, int y10) {
+        setType(type10);
+        setNom(name10);
+        setDistAttMax(distattmax10);
+        setPtVie(vie10);
+        setDegAtt(degatt10);
+        setPtPar(ptpar10);
+        setPageAtt(pageatt10);
+        setPagePar(pageapr10);
+        setDirection(direction10);
+        setPos(new Point2D(x10, y10));
+    }
+
     /**
      * When a Personnage find an Epee, it can put into its Vector.
+     *
      * @param e
      */
     public void trouEpee(Epee e) {
@@ -47,7 +68,7 @@ public class Guerrier extends Personnage implements Combattant {
     }
 
     /**
-     *
+     * This function is called when the epee has run out of life and is removed from the bag.
      */
     public void useEpee() {
         if (epees.size() == 0) {
@@ -55,11 +76,11 @@ public class Guerrier extends Personnage implements Combattant {
         }
         epees.removeElementAt(epees.size() - 1);
     }
+
     @Override
     public int getType() {
         return type;
     }
-
 
 
     /**
@@ -93,10 +114,9 @@ public class Guerrier extends Personnage implements Combattant {
                     System.out.println("no epee to use");
                 } else if (epees.lastElement().getLife() == 0) {
                     useEpee();
-                    Joueur.setNbEpee(Joueur.getNbEpee()-1);
+                    Joueur.setNbEpee(Joueur.getNbEpee() - 1);
                     System.out.println("use another Epee");
-                }
-                else {
+                } else {
                     c.setPtVie(c.getPtVie() - epees.get(epees.size() - 1).getDommage());
                     epees.lastElement().setLife(epees.lastElement().getLife() - 5);//Each attack loses 5 points of durability
                 }
@@ -108,7 +128,7 @@ public class Guerrier extends Personnage implements Combattant {
 
     @Override
     public String toString() {
-        return "Guerrier " + " " +type + " " + getNom()+ " " +getDistAttMax()+ " " +getPtVie() + " " + getDegAtt() + " " + getPtPar()+ " " +getPageAtt()+ " " +getPagePar()+ " " +getDirection()+ " " +getPos().getX()+ " " +getPos().getY()+'\n';
+        return "Guerrier " + " " + type + " " + getNom() + " " + getDistAttMax() + " " + getPtVie() + " " + getDegAtt() + " " + getPtPar() + " " + getPageAtt() + " " + getPagePar() + " " + getDirection() + " " + getPos().getX() + " " + getPos().getY() + '\n';
     }
 
     public void affiche() {

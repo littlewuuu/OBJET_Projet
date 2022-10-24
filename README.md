@@ -1,58 +1,79 @@
 # OBJET_Projet
 
-**该项目是 ECN 2022 S7 学年 OBJET 课程的 TP**
+**This project is the TP for the OBJET course in ECN 2022 S7.**
 
-To mark different **_creature_** or **_objet_** information on the **_OCCUPIED_**, we use the following markers
+To mark different **_creature_** or **_object_** information on the world map **_OCCUPIED_**, we use the following markers: 
 
--1 : NuageToxique；1 : Joueur；2 : Fleche；3 : Epee；4 : PotionSoin；
+-1 : NuageToxique : Players in range of NuageToxique's attack are subject to a continuous attack.
 
-5 : Archer；6 : Geurrier；7 : Paysan；8 : Lapin；9 : Loup
+1 : Joueur; 
 
-该信息显示在游戏面板上
+2 : Fleche; 
 
+3 : Epee; 
+
+4 : PotionSoin : Can restore the player's life value
+
+5 : Archer;
+
+ 6 : Geurrier; 
+
+7 : Paysan; 
+
+8 : Lapin; 
+
+9 : Loup : There is a certain probability that it will attack the player.
+
+10: Epinard : Can increase a player's attack value in certain rounds. 
+
+0 : is not occupied;
+
+This information is displayed on the game panel.
 
 UML diagram: https://drive.google.com/file/d/104r5bmn8PTezpQTqheFJOeT6hGcsbT_8/view?usp=sharing
-## 0. 游戏说明
-游戏中一共包含以上几类的生物和物品，系统随机生成生物和物品，每个生物是一个线程，实现每隔一段时间自动移动。
 
-在 run() 方法中更改时间。
+## 0. Game description
 
-玩家在 NuageToxique 的一定范围内会受到持续伤害:
-    在 MyPanel 类中的 run() 方法中进行判断。
+The game contains a total of creatures and items from the above categories. The system generates creatures and items randomly, each creature is a thread that enables automatic movement at regular intervals.
 
-## 1. 玩家选择
-用户首先选择玩家类型: Archer or Guerrier
+Players within a certain range of **NuageToxique** will take continuous damage.
 
-Archer 不能pick up Epee, Archer 初始有 10 只 fleche
+Players within a certain range of **Loup** have a chance of receiving an attack
 
-Guerrier 不能pick up Fleche
+## 1. Player selection
 
-两者都可以pick up PotionSoin
+1. The user first selects whether they want to start a new game or resume from an existing record (done at the terminal)
 
-## 2. 操作说明
-键盘上下左右控制人物的移动。
+2. The user then selects the player type: Archer or Guerrier
 
-1. P 键：pick up玩家正前方的物品（玩家有 direction 属性判断是否在玩家正前方）。
+    Archer can not pick up Epee, Archer initially has 10 fleche.
 
-2. G 键：使用药品恢复。
+    Guerrier can not pick up Fleche.
 
-3. C 键：攻击，只能攻击正前方的生物（direction 属性判断），有近战和远战
+    Both can pick up PotionSoin and Epinard.
 
-    远战：Archer 使用Fleche；Guerrier 使用 Epee
-    未完成：当 Archer 攻击时，会根据 Archer 的位置和方向生成 fleche 线程，在 MyPanel 上显示 fleche 的移动。判断边界条件。
+3. The game ends when the player has less than 0 lives and is prompted to save the game and whether to restart it.
 
-4. K 键：为了测试药品使用，可以使用 k 键直接使玩家生命-10。
+## 2. Operating Instructions
 
-## 3. 待完善
-Loup 等其他生物会有攻击功能，可以给他们添加 direction 表示他们的方向，只能攻击正前方的玩家。（已经在 Creture 类里添加了 direction 表示方向）
-Nnourriture 类。
-各种生物和物品的显示可以有不同的外观。
-地图尺寸
-注释
-使用按钮来进行角色选择
-Archer 攻击 可以显示 fleche 的移动轨迹（写了但没有写完，有点难写）
+Keyboard up, down, left and right to control the movement of the player.
 
-## 4. 效果
+1. **P key**：Pick up the object directly in front of the player (the player has the **direction** attribute to determine if it is directly in front of the player).
 
-<img width="1047" alt="Screenshot 2022-10-08 at 17 50 59" src="https://user-images.githubusercontent.com/95653923/194716114-78b1f22d-e30b-44be-b4c2-86c036bed395.png">
+2. **G key**：Use of medicines to restore ptVie.
 
+3. **C key**：Attack, can only attack creatures directly in front of it (judged by the **direction** attribute), close combat or remote combat.
+
+   Remote combat: Archer with Fleche; Guerrier with Epee.
+
+   Each attack consumes one fleche, regardless of whether it hits or misses.
+
+   Each attack with Epee reduces the life of the Epee.
+
+4. **K key**：To test the use of PosionSoin, use the **K** key to make the player -10 life directly.
+
+5. **L key**: Using Epinard.
+
+## 3. Final result
+
+![Screenshot 2022-10-24 at 21.52.09](/Users/wuzilong/NetBeansProjects/ProjetTP/Screenshot%202022-10-24%20at%2021.52.09.png)

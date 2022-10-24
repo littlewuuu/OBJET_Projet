@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Vector;
 
 /**
+ *
  * @author wuzilong
  * @author Zou Kang
  */
@@ -55,9 +56,17 @@ public class Archer extends Personnage implements Combattant {
         }
     }
 
-    @Override
-    public int getType() {
-        return type;
+    public Archer(int type9, String name9, int distattmax9, int vie9, int degatt9, int ptpar9, int pageatt9, int pageapr9, int direction9, int x9, int y9) {
+        setType(type9);
+        setNom(name9);
+        setDistAttMax(distattmax9);
+        setPtVie(vie9);
+        setDegAtt(degatt9);
+        setPtPar(ptpar9);
+        setPageAtt(pageatt9);
+        setPagePar(pageapr9);
+        setDirection(direction9);
+        setPos(new Point2D(x9, y9));
     }
 
     /**
@@ -80,17 +89,23 @@ public class Archer extends Personnage implements Combattant {
         super(p);
     }
 
+    @Override
+    public int getType() {
+        return type;
+    }
+
     public void trouFleche(Fleche f) {
         fleches.add(f);
     }
 
     /**
-     * 返回用掉的箭
-     * @return
+     * Realisation of long-range attacks using arrows.
+     *
+     * @return fleche that currently used arrows.
      */
     public Fleche useFleche() {
         if (fleches.size() == 0) {
-            System.out.print("you have no fleche");
+            System.out.print("you have no fleche in your bag");
             return null;
         }
         Fleche fleche = fleches.get(fleches.size() - 1);
@@ -111,14 +126,14 @@ public class Archer extends Personnage implements Combattant {
         Random generateRandom = new Random();
         int randatt = generateRandom.nextInt(100) + 1;
         int randdef = generateRandom.nextInt(100) + 1;
-        double distance = Point2D.distance(this.getPos().getX(),  this.getPos().getY(),c.getPos().getX(), c.getPos().getY());
+        double distance = Point2D.distance(this.getPos().getX(), this.getPos().getY(), c.getPos().getX(), c.getPos().getY());
         if (distance == 1) { // combat contact
             if (randatt > c.getPageAtt()) {//rate
             } else {//reussie
-                if (randdef > c.getPagePar()) { //防御失败
+                if (randdef > c.getPagePar()) { //Failure to defend
                     c.setPtVie(c.getPtVie() - this.getDegAtt());
-                    System.out.println("生命值" + c.getPtVie());
-                } else {//防御成功
+                    System.out.println("ptVie" + c.getPtVie());
+                } else {//successfully
                     c.setPtVie(c.getPtVie() - this.getDegAtt() + c.getPtPar());
                 }
             }
@@ -126,7 +141,7 @@ public class Archer extends Personnage implements Combattant {
             if (fleches.size() > 0) {
                 int randdis = generateRandom.nextInt(100) + 1;
                 if (randdis > c.getPageAtt()) {
-                    Joueur.setNbFleche(Joueur.getNbFleche()-1); //没击中也会损耗 Fleche
+                    Joueur.setNbFleche(Joueur.getNbFleche() - 1); //Fleche will be lost even if not hit
                     //************为了显示箭的移动轨迹，没写完
                     Fleche fleche = useFleche();
 
@@ -134,7 +149,7 @@ public class Archer extends Personnage implements Combattant {
                     c.setPtVie(c.getPtVie() - fleches.lastElement().getDommage());
                     //***********为了显示箭的移动轨迹，没写完
                     Fleche fleche = useFleche();
-                    Joueur.setNbFleche(Joueur.getNbFleche()-1);
+                    Joueur.setNbFleche(Joueur.getNbFleche() - 1);
                 }
             } else {
                 System.out.println("There is no Fleche in your bag!");
@@ -161,6 +176,6 @@ public class Archer extends Personnage implements Combattant {
 
     @Override
     public String toString() {
-        return "Archer "+ getNom() + " " + type+ " " + getNom()+ " " + getDistAttMax() + " "+ getPtVie() + " "+ getDegAtt()+ " " + getPtPar()+ " " + getPageAtt()+ " " + getPagePar()+ " " + getDirection() + " "+ getPos().getX() + " "+ getPos().getY()+ '\n';
+        return "Archer " + type + " " + getNom() + " " + getDistAttMax() + " " + getPtVie() + " " + getDegAtt() + " " + getPtPar() + " " + getPageAtt() + " " + getPagePar() + " " + getDirection() + " " + getPos().getX() + " " + getPos().getY() + '\n';
     }
 }

@@ -11,7 +11,7 @@ import java.util.Random;
  * @author wuzilong
  * @author zoukang
  */
-public abstract class Creature extends ElementDeJeu implements Deplacable,Runnable {
+public abstract class Creature extends ElementDeJeu implements Deplacable, Runnable {
 
     private int ptVie = 100;
     private int degAtt = 15;
@@ -20,28 +20,6 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
     private int pagePar = 60;
 
     private int direction = 1;
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-
-    /**
-     * 1:Joueur
-     * 2:Fleche
-     * 3:Epee
-     * 4:PotionSoin
-     * 5:Archer
-     * 6:Guerrier
-     * 7:Paysan
-     * 8:Lapin
-     * 9:Loup
-     */
-
 
     /**
      * initialize
@@ -80,6 +58,19 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
 
 
     /**
+     * 1:Joueur
+     * 2:Fleche
+     * 3:Epee
+     * 4:PotionSoin
+     * 5:Archer
+     * 6:Guerrier
+     * 7:Paysan
+     * 8:Lapin
+     * 9:Loup
+     */
+
+
+    /**
      * initialize
      *
      * @param p position
@@ -94,7 +85,15 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
     public Creature() {
         super();
         Point2D pos = new Point2D(World.createPoints(getType()));
-        setPos( new Point2D(pos));
+        setPos(new Point2D(pos));
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
     public int getType() {
@@ -131,7 +130,6 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
     public int getDegAtt() {
         return degAtt;
     }
-
 
 
     /**
@@ -228,13 +226,13 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
         int x, y;
         x = y = 0;
         do {
-            x = generateRandom.nextInt(3)-1;
-            y = generateRandom.nextInt(3)-1;
+            x = generateRandom.nextInt(3) - 1;
+            y = generateRandom.nextInt(3) - 1;
             if ((x != 0 || y != 0)
-                    &&(this.getPos().getX() + x >=0)
-                    && (this.getPos().getY() + y >=0)
-                    &&(this.getPos().getX() + x <= World.TAILLE-1)
-                    &&(this.getPos().getY() + y <= World.TAILLE - 1)
+                    && (this.getPos().getX() + x >= 0)
+                    && (this.getPos().getY() + y >= 0)
+                    && (this.getPos().getX() + x <= World.TAILLE - 1)
+                    && (this.getPos().getY() + y <= World.TAILLE - 1)
                     && World.getOCCUPIED(this.getPos().getX() + x, this.getPos().getY() + y) == 0) {
                 break;
             }
@@ -255,7 +253,7 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
     public void run() {
         while (true) {
             //玩家死亡后就暂停不移动
-            if(World.GAMESTATUESTATUS == 0){
+            if (World.GAMESTATUESTATUS == 0) {
                 continue;
             }
 
@@ -265,7 +263,7 @@ public abstract class Creature extends ElementDeJeu implements Deplacable,Runnab
                 throw new RuntimeException(e);
             }
             deplacer();
-            if(this.getPtVie()<=0)
+            if (this.getPtVie() <= 0)
                 break;
         }
     }

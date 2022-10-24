@@ -10,10 +10,15 @@ package org.centrale.objet.WoE;
  * @author Zou Kang
  */
 public class Epee extends Objet {
+
     /**
      * Used to indicate on the OOCUPIED table that the position is occupied by Epee
      */
     private final int type = 3;
+
+    /**
+     * The damage caused.
+     */
     private int dommage = 6;
 
     /**
@@ -47,9 +52,17 @@ public class Epee extends Objet {
         this.dommage = dommage;
     }
 
-    public Epee(Epee e){
+    public Epee(Epee e) {
         super(e);
         dommage = e.dommage;
+    }
+
+    public Epee(int type2, int dommage2, int life2, int state2, int x2, int y2) {
+        setType(type2);
+        setDommage(dommage2);
+        setLife(life2);
+        setState(state2);
+        setPos(new Point2D(x2, y2));
     }
 
     /**
@@ -91,6 +104,7 @@ public class Epee extends Objet {
 
     @Override
     public String toString() {
-        return "Epee " + type + " " + dommage +  " " + getLife() + " "+ getValeur() + " " + getName() + " " + getState() + " " + getPos().getX()+ " " +getPos().getY()+ '\n';
+
+        return "Epee " + type + " " + dommage + " " + getLife() + " " + getState() + " " + getPos().getX() + " " + getPos().getY() + '\n';
     }
 }
