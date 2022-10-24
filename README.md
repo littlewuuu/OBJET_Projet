@@ -76,4 +76,4 @@ Keyboard up, down, left and right to control the movement of the player.
 
 ## 3. Final result
 
-![Screenshot 2022-10-24 at 21.52.09](/Users/wuzilong/NetBeansProjects/ProjetTP/Screenshot%202022-10-24%20at%2021.52.09.png)
+<img width="1030" alt="Screenshot 2022-10-24 at 21 52 09" src="https://user-images.githubusercontent.com/95653923/197622685-d3b507db-8b63-46db-9a09-429859fe7d54.png">
