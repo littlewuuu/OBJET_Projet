@@ -24,17 +24,27 @@ public class PotionSoin extends Objet implements Utilisable {
         setPos(World.createPoints(type));
     }
 
-    public PotionSoin(PotionSoin p){
+    public PotionSoin(PotionSoin p) {
         super(p);
         this.recover = p.recover;
     }
+
     public PotionSoin(int recouver, int life, int valeur) {
         super(life, valeur);
         this.recover = recouver;
     }
 
+    public PotionSoin(int type4, int recover4, int life4, int state4, int x4, int y4) {
+        setType(type4);
+        setRecover(recover4);
+        setLife(life4);
+        setState(state4);
+        setPos(new Point2D(x4, y4));
+    }
+
     /**
      * Recovery of life value.
+     *
      * @param c Target of recovery
      */
     public void Guerir(Creature c) {
@@ -61,6 +71,6 @@ public class PotionSoin extends Objet implements Utilisable {
 
     @Override
     public String toString() {
-        return "Epee " + type + " " + recover +  " " + getLife() + " "+ getValeur() + " " + getName() + " " + getState() + " " +getPos().getX()+ " " +getPos().getY()+ '\n';
+        return "PotionSoin " + type + " " + recover + " " + getLife() + " " + getState() + " " + getPos().getX() + " " + getPos().getY() + '\n';
     }
 }

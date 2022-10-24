@@ -5,9 +5,6 @@
  */
 package org.centrale.objet.WoE;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -26,15 +23,43 @@ import java.util.*;
 public class World {
 
     /**
+     * The size of the World : TAILLE x TAILLE.
+     */
+    public final static int TAILLE = 100;
+    /**
+     * To identify if a coordinate is occupied, 0 stands for non-occupied and 1
+     * stands for occupied by creatures, 2 stands for occupied by Fleche, 3 stands for occupied by Epee,
+     * 4 stands for occupied by PotionSoin . original point is [0,0],the range of X coordinate is
+     * [0,TAILLE-1] and the range for Y coordinate is [0,TAILLE-1]
+     */
+    private static final int[][] OCCUPIED = new int[TAILLE][TAILLE];
+    /**
      * 1 Indicates that the game is in progress
      * 0 Indicates that the game is over
      */
     public static int GAMESTATUESTATUS = 1;
-
     /**
      * Record the number of rounds of the game.
      */
     public static int gameCount = 0;
+    /**
+     * To store different creatures: Archer, Paysan, Lapin, Guerrier, Loup
+     */
+    public static ArrayList<Creature> creatures = new ArrayList<>();
+    /**
+     * To store different objets:epinard,fleche,epee,potionSoin
+     */
+    public static ArrayList<Objet> objets = new ArrayList<>();
+    /**
+     * To store nuageToxiques.
+     */
+    public static Vector<NuageToxique> nuageToxiques = new Vector<>();
+
+    /**
+     * Default parameterless constructor
+     */
+    public World() {
+    }
 
     public static int getGameCount() {
         return gameCount;
@@ -52,28 +77,6 @@ public class World {
         World.GAMESTATUESTATUS = GAMESTATUESTATUS;
     }
 
-    /**
-     * The size of the World : TAILLE x TAILLE.
-     */
-    public final static int TAILLE = 100;
-
-    /**
-     * To identify if a coordinate is occupied, 0 stands for non-occupied and 1
-     * stands for occupied by creatures, 2 stands for occupied by Fleche, 3 stands for occupied by Epee,
-     * 4 stands for occupied by PotionSoin . original point is [0,0],the range of X coordinate is
-     * [0,TAILLE-1] and the range for Y coordinate is [0,TAILLE-1]
-     */
-    private static final int[][] OCCUPIED = new int[TAILLE][TAILLE];
-    /**
-     * To store different creatures: Archer, Paysan, Lapin, Guerrier, Loup
-     */
-    public static ArrayList<Creature> creatures = new ArrayList<>();
-
-    /**
-     * To store different objets:epinard,fleche,epee,potionSoin
-     */
-    public static ArrayList<Objet> objets = new ArrayList<>();
-
     public static ArrayList<Creature> getCreatures() {
         return creatures;
     }
@@ -85,11 +88,6 @@ public class World {
     public static Vector<NuageToxique> getNuageToxiques() {
         return nuageToxiques;
     }
-
-    /**
-     * Default parameterless constructor
-     */
-    public World() {}
 
     /**
      * @param x x-coordinate of the World
@@ -153,12 +151,44 @@ public class World {
         return new Point2D(X, Y);
     }
 
-    public void tourDeJeu() {
-
+    /**
+     * Returns the item information at this coordinate in the world, which is used to judge whether it is an attackable object when the player attacks.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    public static Objet getObjet(int x, int y) {
+        Iterator<Objet> iterator = objets.iterator();
+        while (iterator.hasNext()) {
+            Objet o = iterator.next();
+            if (o.getPos().getX() == x && o.getPos().getY() == y) {
+                return o;
+            }
+        }
+        return null; //can not find the objet
     }
 
+    /**
+     * Returns the creatures at the coordinates according to the coordinates.
+     * @param x Horizontal coordinates
+     * @param y Longitudinal coordinates
+     * @return
+     */
+    public static Creature getCreature(int x, int y) {
+        Iterator<Creature> iterator = creatures.iterator();
+        while (iterator.hasNext()) {
+            Creature c = iterator.next();
+            if (c.getPos().getX() == x && c.getPos().getY() == y) {
+                return c;
+            }
+        }
+        return null;
+    }
 
-
+    /**
+     * Print basic information about the world of printouts.
+     */
     public void afficheWorld() {
         Iterator<Creature> iterator = creatures.iterator();
         while (iterator.hasNext()) {
@@ -171,7 +201,7 @@ public class World {
         }
 
 
-        for (int j = TAILLE-1; j >=0; j--) {
+        for (int j = TAILLE - 1; j >= 0; j--) {
             for (int k = 0; k < TAILLE; k++) {
                 System.out.print(OCCUPIED[j][k]);
             }
@@ -189,8 +219,6 @@ public class World {
         geneNuageToxique(10);
         geneEpinard(20);
     }
-
-
 
     /**
      * Generate a certain number objets.
@@ -222,33 +250,11 @@ public class World {
         }
     }
 
-    /**
-     * To store nuageToxiques.
-     */
-    public static Vector<NuageToxique> nuageToxiques = new Vector<>();
-
-    public void geneEpinard(int num){
+    public void geneEpinard(int num) {
         for (int i = 0; i < num; i++) {
             Epinard epinard = new Epinard();
             objets.add(epinard);
         }
-    }
-
-    public void geneNuageToxique(int num){
-        for (int i = 0; i < num; i++) {
-            NuageToxique nuageToxique = new NuageToxique();
-            new Thread(nuageToxique).start();
-            nuageToxiques.add(nuageToxique);
-        }
-    }
-
-    /**
-     * 读取世界里的信息
-     * 实现的功能：
-     *
-     */
-    public void chargementPartie(){
-
     }
 
 
@@ -295,6 +301,21 @@ public class World {
 //        robin.affiche();
 //        System.out.println("================fin copie================");
 //    }
+
+    /**
+     * Randomly generate a specified number of NuageToxique.
+     * @param num  Number of NuageToxique.
+     */
+    public void geneNuageToxique(int num) {
+        for (int i = 0; i < num; i++) {
+            NuageToxique nuageToxique = new NuageToxique();
+            new Thread(nuageToxique).start();
+            nuageToxiques.add(nuageToxique);
+        }
+    }
+
+
+
 
     /**
      * Generate a certain number creatures.
@@ -361,7 +382,6 @@ public class World {
             Lapin a = new Lapin(createPoints());
             creatures.add(a);
         }
-
 
 
         int nbGuerrier = generateurAleatoire.nextInt(100);
@@ -441,7 +461,6 @@ public class World {
         Random generateurAleatoire = new Random();
         return generateurAleatoire.nextInt(5) + 1;
     }
-
 
     public int numberRandom3() {
         Random generateurAleatoire = new Random();
@@ -614,6 +633,31 @@ public class World {
 
     }
 
+    /**
+     * To test if the class PotionSoin works correctly.
+     */
+//    public void testPotion() {
+//        //Test potion function
+//        System.out.println("================test potion================");
+//        robin.setPtVie(70);
+//        PotionSoin potion1 = new PotionSoin();
+//        PotionSoin potion2 = new PotionSoin();
+//        robin.getPotionsoins().add(potion1);
+//        robin.getPotionsoins().add(potion2);
+//        robin.affiche();
+//        System.out.println("nombre de potion de robin: " + robin.getPotionsoins().size());
+//        System.out.println("consumer 1 potion");
+//        robin.usagePotion(potion2);
+//        robin.affiche();
+//        System.out.println("nombre de potion de robin: " + robin.getPotionsoins().size());
+//        System.out.println("consumer 1 potion");
+//        robin.usagePotion(potion1);
+//        System.out.println("nombre de potion de robin: " + robin.getPotionsoins().size());
+//        robin.usagePotion(potion1);
+//        robin.affiche();
+//        System.out.println("================fin de test potion================");
+//
+//    }
 
     /**
      * Calculate the time taken to generate LinkedLists of different sizes.
@@ -778,60 +822,6 @@ public class World {
 
         }
 
-    }
-
-    /**
-     * To test if the class PotionSoin works correctly.
-     */
-//    public void testPotion() {
-//        //Test potion function
-//        System.out.println("================test potion================");
-//        robin.setPtVie(70);
-//        PotionSoin potion1 = new PotionSoin();
-//        PotionSoin potion2 = new PotionSoin();
-//        robin.getPotionsoins().add(potion1);
-//        robin.getPotionsoins().add(potion2);
-//        robin.affiche();
-//        System.out.println("nombre de potion de robin: " + robin.getPotionsoins().size());
-//        System.out.println("consumer 1 potion");
-//        robin.usagePotion(potion2);
-//        robin.affiche();
-//        System.out.println("nombre de potion de robin: " + robin.getPotionsoins().size());
-//        System.out.println("consumer 1 potion");
-//        robin.usagePotion(potion1);
-//        System.out.println("nombre de potion de robin: " + robin.getPotionsoins().size());
-//        robin.usagePotion(potion1);
-//        robin.affiche();
-//        System.out.println("================fin de test potion================");
-//
-//    }
-
-    /**
-     * Returns the item information at this coordinate in the world, which is used to judge whether it is an attackable object when the player attacks.
-     * @param x
-     * @param y
-     * @return
-     */
-    public static Objet getObjet(int x,int y){
-        Iterator<Objet> iterator = objets.iterator();
-        while (iterator.hasNext()){
-            Objet o = iterator.next();
-            if(o.getPos().getX() == x && o.getPos().getY() == y){
-                return o;
-            }
-        }
-        return null; //can not find the objet
-    }
-
-    public static Creature getCreature(int x,int y){
-        Iterator<Creature> iterator = creatures.iterator();
-        while (iterator.hasNext()){
-            Creature c = iterator.next();
-            if(c.getPos().getX() == x && c.getPos().getY() == y){
-                return c;
-            }
-        }
-        return null;
     }
 
 

@@ -9,7 +9,7 @@ package org.centrale.objet.WoE;
  * @author wuzilong
  * @author Zou Kang
  */
-public class Fleche extends Objet  {
+public class Fleche extends Objet {
     /**
      * Used to indicate on the OOCUPIED table that the position is occupied by Fleche
      */
@@ -18,7 +18,6 @@ public class Fleche extends Objet  {
      * Injuries caused by Fleche
      */
     private int dommage = 4;
-
 
 
     public Fleche(int dommage, int life, int valeur) {
@@ -42,7 +41,26 @@ public class Fleche extends Objet  {
     }
 
     //在最开始初始化 Archer 的时候有 10 只 Fleche，防止其在地图上占位置
-    public Fleche(Boolean i){}
+    public Fleche(Boolean i) {
+    }
+
+    /**
+     * used for charge the world.
+     *
+     * @param type
+     * @param dommage
+     * @param life
+     * @param state
+     * @param x
+     * @param y
+     */
+    public Fleche(int type, int dommage, int life, int state, int x, int y) {
+        setType(type);
+        setDommage(dommage);
+        setLife(life);
+        setState(state);
+        setPos(new Point2D(x, y));
+    }
 
 
     public int getDommage() {
@@ -63,9 +81,8 @@ public class Fleche extends Objet  {
     }
 
 
-
     //********为了实现箭的移动，没写完
- //   @Override
+    //   @Override
 //    public void run() {
 //        while (true) {
 //            try {
@@ -100,6 +117,6 @@ public class Fleche extends Objet  {
 
     @Override
     public String toString() {
-        return "Fleche " + type +" " + dommage +" " +getLife() + " " +getValeur()+" "+getName()+" "+type+" "+getState()+'\n';
+        return "Fleche " + type + " " + dommage + " " + getLife() + " " + getState() + " " + getPos().getX() + " " + getPos().getY() + '\n';
     }
 }

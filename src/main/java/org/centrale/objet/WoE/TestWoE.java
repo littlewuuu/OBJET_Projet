@@ -16,27 +16,30 @@ import java.util.Scanner;
 public class TestWoE extends JFrame {
     static MyPanel mp = null;
 
+    public TestWoE() {
+        initWord();
+    }
+
     public static void main(String[] args) {
         TestWoE testWoE = new TestWoE();
     }
 
-
     /**
      * Called when the game is over.
      */
-    public static void endOfGame(){
+    public static void endOfGame() {
         System.out.println("Game over :(");
         World.setGameCount(World.getGameCount() + 1); //Rounds plus one
         //Add one to the number of rounds in the nourriture used
-        for (Nourriture nou: Personnage.getNourritureInUse()) {
-            nou.setCount(nou.getCount()+1);
+        for (Nourriture nou : Personnage.getNourritureInUse()) {
+            nou.setCount(nou.getCount() + 1);
         }
 
         //If the Nourriture effect in NourritureInUse is over, restore the properties of the jouer
         Iterator<Nourriture> iterator = Personnage.getNourritureInUse().iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Epinard epinard = (Epinard) iterator.next();
-            if(epinard.getCount() == 3){
+            if (epinard.getCount() == 3) {
                 Personnage.cancelEpinard(epinard);
                 iterator.remove();
                 System.out.println("degAtt:" + MyPanel.joueur.perso.getDegAtt());
@@ -44,30 +47,25 @@ public class TestWoE extends JFrame {
         }
 
 
-
-        World.setOCCUPIED(MyPanel.joueur.perso.getPos().getX(),MyPanel.joueur.perso.getPos().getX(),0);//地图上抹掉玩家的位置信息
-        Scanner scanner= new Scanner(System.in);
+        World.setOCCUPIED(MyPanel.joueur.perso.getPos().getX(), MyPanel.joueur.perso.getPos().getX(), 0);//地图上抹掉玩家的位置信息
+        Scanner scanner = new Scanner(System.in);
         System.out.println("open a new game? (enter 1 restart)");
         int i = scanner.nextInt();
-        if(i == 1){ //restart
-          reStart();
+        if (i == 1) { //restart
+            reStart();
         }
-
 
 
     }
 
-    public static void reStart(){
+    public static void reStart() {
         MyPanel.resetJoueurVie();
         World.setGAMESTATUESTATUS(1);
         MyPanel.joueur.perso.setPos(new Point2D(World.createPoints(1)));//重新设置玩家的位置
         Thread thread = new Thread(mp);
     }
-    public TestWoE(){
-        initWord();
-    }
 
-    public void initWord(){
+    public void initWord() {
         JFrame frame = new JFrame();
         mp = new MyPanel();
 
@@ -76,7 +74,7 @@ public class TestWoE extends JFrame {
         Thread thread = new Thread(mp);
         thread.start();
         add(mp);
-        setSize(World.TAILLE*8 + 250, World.TAILLE*8+30);
+        setSize(World.TAILLE * 8 + 250, World.TAILLE * 8 + 30);
         addKeyListener(mp);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

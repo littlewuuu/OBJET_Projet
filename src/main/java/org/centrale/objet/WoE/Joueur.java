@@ -1,7 +1,6 @@
 package org.centrale.objet.WoE;
 
 import java.util.Scanner;
-import java.util.Vector;
 
 public class Joueur {
 
@@ -18,6 +17,26 @@ public class Joueur {
      */
     public Personnage perso;
 
+
+    /**
+     * used to charge world
+     *
+     * @param s
+     * @param x
+     * @param y
+     * @param name
+     */
+    Joueur(String s, int x, int y, String name) {
+        if ("rcher".equals(s)) {
+            perso = new Archer(new Point2D(x, y));
+            perso.setNom(name);
+        } else {
+            perso = new Guerrier(new Point2D(x, y));
+            perso.setNom(name);
+        }
+        ;
+
+    }
 
     Joueur() {
         choosePersonnage();
@@ -62,7 +81,6 @@ public class Joueur {
     public void setPerso(Personnage perso) {
         this.perso = perso;
     }
-
 
 
     public int getType() {
@@ -578,6 +596,7 @@ public class Joueur {
     /**
      * Get a Creature within direct attack range of the joueur.
      * Only the nearest one is returned.
+     *
      * @return
      */
     public Creature getTarget() {
