@@ -32,6 +32,8 @@ This information is displayed on the game panel.
 
 All creatures will move randomly for a certain period of time.
 
+We assume that each element of the world occupies a position on the map and cannot move to an occupied position (even if it is occupied by an object).
+
 UML diagram: https://drive.google.com/file/d/104r5bmn8PTezpQTqheFJOeT6hGcsbT_8/view?usp=sharing
 
 ## 0. Game description
