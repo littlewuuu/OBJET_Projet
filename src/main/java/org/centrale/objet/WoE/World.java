@@ -330,7 +330,7 @@ public class World {
                 case 1:
                     Archer archer = new Archer();
                     new Thread(archer).start();
-                    creatures.add(archer);
+                    creatures.add(archer); //creatures store all creatures in the world
                     break;
                 case 2:
                     Paysan p = new Paysan();
