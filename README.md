@@ -8,19 +8,19 @@ To mark different **_creature_** or **_object_** information on the world map **
 
 1 : Joueur; 
 
-2 : Fleche; 
+2 : Fleche : Can only be picked up and used by Archer. 
 
-3 : Epee; 
+3 : Epee : Can only be picked up and used by Guerrier.
 
 4 : PotionSoin : Can restore the player's life value
 
-5 : Archer;
+5 : Archer : A role that can be choosen by player.
 
- 6 : Geurrier; 
+ 6 : Geurrier : A role that can be choosen by player.
 
-7 : Paysan; 
+7 : Paysan : Can not be choosen by player. 
 
-8 : Lapin; 
+8 : Lapin : Randomly generated, can not attack player.
 
 9 : Loup : There is a certain probability that it will attack the player.
 
@@ -29,6 +29,8 @@ To mark different **_creature_** or **_object_** information on the world map **
 0 : is not occupied;
 
 This information is displayed on the game panel.
+
+All creatures will move randomly for a certain period of time.
 
 UML diagram: https://drive.google.com/file/d/104r5bmn8PTezpQTqheFJOeT6hGcsbT_8/view?usp=sharing
 
