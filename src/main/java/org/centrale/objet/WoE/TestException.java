@@ -1,15 +1,17 @@
 package org.centrale.objet.WoE;
 
 import java.util.Vector;
+import java.util.Random;
+import java.util.Scanner;
 
 public class TestException {
     public static void main(String[] args){
 
         //NullPointerException
-        Lapin lapin1 = new Lapin();
-        lapin1 = null;
-        lapin1.setPos(null);
-        int coorX = lapin1.getPos().getX();
+//        Lapin lapin1 = new Lapin();
+//        lapin1 = null;
+//        lapin1.setPos(null);
+//        int coorX = lapin1.getPos().getX();
 
 
 
@@ -17,7 +19,10 @@ public class TestException {
         // ArrayIndexOutOfBoundsException
 //        Vector <Lapin> Lapins = new Vector<>();
 //        Lapins.add(new Lapin());
-//        Lapins.get(1).affiche();
+//        for(int i=0; i <2; i++){
+//            System.out.println(Lapins.get(i).getPos().getX());
+//        }
+
 
 
         // ArithmeticException
@@ -54,6 +59,44 @@ public class TestException {
 ////            lapins.add(new Lapin());
 //        }
 
+        // NumberFormatException with input
+        System.out.println("Please give the number of Lapin you want in your world!");
+        try{
+            inputLapin();
+        }catch (NumberFormatException e){
+            System.out.println("There is error in input");
+        }
+
+
+//        Scanner scan = new Scanner(System.in);
+//        if (scan.hasNext()){
+//            try{
+//                int numberLapin = Integer.parseInt(scan.next());
+//                Vector<Lapin> lapins = new Vector<>();
+//                for(int i=0; i<numberLapin;i++ ){
+//                    lapins.add(new Lapin());
+//                }
+//                System.out.println("There are "+lapins.size()+" Lapin");
+//            } catch (NumberFormatException e){
+//                e.printStackTrace();
+//            }finally {
+//                System.out.println("This is the end");
+//            }
+//
+//        }
+
+    }
+
+    public static void inputLapin() throws NumberFormatException{
+        Scanner scan = new Scanner(System.in);
+        if (scan.hasNext()){
+            int numberLapin = Integer.parseInt(scan.next());
+                Vector<Lapin> lapins = new Vector<>();
+                for(int i=0; i<numberLapin;i++ ){
+                    lapins.add(new Lapin());
+                }
+                System.out.println("There are "+lapins.size()+" Lapin");
+        }
     }
     public static void generateLapin(Lapin lapin){
         if (lapin.getDegAtt() == 15){
