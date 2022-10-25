@@ -252,10 +252,10 @@ public abstract class Creature extends ElementDeJeu implements Deplacable, Runna
     @Override
     public void run() {
         while (true) {
-            //When the player dies, it pauses without moving.
-            if (World.GAMESTATUESTATUS == 0) {
-                continue;
-            }
+//            //When the player dies, it pauses without moving.
+//            if (World.GAMESTATUESTATUS == 0) {
+//                continue;
+//            }
 
             try {
                 Thread.sleep(5000); //Time interval for creature movement

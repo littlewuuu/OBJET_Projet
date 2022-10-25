@@ -52,7 +52,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
                 world.afficheWorld();
                 break;
             } else if ("2".equals(choose)) {
-                chargementPartie();
+                System.out.println("Please enter the name of file");
+                String fileName = scanner.next();
+                chargementPartie(fileName);
                 break;
             } else {
                 System.out.println("wrong input, try again");
@@ -368,10 +370,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     public void save() {
         String fileName = "";
         Scanner scanner = new Scanner(System.in);
-        System.out.println("please enter filename: (or by default press \"n\")");
+        System.out.println("please enter filename to save: (or by default press \"n\")");
         String s = scanner.next();
         if (s.equals("n")) {
-            fileName = "sauvegarde" + World.gameCount;
+            fileName = "sauvegarde" + World.gameCount + ".txt";
         } else {
             fileName = s;
         }
@@ -384,7 +386,10 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
     }
 
-
+    /**
+     * Record the number of game saves
+     */
+    int count = 0;
     /**
      * The corresponding function is called according to the key pressed to achieve the corresponding function.
      * @param e the event to be processed
@@ -418,8 +423,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         if (e.getKeyCode() == KeyEvent.VK_L) { //use Epinard
             joueur.perso.useEpinard();
         }
-        if (e.getKeyCode() == KeyEvent.VK_S) { //to test if sauvegardePartie works well
-            sauvegardePartie("test.txt");
+        if (e.getKeyCode() == KeyEvent.VK_S) { //save the world to txt file
+            sauvegardePartie("sauvegarde_automatique" + count +".txt");
+            count = count + 1;
         }
 
         this.repaint();
@@ -549,10 +555,19 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     /**
      * Reading the world from a file
      */
-    public void chargementPartie() {
-        String source = "test.txt";
+    public static boolean  chargementPartie(String fileName){
+        String source = fileName;
+        BufferedReader buf = null;
+
         try {
-            BufferedReader buf = new BufferedReader(new FileReader(source));
+            try {
+                buf = new BufferedReader(new FileReader(source));
+            }catch (Exception e){
+                System.out.println("no such file, try again: " + fileName);
+                return false;
+            }
+
+
             String line = null;
 
             //charge OCCUPIED[][]
@@ -575,7 +590,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             int y = Integer.parseInt((st.nextToken()));//get y position
             String name = st.nextToken();//get name
             if ("rcher".equals(s)) {//is Archer
-                joueur = new Joueur("recher", x, y, name);
+                joueur = new Joueur("rcher", x, y, name);
                 joueurType = 1;
             } else {
                 joueur = new Joueur("rrier", x, y, name);
@@ -614,6 +629,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
     /**
@@ -624,7 +640,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
      * @param nbEpee Number of Epee owned by the player.
      * @param joueurType The type chosen by the player
      */
-    private void addObjets(int nbEpinard, int nbFleche, int nbPotionSoin, int nbEpee, int joueurType) {
+    private static void addObjets(int nbEpinard, int nbFleche, int nbPotionSoin, int nbEpee, int joueurType) {
         for (int i = 0; i < nbEpinard; i++) {
             Epinard epinard = new Epinard();
             joueur.perso.getEpinard().add(epinard);
@@ -653,7 +669,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
      * @param typeName
      * @param st
      */
-    public void chargeElem(String typeName, StringTokenizer st) {
+    public static void chargeElem(String typeName, StringTokenizer st) {
         switch (typeName) {
             case "Fleche":
                 int type1 = Integer.parseInt(st.nextToken());

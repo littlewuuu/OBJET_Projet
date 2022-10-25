@@ -49,20 +49,24 @@ public class TestWoE extends JFrame {
 
         World.setOCCUPIED(MyPanel.joueur.perso.getPos().getX(), MyPanel.joueur.perso.getPos().getX(), 0);//地图上抹掉玩家的位置信息
         Scanner scanner = new Scanner(System.in);
-        System.out.println("open a new game? (enter 1 restart)");
+        System.out.println("open a new game or continue? (enter 1 restart)");
         int i = scanner.nextInt();
         if (i == 1) { //restart
             reStart();
         }
 
-
     }
 
+    /**
+     * Restart the game.
+     *
+     */
     public static void reStart() {
         MyPanel.resetJoueurVie();
         World.setGAMESTATUESTATUS(1);
-        MyPanel.joueur.perso.setPos(new Point2D(World.createPoints(1)));//重新设置玩家的位置
-        Thread thread = new Thread(mp);
+        MyPanel.joueur.perso.setPos(new Point2D(World.createPoints(1)));//Reset the player's position
+        new Thread(mp).start();
+
     }
 
     public void initWord() {

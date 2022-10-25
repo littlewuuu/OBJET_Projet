@@ -34,7 +34,6 @@ public class Joueur {
             perso = new Guerrier(new Point2D(x, y));
             perso.setNom(name);
         }
-        ;
 
     }
 

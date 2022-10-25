@@ -190,23 +190,23 @@ public class World {
      * Print basic information about the world of printouts.
      */
     public void afficheWorld() {
-        Iterator<Creature> iterator = creatures.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().affiche();
-        }
-
-        Iterator<Objet> i = objets.iterator();
-        while (i.hasNext()) {
-            i.next().affiche();
-        }
-
-
-        for (int j = TAILLE - 1; j >= 0; j--) {
-            for (int k = 0; k < TAILLE; k++) {
-                System.out.print(OCCUPIED[j][k]);
-            }
-            System.out.println();
-        }
+//        Iterator<Creature> iterator = creatures.iterator();
+//        while (iterator.hasNext()) {
+//            iterator.next().affiche();
+//        }
+//
+//        Iterator<Objet> i = objets.iterator();
+//        while (i.hasNext()) {
+//            i.next().affiche();
+//        }
+//
+//
+//        for (int j = TAILLE - 1; j >= 0; j--) {
+//            for (int k = 0; k < TAILLE; k++) {
+//                System.out.print(OCCUPIED[j][k]);
+//            }
+//            System.out.println();
+//        }
     }
 
     /**
@@ -256,51 +256,6 @@ public class World {
             objets.add(epinard);
         }
     }
-
-
-    /**
-     * To test if the function SetPosition of the class Creature works well.
-     */
-//    public void testSetPosition() {
-//        //TP3 test
-//        //create some roles
-//        bugs1 = new Lapin();
-//        bugs2 = new Lapin();
-//
-//        robin = new Archer("robin");
-//        peon = new Paysan("peon");
-//
-//        grosBill = new Guerrier("grosBill");
-//
-//        wolfie = new Loup();
-//
-//        Point2D[] points = {new Point2D(), new Point2D(), new Point2D(), new Point2D(), new Point2D(), new Point2D()};
-//
-//        robin.setPos(points[0]);
-//        peon.setPos(points[1]);
-//        bugs1.setPos(points[2]);
-//        bugs2.setPos(points[3]);
-//        grosBill.setPos(points[4]);
-//        wolfie.setPos(points[5]);
-//
-//    }
-
-    /**
-     * To test if the function Copie works well.
-     */
-//    public void testCopie() {
-//        System.out.println("================test copie================");
-//        guillaumeT = new Archer(robin);
-//        guillaumeT.setNom("guillaumeT");
-//        System.out.println("--------------avant-------------");
-//        guillaumeT.affiche();
-//        robin.affiche();
-//        System.out.println("--------------apres-------------");
-//        robin.deplacer();
-//        guillaumeT.affiche();
-//        robin.affiche();
-//        System.out.println("================fin copie================");
-//    }
 
     /**
      * Randomly generate a specified number of NuageToxique.

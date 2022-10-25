@@ -111,10 +111,10 @@ public class NuageToxique extends Objet implements Combattant, Deplacable, Runna
     public void run() {
         while (true) {
 
-            //stop moving when game is over
-            if (World.GAMESTATUESTATUS == 0) {
-                continue;
-            }
+//            //stop moving when game is over
+//            if (World.GAMESTATUESTATUS == 0) {
+//                continue;
+//            }
 
             try {
                 Thread.sleep(10000);
