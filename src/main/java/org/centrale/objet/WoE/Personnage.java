@@ -36,6 +36,10 @@ public abstract class Personnage extends Creature {
      * bottles of potion, we set it as a vector type.
      */
     private Vector<PotionSoin> potionsoins = new Vector();
+
+    /**
+     * Store owned epinards.
+     */
     private Vector<Epinard> epinards = new Vector<>();
 
     /**
@@ -98,6 +102,10 @@ public abstract class Personnage extends Creature {
 
     }
 
+    /**
+     * Store all nourriture in use, as all nourriture has a time limit for use.
+     * @return
+     */
     public static Vector<Nourriture> getNourritureInUse() {
         return nourritureInUse;
     }

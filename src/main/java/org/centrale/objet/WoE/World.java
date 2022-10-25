@@ -173,7 +173,7 @@ public class World {
      * Returns the creatures at the coordinates according to the coordinates.
      * @param x Horizontal coordinates
      * @param y Longitudinal coordinates
-     * @return
+     * @return  The creature in this position
      */
     public static Creature getCreature(int x, int y) {
         Iterator<Creature> iterator = creatures.iterator();

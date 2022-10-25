@@ -7,7 +7,7 @@ package org.centrale.objet.WoE;
 
 /**
  * The class Monstre represents the monsters of the world, a class that inherits
- * from thhe Creature class.
+ * from the Creature class.
  *
  * @author WuZilong
  * @author ZouKang

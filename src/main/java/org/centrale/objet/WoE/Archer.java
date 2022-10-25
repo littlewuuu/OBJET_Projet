@@ -9,15 +9,26 @@ import java.util.Random;
 import java.util.Vector;
 
 /**
- *
+ * Is a character type in the world, the player chooses this type,
+ * can pick up fleche , potionSoin and Epinard,
+ * can not pick up Epee.
+ * This class implements the Combattant interface and can fight.
+ * Random movement at regular intervals.
  * @author wuzilong
  * @author Zou Kang
  */
 public class Archer extends Personnage implements Combattant {
 
+    /**
+     * Marker on the map.
+     */
     final private int type = 5;
+
+    /**
+     * Store the picked up fleche.
+     */
     private Vector<Fleche> fleches = new Vector<>();
-    private Vector<Epee> epees = new Vector<>();
+
 
     /**
      * initialize Archer
@@ -94,10 +105,6 @@ public class Archer extends Personnage implements Combattant {
         return type;
     }
 
-    public void trouFleche(Fleche f) {
-        fleches.add(f);
-    }
-
     /**
      * Realisation of long-range attacks using arrows.
      *
@@ -166,13 +173,15 @@ public class Archer extends Personnage implements Combattant {
         super.affiche();
     }
 
+    /**
+     * Return Archer-owned fleche
+     * @return
+     */
     public Vector<Fleche> getFleches() {
         return fleches;
     }
 
-    public Vector<Epee> getEpees() {
-        return epees;
-    }
+
 
     @Override
     public String toString() {

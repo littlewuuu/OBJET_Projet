@@ -1,7 +1,20 @@
 package org.centrale.objet.WoE;
 
+/**
+ * Represents all elements in the world, and all elements in the world
+ * are subclasses of this class. The class defines some properties that
+ * all elements have.
+ */
 public class ElementDeJeu {
+
+    /**
+     * The position in the world.
+     */
     private Point2D pos;
+
+    /**
+     * marker on the map.
+     */
     private int type;
 
     public ElementDeJeu() {

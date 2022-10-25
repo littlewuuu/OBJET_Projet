@@ -6,6 +6,7 @@
 package org.centrale.objet.WoE;
 
 /**
+ * Represents all items in the world with a specific function.
  * @author wuzilong
  */
 public abstract class Objet extends ElementDeJeu {
@@ -23,9 +24,14 @@ public abstract class Objet extends ElementDeJeu {
 
     private String name;
 
+    /**
+     * marker on the map.
+     */
     private int type;
 
-    // 0:showed on the map,1:not showed on the map
+    /**
+     *  0:showed on the map,1:not showed on the map
+     */
     private int state = 0;
 
     public Objet(int life, Point2D pos, int valeur, String name) {

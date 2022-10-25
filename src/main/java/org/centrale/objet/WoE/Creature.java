@@ -8,17 +8,41 @@ package org.centrale.objet.WoE;
 import java.util.Random;
 
 /**
+ * is an abstract class that is the parent class of all creatures in the world
+ * and defines in it the properties that all creatures have.
  * @author wuzilong
  * @author zoukang
  */
 public abstract class Creature extends ElementDeJeu implements Deplacable, Runnable {
 
+    /**
+     * point of life, when <= 0 means the creature is dead.
+     */
     private int ptVie = 100;
+
+    /**
+     * points of attack
+     */
     private int degAtt = 15;
+
+    /**
+     * points of defence
+     */
     private int ptPar = 10;
+
+    /**
+     * Probability of successful attack
+     */
     private int pageAtt = 70;
+
+    /**
+     * Probability of successful defense
+     */
     private int pagePar = 60;
 
+    /**
+     * Indicates the direction of the current creature
+     */
     private int direction = 1;
 
     /**
@@ -28,7 +52,7 @@ public abstract class Creature extends ElementDeJeu implements Deplacable, Runna
      * @param degAtt  points of attack
      * @param ptPar   points of defence
      * @param pageAtt percentage of attack
-     * @param pagePar percentage of denfence
+     * @param pagePar percentage of defense
      * @param pos     position
      */
     public Creature(int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, Point2D pos) {
@@ -56,18 +80,6 @@ public abstract class Creature extends ElementDeJeu implements Deplacable, Runna
         this.ptVie = m.ptVie;
     }
 
-
-    /**
-     * 1:Joueur
-     * 2:Fleche
-     * 3:Epee
-     * 4:PotionSoin
-     * 5:Archer
-     * 6:Guerrier
-     * 7:Paysan
-     * 8:Lapin
-     * 9:Loup
-     */
 
 
     /**
@@ -197,24 +209,6 @@ public abstract class Creature extends ElementDeJeu implements Deplacable, Runna
     public void setPagePar(int pagePar) {
         this.pagePar = pagePar;
     }
-
-//    /**
-//     * Get position
-//     *
-//     * @return Point2D, position
-//     */
-//    public Point2D getPos() {
-//        return super.getPos();
-//    }
-//
-//    /**
-//     * Set position
-//     *
-//     * @param pos position
-//     */
-//    public void setPos(Point2D pos) {
-//        super.setPos(new Point2D(pos));
-//    }
 
     /**
      * Il s'agit d'une fonction qui se déplace de manière aléatoire dans

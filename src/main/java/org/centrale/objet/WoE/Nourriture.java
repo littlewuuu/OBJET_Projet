@@ -1,5 +1,8 @@
 package org.centrale.objet.WoE;
 
+/**
+ * Represents all nourriture in the world and has the ability to increase a player's ability in a certain area.
+ */
 public abstract class Nourriture extends Objet {
     /**
      * Maker on the map

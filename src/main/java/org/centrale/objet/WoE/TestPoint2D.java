@@ -6,6 +6,7 @@
 package org.centrale.objet.WoE;
 
 /**
+ * Test the functionality of the Point2D class for completeness.
  * @author wuzilong
  * @author Zou Kang
  */

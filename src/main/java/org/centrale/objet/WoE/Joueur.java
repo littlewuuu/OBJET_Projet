@@ -2,12 +2,32 @@ package org.centrale.objet.WoE;
 
 import java.util.Scanner;
 
+
+/**
+ * Represents the player in the world, able to move, attack, use medicine, etc.
+ */
 public class Joueur {
 
+    /**
+     * Number of fleche owned by the player
+     */
     public static int nbFleche = 10;
+
+    /**
+     * Number of epee owned by the player
+     */
     public static int nbEpee = 0;
+
+    /**
+     * Number of potionSoin owned by the player
+     */
     public static int nbPotionSoin = 0;
+
+    /**
+     * Number of Epinard owned by the player
+     */
     public static int nbEpinard = 0;
+
     /**
      * Used to indicate on the OOCUPIED table that the position is occupied by Joueur
      */
@@ -143,7 +163,9 @@ public class Joueur {
         System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
-    //This method enables the player to move down around the world, and will detect if the target position can be moved to.
+    /**
+     *     This method enables the player to move down around the world, and will detect if the target position can be moved to.
+     */
     public void moveDown() {
         if (perso.getPos().getY() >= 99) {
             System.out.println("border!");
@@ -162,7 +184,9 @@ public class Joueur {
 
     }
 
-    //This method enables the player to move left around the world, and will detect if the target position can be moved to.
+    /**
+     * This method enables the player to move left around the world, and will detect if the target position can be moved to.
+     */
     public void moveLeft() {
         if (perso.getPos().getX() <= 0) {
             System.out.println("border!");
@@ -198,6 +222,10 @@ public class Joueur {
         System.out.println("joueur position : " + perso.getPos() + "; direction : " + perso.getDirection());
     }
 
+    /**
+     * This method enables the player to pick up items, but only if they are directly in front of the player.
+     * Will determine the current player's type, as some items cannot be picked up by a particular player.
+     */
     public void pickObjet() {
         Point2D p = new Point2D(perso.getPos()); //joueur's coordinate
         if (perso.getClass().toString().equals("class org.centrale.objet.WoE.Archer")) { //is Archer

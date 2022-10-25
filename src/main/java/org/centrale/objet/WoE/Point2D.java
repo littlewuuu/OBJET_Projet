@@ -6,12 +6,20 @@
 package org.centrale.objet.WoE;
 
 /**
+ * Represents a position in the world.
  * @author wuzilong
  * @author Zou Kang
  */
 public class Point2D {
 
+    /**
+     * Horizontal coordinate
+     */
     private int x;
+
+    /**
+     * Longitudinal coordinates
+     */
     private int y;
 
     public Point2D(int x, int y) {
@@ -27,6 +35,14 @@ public class Point2D {
     public Point2D() {
     }
 
+    /**
+     * Calculate the distance between two points.
+     * @param x1 The horizontal coordinate of the first coordinate
+     * @param y1 Vertical coordinate of the first coordinate
+     * @param x2 The horizontal coordinate of the second coordinate
+     * @param y2 Vertical coordinate of the second coordinate
+     * @return distance between these two points.
+     */
     public static double distance(int x1, int y1, int x2, int y2) {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }

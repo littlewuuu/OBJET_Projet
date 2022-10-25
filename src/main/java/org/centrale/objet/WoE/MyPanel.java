@@ -389,7 +389,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
     /**
      * Record the number of game saves
      */
-    int count = 0;
+    int countFile = 0;
     /**
      * The corresponding function is called according to the key pressed to achieve the corresponding function.
      * @param e the event to be processed
@@ -424,8 +424,8 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             joueur.perso.useEpinard();
         }
         if (e.getKeyCode() == KeyEvent.VK_S) { //save the world to txt file
-            sauvegardePartie("sauvegarde_automatique" + count +".txt");
-            count = count + 1;
+            sauvegardePartie("sauvegarde_automatique" + countFile +".txt");
+            countFile = countFile + 1;
         }
 
         this.repaint();
@@ -554,6 +554,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
 
     /**
      * Reading the world from a file
+     * @param fileName the name of file to charge. Default storage is in the current project's folder.
      */
     public static boolean  chargementPartie(String fileName){
         String source = fileName;
@@ -598,6 +599,9 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
             }
             int disAtMax = Integer.parseInt(st.nextToken());
             int PtVie = Integer.parseInt(st.nextToken());
+            if(World.gameCount == 0){
+                PtVie = 100;
+            }
             int DegAtt = Integer.parseInt(st.nextToken());
             int PtPar = Integer.parseInt(st.nextToken());
             int PageAtt = Integer.parseInt(st.nextToken());
@@ -638,7 +642,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
      * @param nbFleche Number of Flech owned by the player.
      * @param nbPotionSoin Number of PotionSoin owned by the player.
      * @param nbEpee Number of Epee owned by the player.
-     * @param joueurType The type chosen by the player
+     * @param joueurType The type chosen by the player: Archer or Guerrier
      */
     private static void addObjets(int nbEpinard, int nbFleche, int nbPotionSoin, int nbEpee, int joueurType) {
         for (int i = 0; i < nbEpinard; i++) {
