@@ -246,10 +246,18 @@ public abstract class Creature extends ElementDeJeu implements Deplacable, Runna
     @Override
     public void run() {
         while (true) {
-//            //When the player dies, it pauses without moving.
-//            if (World.GAMESTATUESTATUS == 0) {
-//                continue;
-//            }
+            //When the player dies, it pauses without moving.
+            if (World.GAMESTATUESTATUS == 0) {
+                continue;
+            }
+            
+            if (this.getPtVie() <= 0)//Exit the thread when the creature's ptVie value < 0
+            {
+                World.getCreatures().remove(this);
+                return;
+            } else {
+                deplacer(); //Random movement of creatures1
+            }
 
             try {
                 Thread.sleep(5000); //Time interval for creature movement
@@ -257,10 +265,6 @@ public abstract class Creature extends ElementDeJeu implements Deplacable, Runna
                 throw new RuntimeException(e);
             }
 
-            deplacer(); //Random movement of creatures
-
-            if (this.getPtVie() <= 0)//Exit the thread when the creature's ptVie value <= 0
-                break;
         }
     }
 }

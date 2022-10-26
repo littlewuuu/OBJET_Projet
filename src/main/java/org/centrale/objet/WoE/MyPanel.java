@@ -291,6 +291,7 @@ public class MyPanel extends JPanel implements KeyListener, Runnable {
         while (iterator.hasNext()) {
             Creature c = iterator.next();
             if (c.getPtVie() <= 0) {
+
                 continue;
             } //单纯不在地图上显示，并没有在地图上把该 Creature 的位置置为 0
             int type = c.getType();

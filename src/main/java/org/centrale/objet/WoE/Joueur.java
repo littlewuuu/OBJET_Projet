@@ -511,9 +511,12 @@ public class Joueur {
                     a.combattre(c1);
                     c1.affiche();
                     if (c1.getPtVie() <= 0) {
-                        World.creatures.remove(c1);
                         World.setOCCUPIED(c1.getPos().getX(), c1.getPos().getY(), 0);
+                        World.creatures.remove(c1);
+                        new Thread(c1).interrupt();
+
                     }
+
                     break;
                 case 2:
                     Creature c2 = getTarget();
@@ -521,13 +524,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c2.getPtVie() <= 0) {
+                        World.setOCCUPIED(c2.getPos().getX(), c2.getPos().getY(), 0);
+                        World.creatures.remove(c2);
+                        new Thread(c2).interrupt();
+                    }
                     a.combattre(c2);
                     c2.affiche();
-                    if (c2.getPtVie() <= 0) {
-
-                        World.creatures.remove(c2);
-                        World.setOCCUPIED(c2.getPos().getX(), c2.getPos().getY(), 0);
-                    }
                     break;
                 case 3:
                     Creature c3 = getTarget();
@@ -535,13 +539,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c3.getPtVie() <= 0) {
+                        World.setOCCUPIED(c3.getPos().getX(), c3.getPos().getY(), 0);
+                        World.creatures.remove(c3);
+                        new Thread(c3).interrupt();
+                    }
                     a.combattre(c3);
                     c3.affiche();
-                    if (c3.getPtVie() <= 0) {
-
-                        World.creatures.remove(c3);
-                        World.setOCCUPIED(c3.getPos().getX(), c3.getPos().getY(), 0);
-                    }
                     break;
                 case 4:
                     Creature c4 = getTarget();
@@ -549,13 +554,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c4.getPtVie() <= 0) {
+                        World.setOCCUPIED(c4.getPos().getX(), c4.getPos().getY(), 0);
+                        World.creatures.remove(c4);
+                        new Thread(c4).interrupt();
+                    }
                     a.combattre(c4);
                     c4.affiche();
-                    if (c4.getPtVie() <= 0) {
-
-                        World.creatures.remove(c4);
-                        World.setOCCUPIED(c4.getPos().getX(), c4.getPos().getY(), 0);
-                    }
                     break;
             }
         } else { // is Guerrier
@@ -567,12 +573,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c1.getPtVie() <= 0) {
+                        World.setOCCUPIED(c1.getPos().getX(), c1.getPos().getY(), 0);
+                        World.creatures.remove(c1);
+
+                    }
                     g.combattre(c1);
                     c1.affiche();
-                    if (c1.getPtVie() <= 0) {
-                        World.creatures.remove(c1);
-                        World.setOCCUPIED(c1.getPos().getX(), c1.getPos().getY(), 0);
-                    }
                     break;
                 case 2:
                     Creature c2 = getTarget();
@@ -580,12 +588,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c2.getPtVie() <= 0) {
+                        World.setOCCUPIED(c2.getPos().getX(), c2.getPos().getY(), 0);
+                        World.creatures.remove(c2);
+
+                    }
                     g.combattre(c2);
                     c2.affiche();
-                    if (c2.getPtVie() <= 0) {
-                        World.creatures.remove(c2);
-                        World.setOCCUPIED(c2.getPos().getX(), c2.getPos().getY(), 0);
-                    }
                     break;
                 case 3:
                     Creature c3 = getTarget();
@@ -593,13 +603,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c3.getPtVie() <= 0) {
+                        World.setOCCUPIED(c3.getPos().getX(), c3.getPos().getY(), 0);
+                        World.creatures.remove(c3);
+
+                    }
                     g.combattre(c3);
                     c3.affiche();
-                    if (c3.getPtVie() <= 0) {
-
-                        World.creatures.remove(c3);
-                        World.setOCCUPIED(c3.getPos().getX(), c3.getPos().getY(), 0);
-                    }
                     break;
                 case 4:
                     Creature c4 = getTarget();
@@ -607,13 +618,14 @@ public class Joueur {
                         System.out.println("there is no target to attack!");
                         break;
                     }
+
+                    if (c4.getPtVie() <= 0) {
+                        World.setOCCUPIED(c4.getPos().getX(), c4.getPos().getY(), 0);
+                        World.creatures.remove(c4);
+
+                    }
                     g.combattre(c4);
                     c4.affiche();
-                    if (c4.getPtVie() <= 0) {
-
-                        World.creatures.remove(c4);
-                        World.setOCCUPIED(c4.getPos().getX(), c4.getPos().getY(), 0);
-                    }
                     break;
             }
 
