@@ -118,18 +118,6 @@ public abstract class Personnage extends Creature {
     }
 
     /**
-     * When find a potion type, put into knapsack We will first check if the
-     * input parameter is a potion class, if yes, put into knapsack.
-     *
-     * @param p instance of Potion Soin
-     */
-    public void TrouPotion(PotionSoin p) {
-        if (p instanceof PotionSoin) {
-            potionsoins.add(p);
-        }
-    }
-
-    /**
      * The process of using potion first, we will check whether there is potion
      * in Knapsack, if no, program will print "no potion" if yes, potion will
      * be moved out of knapsack, and set as null to be collect as garbage.
@@ -182,14 +170,6 @@ public abstract class Personnage extends Creature {
         return potionsoins;
     }
 
-    /**
-     * Set a person's knapsack of potion with a knapsack's potion.
-     * So we can see it's a vector.
-     * @param potionsoins a list of PotionSoin(vector)
-     */
-    public void setPotionsoins(Vector<PotionSoin> potionsoins) {
-        this.potionsoins = potionsoins;
-    }
 
 
     public Vector<Epinard> getEpinard() {

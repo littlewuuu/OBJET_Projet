@@ -22,16 +22,7 @@ public class Fleche extends Objet {
     private int dommage = 4;
 
 
-    public Fleche(int dommage, int life, int valeur) {
-        super(life, valeur);
-        this.dommage = dommage;
-        setPos(World.createPoints(type));
-    }
 
-    public Fleche(int dommage) {
-        this.dommage = dommage;
-        setPos(World.createPoints(type));
-    }
 
     public Fleche(Fleche f) {
         super(f);

@@ -30,31 +30,8 @@ public class Archer extends Personnage implements Combattant {
     private Vector<Fleche> fleches = new Vector<>();
 
 
-    /**
-     * initialize Archer
-     *
-     * @param nom        name
-     * @param ptVie      point of life
-     * @param degAtt     points of attack
-     * @param ptPar      points of defence
-     * @param pageAtt    percentage of att
-     * @param pagePar    percentage of par
-     * @param distAttMax max att distance
-     * @param pos        position
-     */
-    public Archer(String nom, int ptVie, int degAtt, int ptPar, int pageAtt, int pagePar, int distAttMax, Point2D pos) {
-        super(nom, ptVie, degAtt, ptPar, pageAtt, pagePar, distAttMax, pos);
 
-    }
 
-    /**
-     * Use an Archer to initialize an Archer
-     *
-     * @param a an instance of Archer
-     */
-    public Archer(Archer a) {
-        super(a);
-    }
 
     /**
      * Initial an Archer without parameter
