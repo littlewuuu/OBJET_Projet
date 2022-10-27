@@ -34,7 +34,6 @@ All creatures will move randomly for a certain period of time.
 
 We assume that each element of the world occupies a position on the map and cannot move to an occupied position (even if it is occupied by an object).
 
-UML diagram: https://drive.google.com/file/d/104r5bmn8PTezpQTqheFJOeT6hGcsbT_8/view?usp=sharing
 
 ## 0. Game description
 
@@ -81,3 +80,6 @@ Keyboard up, down, left and right to control the movement of the player.
 ## 3. Final result
 
 <img width="1030" alt="Screenshot 2022-10-24 at 21 52 09" src="https://user-images.githubusercontent.com/95653923/197622685-d3b507db-8b63-46db-9a09-429859fe7d54.png">
+
+## 4. UML
+![UML](https://user-images.githubusercontent.com/95653923/198290539-d31daf2e-416a-4a5c-b591-20007252fe5c.png)
